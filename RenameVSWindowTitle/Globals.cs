@@ -150,54 +150,74 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return name;
         }
 
-        public static string GetGitBranch(string workingDirectory) {
+        public static string GetGitBranch(string workingDirectory)
+        {
             //Create process
-            var pProcess = new System.Diagnostics.Process {
+            using (var pProcess = new System.Diagnostics.Process
+            {
                 StartInfo = {
-                    FileName = "git.exe",
+                    FileName = _GitExePath,
                     Arguments = "symbolic-ref --short -q HEAD", //As per: http://git-blame.blogspot.sg/2013/06/checking-current-branch-programatically.html. Or: "rev-parse --abbrev-ref HEAD"
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
                     WorkingDirectory = workingDirectory
                 }
-            };
+            })
+            {
 
-            //Start the process
-            pProcess.Start();
+                //Start the process
+                pProcess.Start();
 
-            //Get program output
-            var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
+                //Get program output
+                var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
 
-            //Wait for process to finish
-            pProcess.WaitForExit();
-
-            return branchName;
+                //Wait for process to finish
+                pProcess.WaitForExit();
+                return branchName;
+            }
         }
 
-        public static bool IsGitRepository(string workingDirectory) {
+        private const string GitExeName = "git.exe";
+        private static string _GitExePath = GitExeName;
+
+        public static void UpdateGitExePath(string gitDirectory)
+        {
+            if (string.IsNullOrEmpty(gitDirectory))
+            {
+                _GitExePath=GitExeName;
+                return;
+            }
+            _GitExePath=Path.Combine(gitDirectory, GitExeName);
+        }
+
+        public static bool IsGitRepository(string workingDirectory)
+        {
             //Create process
-            var pProcess = new System.Diagnostics.Process {
+            using (var pProcess = new System.Diagnostics.Process
+            {
                 StartInfo = {
-                    FileName = "git.exe",
+                    FileName = _GitExePath,
                     Arguments = "rev-parse --is-inside-work-tree",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
                     WorkingDirectory = workingDirectory
                 }
-            };
+            })
+            {
 
-            //Start the process
-            pProcess.Start();
+                //Start the process
+                pProcess.Start();
 
-            //Get program output
-            var res = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
+                //Get program output
+                var res = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
 
-            //Wait for process to finish
-            pProcess.WaitForExit();
+                //Wait for process to finish
+                pProcess.WaitForExit();
 
-            return res == "true";
+                return res == "true";
+            }
         }
 
         public static bool TryGetActiveProject(DTE2 dte, out Project activeProject) {

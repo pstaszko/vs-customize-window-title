@@ -324,7 +324,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 case "projectName": return Globals.GetActiveProjectNameOrEmpty()?? "";
                 case "solutionName": return Globals.GetSolutionNameOrEmpty(solution)?? "";
                 case "alternateSolutionName": return Globals.GetAlternateSolutionNameOrEmpty(solution)?? "";
-                case "gitBranchName": return Globals.GetGitBranchNameOrEmpty(solution)?? "";
+                case "gitBranchName":
+                    Globals.UpdateGitExePath(this.Settings.GitDirectory); // there is likely a better way to adjust the git path
+                    return Globals.GetGitBranchNameOrEmpty(solution)?? "";
                 case "workspaceName": return Globals.GetWorkspaceNameOrEmpty(solution)?? "";
                 case "workspaceOwnerName": return Globals.GetWorkspaceOwnerNameOrEmpty(solution)?? "";
                 case "documentName": return Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow)?? "";
