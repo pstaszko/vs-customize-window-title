@@ -10,6 +10,7 @@ using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using System.Collections.Generic;
 
 // The PackageRegistration attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class
 // is a package.
@@ -289,6 +290,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
+        Regex rePattern = new Regex(@"\[([^\]]+)\]", RegexOptions.Multiline);
+
         private string GetNewTitle(string pattern) {
             var solution = Globals.DTE.Solution;
             var activeDocument = Globals.DTE.ActiveDocument;
@@ -299,55 +302,84 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     return this.IDEName;
                 }
             }
-            var parentPath = "";
+            string path=string.Empty;
+            var parentPath = string.Empty;
+
             if (solution != null && !string.IsNullOrEmpty(solution.FullName)) {
-                var parents = Path.GetDirectoryName(solution.FullName).Split(Path.DirectorySeparatorChar).Reverse().ToArray();
-                parentPath = this.GetParentPath(parents: parents);
-                pattern = this.ReplaceParentTags(pattern: pattern, parents: parents);
+                path=solution.FullName;
             }
             else if (activeDocument != null) {
-                var parents = Path.GetDirectoryName(activeDocument.FullName).Split(Path.DirectorySeparatorChar).Reverse().ToArray();
-                parentPath = this.GetParentPath(parents: parents);
-                pattern = this.ReplaceParentTags(pattern: pattern, parents: parents);
+                path=activeDocument.FullName;
             }
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[configurationName]", tagValueSelector: () => Globals.GetActiveConfigurationNameOrEmpty(solution), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[platformName]", tagValueSelector: () => Globals.GetPlatformNameOrEmpty(solution), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[projectName]", tagValueSelector: () => Globals.GetActiveProjectNameOrEmpty(), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[solutionName]", tagValueSelector: () => Globals.GetSolutionNameOrEmpty(solution), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[gitBranchName]", tagValueSelector: () => Globals.GetGitBranchNameOrEmpty(solution), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[workspaceName]", tagValueSelector: () => Globals.GetWorkspaceNameOrEmpty(solution), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[workspaceOwnerName]", tagValueSelector: () => Globals.GetWorkspaceOwnerNameOrEmpty(solution), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[documentName]", tagValueSelector: () => Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[vsMajorVersion]", tagValueSelector: () => Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[vsMajorVersionYear]", tagValueSelector: () => Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture), defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[parentPath]", tagValueSelector: () => parentPath, defaultValue: "");
-            pattern = this.ReplaceTag(pattern: pattern, tag: "[ideName]", tagValueSelector: () => this.IDEName, defaultValue: "");
+
+            string[] pathparts = SplitPath(path);
+
+            pattern=rePattern.Replace(pattern, (Match match) =>
+            {
+                string mtext = match.Groups[1].Value;
+                switch (mtext)
+                {
+                case "configurationName": return Globals.GetActiveConfigurationNameOrEmpty(solution) ??  "";
+                case "platformName": return Globals.GetPlatformNameOrEmpty(solution)?? "";
+                case "projectName": return Globals.GetActiveProjectNameOrEmpty()?? "";
+                case "solutionName": return Globals.GetSolutionNameOrEmpty(solution)?? "";
+                case "alternateSolutionName": return Globals.GetAlternateSolutionNameOrEmpty(solution)?? "";
+                case "gitBranchName": return Globals.GetGitBranchNameOrEmpty(solution)?? "";
+                case "workspaceName": return Globals.GetWorkspaceNameOrEmpty(solution)?? "";
+                case "workspaceOwnerName": return Globals.GetWorkspaceOwnerNameOrEmpty(solution)?? "";
+                case "documentName": return Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow)?? "";
+                case "vsMajorVersion": return Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture)?? "";
+                case "vsMajorVersionYear": return Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture)?? "";
+                case "ideName": return this.IDEName?? "";
+                case "parentPath":
+
+                    return GetParentPath(pathparts) ?? "";
+                default:
+                    if (mtext.StartsWith("parent"))
+                    {
+                        int n;
+                        if (int.TryParse(mtext.Substring(6 /*length of parent*/), out n))
+                        {
+                            if (n>0 && n<=pathparts.Length)
+                            {
+                                return pathparts[pathparts.Length-n]; // n=1 means direct parent
+                            }
+                            else
+                                return string.Empty;
+
+                        }
+                        else
+                            return "[INVALID-PATTERN]";
+                    }
+                    break;
+                }
+                return match.Value;
+            });
             return pattern + " " + this.Settings.AppendedString;
         }
 
-        private string ReplaceTag(string pattern, string tag, Func<string> tagValueSelector, string defaultValue) {
-            if (!pattern.Contains(tag)) {
-                return pattern.Replace(tag, defaultValue);
-            }
-            try {
-                return pattern.Replace(tag, tagValueSelector() ?? defaultValue);
-            }
-            catch (Exception ex) {
-                try {
-                    if (this.Settings.EnableDebugMode) {
-                        WriteOutput("ReplaceTag (" + tag + ") failed: " + ex);
-                    }
-                }
-                catch {
-                    // ignored
-                }
-                return pattern.Replace(tag, defaultValue);
-            }
+        private string[] SplitPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return new string[0];
+
+            string root = Path.GetPathRoot(path);
+            List<string> parts = new List<string>();
+            if (!string.IsNullOrEmpty(root))
+                parts.Add(root);
+            parts.AddRange(path.Substring(root.Length).Split(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries));
+            if(parts.Count>0) // =0 should not happen
+                parts.RemoveAt(parts.Count-1);
+            return parts.ToArray();
         }
+
 
         private string GetParentPath(string[] parents) {
             //TODO: handle drive letter better if (path1.Substring(path1.Length - 1, 1) == ":") path1 += System.IO.Path.DirectorySeparatorChar; http://stackoverflow.com/questions/1527942/why-path-combine-doesnt-add-the-path-directoryseparatorchar-after-the-drive-des?rq=1
-            return Path.Combine(parents.Skip(this.Settings.ClosestParentDepth - 1).Take(this.Settings.FarthestParentDepth - this.Settings.ClosestParentDepth + 1).Reverse().ToArray());
+            return Path.Combine(parents.Reverse().Skip(this.Settings.ClosestParentDepth - 1)
+                .Take(this.Settings.FarthestParentDepth - this.Settings.ClosestParentDepth + 1)
+                .Reverse()
+                .ToArray());
         }
 
         private string ReplaceParentTags(string pattern, string[] parents) {
