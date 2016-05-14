@@ -124,4 +124,46 @@
   <data name="style" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\style.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="tag_alternateSolutionName" xml:space="preserve">
+    <value>Alternate solution name</value>
+  </data>
+  <data name="tag_configurationName" xml:space="preserve">
+    <value>Current configuration name (e.g. Release).</value>
+  </data>
+  <data name="tag_documentName" xml:space="preserve">
+    <value>Active document or window name.</value>
+  </data>
+  <data name="tag_gitBranchName" xml:space="preserve">
+    <value>Current Git branch name. Make sure Git\'s executable directory is added to the Windows PATH variable.</value>
+  </data>
+  <data name="tag_ideName" xml:space="preserve">
+    <value>Name of the IDE (e.g. Microsoft Visual Studio).</value>
+  </data>
+  <data name="tag_parentPath" xml:space="preserve">
+    <value>Current solution path or, if no solution open, document path, with depth range as set in settings.</value>
+  </data>
+  <data name="tag_parentX" xml:space="preserve">
+    <value>Parent folder at the specified depth X (e.g. parent1 for document/solution file parent folder).</value>
+  </data>
+  <data name="tag_platformName" xml:space="preserve">
+    <value>Current platform name (e.g. x86).</value>
+  </data>
+  <data name="tag_projectName" xml:space="preserve">
+    <value>Active project name.</value>
+  </data>
+  <data name="tag_solutionName" xml:space="preserve">
+    <value>Active solution name.</value>
+  </data>
+  <data name="tag_vsMajorVersion" xml:space="preserve">
+    <value>Major version of Visual Studio (e.g. 9, 10, 11, 12, 14...).</value>
+  </data>
+  <data name="tag_vsMajorVersionYear" xml:space="preserve">
+    <value>Major version of Visual Studio, in year form (e.g. 2008, 2010, 2012, 2013, 2015...).</value>
+  </data>
+  <data name="tag_workspaceName" xml:space="preserve">
+    <value>Current Team Foundation Server (TFS) workspace name.</value>
+  </data>
+  <data name="tag_workspaceOwnerName" xml:space="preserve">
+    <value>Current Team Foundation Server (TFS) workspace owner name.</value>
+  </data>
 </root>

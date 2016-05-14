@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
+using System.Collections.Generic;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
     public static class Globals {
@@ -32,6 +33,66 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         public static string GetSolutionNameOrEmpty(Solution solution) {
             return solution == null || string.IsNullOrEmpty(solution.FullName) ? "" : Path.GetFileNameWithoutExtension(solution.FullName);
+        }
+        public static string GetAlternateSolutionNameOrEmpty(Solution solution)
+        {
+            if (solution==null || string.IsNullOrEmpty(solution.FullName))
+                return string.Empty;
+
+            string sln = solution.FullName;
+
+            reloadAlternateNames();
+            string altName;
+            if (alternateSlnName.TryGetValue(sln.ToLower(), out altName))
+                return altName;
+
+            string renamesln = Path.ChangeExtension(sln, ".renamesln");
+            try
+            {
+                string[] text = File.ReadAllLines(renamesln, System.Text.Encoding.UTF8);
+                if (text!=null && text.Length>0)
+                    return text[0]; ;
+            }
+            catch
+            {
+
+            }
+            return GetSolutionNameOrEmpty(solution);
+        }
+
+        static DateTime alternateSlnFileTime = DateTime.MinValue;
+        static Dictionary<string, string> alternateSlnName = new Dictionary<string, string>();
+
+        private static void reloadAlternateNames()
+        {
+            string alternateSlnConfig = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "RenameVSWindowTitle.txt");
+            if (!File.Exists(alternateSlnConfig))
+            {
+                try { File.WriteAllText(alternateSlnConfig, "# lines starting with # are comments, others are in form of: alternatename = real-solution-path ", System.Text.Encoding.UTF8 ); } catch { }
+                alternateSlnName.Clear();
+                return;
+            }
+
+            DateTime dt = File.GetLastWriteTime(alternateSlnConfig);
+            if (alternateSlnFileTime==DateTime.MinValue || dt>alternateSlnFileTime)
+            {
+                alternateSlnFileTime=dt;
+                alternateSlnName.Clear();
+                string[] text = File.ReadAllLines(alternateSlnConfig, System.Text.Encoding.UTF8);
+                foreach (string line in text)
+                {
+                    if (line.StartsWith("#"))
+                        continue;
+                    int z = line.IndexOf("=");
+                    if (z==-1) continue;
+                    string name = line.Substring(0, z).Trim();
+                    string sln = line.Substring(z+1).Trim();
+                    if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(sln))
+                        continue;
+                    alternateSlnName.Add(sln.ToLower(), name);
+                }
+
+            }
         }
 
         public static string GetActiveProjectNameOrEmpty() {
@@ -89,54 +150,74 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return name;
         }
 
-        public static string GetGitBranch(string workingDirectory) {
+        public static string GetGitBranch(string workingDirectory)
+        {
             //Create process
-            var pProcess = new System.Diagnostics.Process {
+            using (var pProcess = new System.Diagnostics.Process
+            {
                 StartInfo = {
-                    FileName = "git.exe",
+                    FileName = _GitExePath,
                     Arguments = "symbolic-ref --short -q HEAD", //As per: http://git-blame.blogspot.sg/2013/06/checking-current-branch-programatically.html. Or: "rev-parse --abbrev-ref HEAD"
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
                     WorkingDirectory = workingDirectory
                 }
-            };
+            })
+            {
 
-            //Start the process
-            pProcess.Start();
+                //Start the process
+                pProcess.Start();
 
-            //Get program output
-            var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
+                //Get program output
+                var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
 
-            //Wait for process to finish
-            pProcess.WaitForExit();
-
-            return branchName;
+                //Wait for process to finish
+                pProcess.WaitForExit();
+                return branchName;
+            }
         }
 
-        public static bool IsGitRepository(string workingDirectory) {
+        private const string GitExeName = "git.exe";
+        private static string _GitExePath = GitExeName;
+
+        public static void UpdateGitExePath(string gitDirectory)
+        {
+            if (string.IsNullOrEmpty(gitDirectory))
+            {
+                _GitExePath=GitExeName;
+                return;
+            }
+            _GitExePath=Path.Combine(gitDirectory, GitExeName);
+        }
+
+        public static bool IsGitRepository(string workingDirectory)
+        {
             //Create process
-            var pProcess = new System.Diagnostics.Process {
+            using (var pProcess = new System.Diagnostics.Process
+            {
                 StartInfo = {
-                    FileName = "git.exe",
+                    FileName = _GitExePath,
                     Arguments = "rev-parse --is-inside-work-tree",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
                     WorkingDirectory = workingDirectory
                 }
-            };
+            })
+            {
 
-            //Start the process
-            pProcess.Start();
+                //Start the process
+                pProcess.Start();
 
-            //Get program output
-            var res = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
+                //Get program output
+                var res = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
 
-            //Wait for process to finish
-            pProcess.WaitForExit();
+                //Wait for process to finish
+                pProcess.WaitForExit();
 
-            return res == "true";
+                return res == "true";
+            }
         }
 
         public static bool TryGetActiveProject(DTE2 dte, out Project activeProject) {

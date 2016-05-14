@@ -60,6 +60,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             set { this._PatternIfDocumentButNoSolutionOpen = value; }
         }
 
+        private string _GitDirectory = "";
+
+        [Category("git")]
+        [DisplayName("Git directory")]
+        [Description("Default: Empty. Search windows PATH for git if empty.")]
+        public string GitDirectory {
+            get { return this._GitDirectory; }
+            set { this._GitDirectory = value; }
+        }
+
         private string _PatternIfDesignMode = "[parentPath]\\[solutionName] - [ideName]";
 
         [Category("Patterns")]

@@ -15,7 +15,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 			}
 			finally
 			{
-				base.Dispose(disposing);
+
+                base.Dispose(disposing);
 			}
 		}
 		
