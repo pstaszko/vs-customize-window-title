@@ -57,16 +57,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         [Category("Patterns")]
         [DisplayName("Allow solution-specific settings overrides")]
-        [Description("Default: False. If true, will use settings overrides from any existing 'MySolution.sln.rncfg' file found in the same directory as the MySolution.sln file. The file should contain a valid JSON dictionary. Supported \"key\":valueType are: 'FarthestParentDepth':int, 'ClosestParentDepth':int, 'PatternIfDesignMode':str, 'PatternIfBreakMode':str, 'PatternIfRunningMode':str, 'AppendedString':str. Such overrides will only be loaded once upon opening the solution.")]
+        [Description("Default: False. If true, will use settings overrides from any existing 'MySolution.sln.rncfg' file to be placed in the same directory as the MySolution.sln file. The file should contain a valid JSON dictionary. Supported \"key\":valueType entries: \"FarthestParentDepth\":int, \"ClosestParentDepth\":int, \"PatternIfDesignMode\":str, \"PatternIfBreakMode\":str, \"PatternIfRunningMode\":str, \"AppendedString\":str. Such overrides will only be loaded once upon opening the corresponding solution.")]
         public bool AllowSolutionSettingsOverrides { get; set; } = false;
 
         [Category("Patterns")]
-        [DisplayName("Global solution-specific settings overrides file")]
-        [Description("Default: Empty. Path of an existing file that should contain a JSON array of JSON dictionaries in the same format as defined above. Each dictionary should contain an additional 'SolutionFilePath':str key value pair, specifying to which solution file (full or partial path matching the end of the actual path) each override should be applied. This takes precedence over any .sln.rncfg file that may exist.")]
+        [DisplayName("Global solution-specific settings overrides file path")]
+        [Description("Default: Empty. Path of an existing file that should contain a JSON array of JSON dictionaries in the same format as defined above. Each dictionary should contain an additional \"SolutionFilePath\":str key value pair, specifying to which solution file (full or partial path matching the end of the actual path) each override should be applied. This takes precedence over any corresponding .sln.rncfg file that may exist.")]
         public string GlobalSolutionSettingsOverridesFp { get; set; } = null;
 
-        [Category("git")]
-        [DisplayName("Git directory")]
+        [Category("Git")]
+        [DisplayName("Git binaries directory")]
         [Description("Default: Empty. Search windows PATH for git if empty.")]
         public string GitDirectory { get; set; } = "";
 
