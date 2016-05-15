@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -7,7 +6,6 @@ using System.Text.RegularExpressions;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
-using System.Collections.Generic;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
     public static class Globals {
@@ -25,74 +23,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
         private static int? _VsMajorVersionYear;
-        public static int VsMajorVersionYear {
-            get {
-                return _VsMajorVersionYear ?? (_VsMajorVersionYear = GetYearFromVsMajorVersion(VsMajorVersion)).Value;
-            }
-        }
+        public static int VsMajorVersionYear => _VsMajorVersionYear ?? (_VsMajorVersionYear = GetYearFromVsMajorVersion(VsMajorVersion)).Value;
 
         public static string GetSolutionNameOrEmpty(Solution solution) {
-            return solution == null || string.IsNullOrEmpty(solution.FullName) ? "" : Path.GetFileNameWithoutExtension(solution.FullName);
-        }
-        public static string GetAlternateSolutionNameOrEmpty(Solution solution)
-        {
-            if (solution==null || string.IsNullOrEmpty(solution.FullName))
-                return string.Empty;
-
-            string sln = solution.FullName;
-
-            reloadAlternateNames();
-            string altName;
-            if (alternateSlnName.TryGetValue(sln.ToLower(), out altName))
-                return altName;
-
-            string renamesln = Path.ChangeExtension(sln, ".renamesln");
-            try
-            {
-                string[] text = File.ReadAllLines(renamesln, System.Text.Encoding.UTF8);
-                if (text!=null && text.Length>0)
-                    return text[0]; ;
-            }
-            catch
-            {
-
-            }
-            return GetSolutionNameOrEmpty(solution);
-        }
-
-        static DateTime alternateSlnFileTime = DateTime.MinValue;
-        static Dictionary<string, string> alternateSlnName = new Dictionary<string, string>();
-
-        private static void reloadAlternateNames()
-        {
-            string alternateSlnConfig = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "RenameVSWindowTitle.txt");
-            if (!File.Exists(alternateSlnConfig))
-            {
-                try { File.WriteAllText(alternateSlnConfig, "# lines starting with # are comments, others are in form of: alternatename = real-solution-path ", System.Text.Encoding.UTF8 ); } catch { }
-                alternateSlnName.Clear();
-                return;
-            }
-
-            DateTime dt = File.GetLastWriteTime(alternateSlnConfig);
-            if (alternateSlnFileTime==DateTime.MinValue || dt>alternateSlnFileTime)
-            {
-                alternateSlnFileTime=dt;
-                alternateSlnName.Clear();
-                string[] text = File.ReadAllLines(alternateSlnConfig, System.Text.Encoding.UTF8);
-                foreach (string line in text)
-                {
-                    if (line.StartsWith("#"))
-                        continue;
-                    int z = line.IndexOf("=");
-                    if (z==-1) continue;
-                    string name = line.Substring(0, z).Trim();
-                    string sln = line.Substring(z+1).Trim();
-                    if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(sln))
-                        continue;
-                    alternateSlnName.Add(sln.ToLower(), name);
-                }
-
-            }
+            var sn = solution?.FullName;
+            return string.IsNullOrEmpty(sn) ? "" : Path.GetFileNameWithoutExtension(sn);
         }
 
         public static string GetActiveProjectNameOrEmpty() {
@@ -111,20 +46,21 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
         public static string GetActiveConfigurationNameOrEmpty(Solution solution) {
-            if (solution == null || string.IsNullOrEmpty(solution.FullName)) return "";
+            if (string.IsNullOrEmpty(solution?.FullName)) return "";
             var activeConfig = (SolutionConfiguration2)solution.SolutionBuild.ActiveConfiguration;
             return activeConfig != null ? activeConfig.Name : "";
         }
 
         public static string GetPlatformNameOrEmpty(Solution solution) {
-            if (solution == null || string.IsNullOrEmpty(solution.FullName)) return "";
+            if (string.IsNullOrEmpty(solution?.FullName)) return "";
             var activeConfig = (SolutionConfiguration2)solution.SolutionBuild.ActiveConfiguration;
             return activeConfig != null ? activeConfig.PlatformName : "";
         }
 
         public static string GetGitBranchNameOrEmpty(Solution solution) {
-            if (solution == null || string.IsNullOrEmpty(solution.FullName)) return "";
-            var workingDirectory = new FileInfo(solution.FullName).DirectoryName;
+            var sn = solution?.FullName;
+            if (string.IsNullOrEmpty(sn)) return "";
+            var workingDirectory = new FileInfo(sn).DirectoryName;
             return IsGitRepository(workingDirectory) ? GetGitBranch(workingDirectory) : "";
         }
 
@@ -133,9 +69,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             //if (vce != null && vce.SolutionWorkspace != null) {
             //    return vce.SolutionWorkspace.Name;
             //}  
-            if (solution == null || string.IsNullOrEmpty(solution.FullName)) return "";
+            var sn = solution?.FullName;
+            if (string.IsNullOrEmpty(sn)) return "";
             var name = "";
-            InvokeOnUIThread(() => name = WorkspaceInfoGetter.Instance().GetName(solution.FullName));
+            InvokeOnUIThread(() => name = WorkspaceInfoGetter.Instance().GetName(sn));
             return name;
         }
 
@@ -144,78 +81,56 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             //if (vce != null && vce.SolutionWorkspace != null) {
             //    return vce.SolutionWorkspace.OwnerName;
             //}  
-            if (solution == null || string.IsNullOrEmpty(solution.FullName)) return "";
+            var sn = solution?.FullName;
+            if (string.IsNullOrEmpty(sn)) return "";
             var name = "";
-            InvokeOnUIThread(() => name = WorkspaceInfoGetter.Instance().GetOwner(solution.FullName));
+            InvokeOnUIThread(() => name = WorkspaceInfoGetter.Instance().GetOwner(sn));
             return name;
         }
 
-        public static string GetGitBranch(string workingDirectory)
-        {
-            //Create process
-            using (var pProcess = new System.Diagnostics.Process
-            {
+        public static string GetGitBranch(string workingDirectory) {
+            using (var pProcess = new System.Diagnostics.Process {
                 StartInfo = {
-                    FileName = _GitExePath,
+                    FileName = GitExecFp,
                     Arguments = "symbolic-ref --short -q HEAD", //As per: http://git-blame.blogspot.sg/2013/06/checking-current-branch-programatically.html. Or: "rev-parse --abbrev-ref HEAD"
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
                     WorkingDirectory = workingDirectory
                 }
-            })
-            {
-
-                //Start the process
+            }) {
                 pProcess.Start();
-
-                //Get program output
                 var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
-
-                //Wait for process to finish
                 pProcess.WaitForExit();
                 return branchName;
             }
         }
 
-        private const string GitExeName = "git.exe";
-        private static string _GitExePath = GitExeName;
+        private const string GitExecFn = "git.exe";
+        private static string GitExecFp = GitExecFn;
 
-        public static void UpdateGitExePath(string gitDirectory)
-        {
-            if (string.IsNullOrEmpty(gitDirectory))
-            {
-                _GitExePath=GitExeName;
+        public static void UpdateGitExecFp(string gitDp) {
+            if (string.IsNullOrEmpty(gitDp)) {
+                GitExecFp = GitExecFn;
                 return;
             }
-            _GitExePath=Path.Combine(gitDirectory, GitExeName);
+            GitExecFp = Path.Combine(gitDp, GitExecFn);
         }
 
-        public static bool IsGitRepository(string workingDirectory)
-        {
-            //Create process
-            using (var pProcess = new System.Diagnostics.Process
-            {
+        public static bool IsGitRepository(string workingDirectory) {
+            using (var pProcess = new System.Diagnostics.Process {
                 StartInfo = {
-                    FileName = _GitExePath,
+                    FileName = GitExecFp,
                     Arguments = "rev-parse --is-inside-work-tree",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
                     WorkingDirectory = workingDirectory
                 }
-            })
-            {
-
-                //Start the process
+            }) {
                 pProcess.Start();
-
-                //Get program output
                 var res = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
-
-                //Wait for process to finish
                 pProcess.WaitForExit();
-
                 return res == "true";
             }
         }
@@ -239,16 +154,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         public static void InvokeOnUIThread(Action action) {
             var dispatcher = System.Windows.Application.Current.Dispatcher;
-            if (dispatcher != null) {
-                dispatcher.Invoke(action);
-            }
+            dispatcher?.Invoke(action);
         }
 
         public static void BeginInvokeOnUIThread(Action action) {
             var dispatcher = System.Windows.Application.Current.Dispatcher;
-            if (dispatcher != null) {
-                dispatcher.BeginInvoke(action);
-            }
+            dispatcher?.BeginInvoke(action);
         }
 
         [DllImport("ole32.dll")]

@@ -36,7 +36,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         /// initialization is the Initialize method.
         /// </summary>
         public RenameVSWindowTitle() {
-            Globals.DTE = (DTE2)(GetGlobalService(typeof(DTE)));
+            Globals.DTE = (DTE2)GetGlobalService(typeof(DTE));
             Globals.DTE.Events.DebuggerEvents.OnEnterBreakMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnEnterRunMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnEnterDesignMode += this.OnIdeEvent;
@@ -110,9 +110,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         #endregion
 
-        private OptionPageGrid Settings {
-            get { return ((OptionPageGrid)(this.GetDialogPage(typeof(OptionPageGrid)))); }
-        }
+        private OptionPageGrid Settings => (OptionPageGrid)this.GetDialogPage(typeof(OptionPageGrid));
 
         private string GetIDEName(string str) {
             try {
@@ -126,7 +124,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 if (!m.Success) {
                     m = new Regex(@"^(" + Globals.DTE.Name + ".*)$", RegexOptions.RightToLeft).Match(str);
                 }
-                if ((m.Success) && m.Groups.Count >= 2) {
+                if (m.Success && m.Groups.Count >= 2) {
                     if (m.Groups.Count >= 3) {
                         return m.Groups[2].Captures[0].Value;
                     }
@@ -153,22 +151,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         private string GetVSSolutionName(string str) {
             try {
                 var m = new Regex(@"^(.*)\\(.*) - (" + Globals.DTE.Name + ".*) " + Regex.Escape(this.Settings.AppendedString) + "$", RegexOptions.RightToLeft).Match(str);
-                if ((m.Success) && m.Groups.Count >= 4) {
+                if (m.Success && m.Groups.Count >= 4) {
                     var name = m.Groups[2].Captures[0].Value;
                     var state = this.GetVSState(str);
-                    return name.Substring(0, name.Length - ((string.IsNullOrEmpty(state)) ? 0 : state.Length + 3));
+                    return name.Substring(0, name.Length - (string.IsNullOrEmpty(state) ? 0 : state.Length + 3));
                 }
                 m = new Regex("^(.*) - (" + Globals.DTE.Name + ".*) " + Regex.Escape(this.Settings.AppendedString) + "$", RegexOptions.RightToLeft).Match(str);
-                if ((m.Success) && m.Groups.Count >= 3) {
+                if (m.Success && m.Groups.Count >= 3) {
                     var name = m.Groups[1].Captures[0].Value;
                     var state = this.GetVSState(str);
-                    return name.Substring(0, name.Length - ((string.IsNullOrEmpty(state)) ? 0 : state.Length + 3));
+                    return name.Substring(0, name.Length - (string.IsNullOrEmpty(state) ? 0 : state.Length + 3));
                 }
                 m = new Regex("^(.*) - (" + Globals.DTE.Name + ".*)$", RegexOptions.RightToLeft).Match(str);
-                if ((m.Success) && m.Groups.Count >= 3) {
+                if (m.Success && m.Groups.Count >= 3) {
                     var name = m.Groups[1].Captures[0].Value;
                     var state = this.GetVSState(str);
-                    return name.Substring(0, name.Length - ((string.IsNullOrEmpty(state)) ? 0 : state.Length + 3));
+                    return name.Substring(0, name.Length - (string.IsNullOrEmpty(state) ? 0 : state.Length + 3));
                 }
                 if (this.Settings.EnableDebugMode) {
                     WriteOutput("VSName not found: " + str + ".");
@@ -189,7 +187,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 if (!m.Success) {
                     m = new Regex(@" \((.*)\) - (" + Globals.DTE.Name + ".*)$", RegexOptions.RightToLeft).Match(str);
                 }
-                if ((m.Success) && m.Groups.Count >= 3) {
+                if (m.Success && m.Groups.Count >= 3) {
                     return m.Groups[1].Captures[0].Value;
                 }
                 if (this.Settings.EnableDebugMode) {
@@ -222,58 +220,36 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 return;
             }
             try {
-                var rewrite = false;
+                var useDefaultPattern = true;
                 if (this.Settings.AlwaysRewriteTitles) {
-                    rewrite = true;
+                    useDefaultPattern = false;
                 }
                 else {
                     Globals.VSMultiInstanceInfo info;
                     Globals.GetVSMultiInstanceInfo(out info);
                     if (info.nb_instances_same_solution >= 2) {
-                        rewrite = true;
+                        useDefaultPattern = false;
                     }
                     else {
                         var currentInstance = System.Diagnostics.Process.GetCurrentProcess();
                         var vsInstances = System.Diagnostics.Process.GetProcessesByName("devenv");
-                        if (vsInstances.Count() >= 2) {
+                        if (vsInstances.Length >= 2) {
                             //Check if multiple instances of devenv have identical original names. If so, then rewrite the title of current instance (normally the extension will run on each instance so no need to rewrite them as well). Otherwise do not rewrite the title.
                             //The best would be to get the EnvDTE.DTE object of the other instances, and compare the solution or project names directly instead of relying on window titles (which may be hacked by third party software as well). But using moniker it will only work if they are launched with the same privilege.
                             var currentInstanceName = Path.GetFileNameWithoutExtension(Globals.DTE.Solution.FullName);
-                            if (string.IsNullOrEmpty(currentInstanceName) || ((from vsInstance in vsInstances
-                                      where vsInstance.Id != currentInstance.Id
-                                      select this.GetVSSolutionName(vsInstance.MainWindowTitle)).Any(vsInstanceName => vsInstanceName != null && currentInstanceName == vsInstanceName))) {
-                                rewrite = true;
+                            if (string.IsNullOrEmpty(currentInstanceName) || (from vsInstance in vsInstances
+                                                                              where vsInstance.Id != currentInstance.Id
+                                                                              select this.GetVSSolutionName(vsInstance.MainWindowTitle)).Any(vsInstanceName => vsInstanceName != null && currentInstanceName == vsInstanceName)) {
+                                useDefaultPattern = false;
                             }
                         }
                     }
                 }
-                string pattern;
                 var solution = Globals.DTE.Solution;
-                if (solution == null || solution.FullName == string.Empty) {
-                    var document = Globals.DTE.ActiveDocument;
-                    var window = Globals.DTE.ActiveWindow;
-                    if ((document == null || string.IsNullOrEmpty(document.FullName)) && (window == null || string.IsNullOrEmpty(window.Caption))) {
-                        pattern = Convert.ToString(rewrite ? this.Settings.PatternIfNothingOpen : "[ideName]");
-                    }
-                    else {
-                        pattern = Convert.ToString(rewrite ? this.Settings.PatternIfDocumentButNoSolutionOpen : "[documentName] - [ideName]");
-                    }
-                }
-                else {
-                    if (Globals.DTE.Debugger == null || Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgDesignMode) {
-                        pattern = Convert.ToString(rewrite ? this.Settings.PatternIfDesignMode : "[solutionName] - [ideName]");
-                    }
-                    else if (Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgBreakMode) {
-                        pattern = Convert.ToString(rewrite ? this.Settings.PatternIfBreakMode : "[solutionName] (Debugging) - [ideName]");
-                    }
-                    else if (Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgRunMode) {
-                        pattern = Convert.ToString(rewrite ? this.Settings.PatternIfRunningMode : "[solutionName] (Running) - [ideName]");
-                    }
-                    else {
-                        throw (new Exception("No matching state found"));
-                    }
-                }
-                this.ChangeWindowTitle(this.GetNewTitle(pattern: pattern));
+                var solutionFp = solution?.FullName;
+                Dictionary<string, object> settingsOverride = this.GetSettingsOverride(solutionFp: solutionFp);
+                var pattern = this.GetPattern(solutionFp: solutionFp, useDefault: useDefaultPattern, settingsOverride: settingsOverride);
+                this.ChangeWindowTitle(this.GetNewTitle(solution: solution, pattern: pattern, settingsOverride: settingsOverride));
             }
             catch (Exception ex) {
                 try {
@@ -290,112 +266,166 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        Regex rePattern = new Regex(@"\[([^\]]+)\]", RegexOptions.Multiline);
+        private string GetPattern(string solutionFp, bool useDefault, Dictionary<string, object> settingsOverride) {
+            if (string.IsNullOrEmpty(solutionFp)) {
+                var document = Globals.DTE.ActiveDocument;
+                var window = Globals.DTE.ActiveWindow;
+                if (string.IsNullOrEmpty(document?.FullName) && string.IsNullOrEmpty(window?.Caption)) {
+                    return useDefault ? "[ideName]" : this.Settings.PatternIfNothingOpen;
+                }
+                return useDefault ? "[documentName] - [ideName]" : this.Settings.PatternIfDocumentButNoSolutionOpen;
+            }
+            var designModePattern = "[solutionName] - [ideName]";
+            var breakModePattern = "[solutionName] (Debugging) - [ideName]";
+            var runningModePattern = "[solutionName] (Running) - [ideName]";
+            if (!useDefault) {
+                designModePattern = this.Settings.PatternIfDesignMode;
+                breakModePattern = this.Settings.PatternIfBreakMode;
+                runningModePattern = this.Settings.PatternIfRunningMode;
+                if (settingsOverride != null) {
+                    string v;
+                    if (TryGetSettingValue(settings: settingsOverride, key: "PatternIfDesignMode", value: out v)) {
+                        designModePattern = v;
+                    }
+                    if (TryGetSettingValue(settings: settingsOverride, key: "PatternIfBreakMode", value: out v)) {
+                        breakModePattern = v;
+                    }
+                    if (TryGetSettingValue(settings: settingsOverride, key: "PatternIfRunningMode", value: out v)) {
+                        runningModePattern = v;
+                    }
+                }
+            }
+            if (Globals.DTE.Debugger == null || Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgDesignMode) {
+                return designModePattern;
+            }
+            if (Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgBreakMode) {
+                return breakModePattern;
+            }
+            if (Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgRunMode) {
+                return runningModePattern;
+            }
+            throw new Exception("No matching state found");
+        }
 
-        private string GetNewTitle(string pattern) {
-            var solution = Globals.DTE.Solution;
+        readonly Regex TagRegex = new Regex(@"\[([^\]]+)\]", RegexOptions.Multiline);
+
+        private string GetNewTitle(Solution solution, string pattern, Dictionary<string, object> settingsOverride) {
             var activeDocument = Globals.DTE.ActiveDocument;
             var activeWindow = Globals.DTE.ActiveWindow;
-            if (activeDocument == null && (solution == null || string.IsNullOrEmpty(solution.FullName))) {
+            var solutionFp = solution?.FullName;
+            if (activeDocument == null && string.IsNullOrEmpty(solutionFp)) {
                 var window = Globals.DTE.ActiveWindow;
                 if (window == null || window.Caption == Globals.DTE.MainWindow.Caption) {
                     return this.IDEName;
                 }
             }
-            string path=string.Empty;
-            var parentPath = string.Empty;
+            var path = string.Empty;
 
-            if (solution != null && !string.IsNullOrEmpty(solution.FullName)) {
-                path=solution.FullName;
+            if (!string.IsNullOrEmpty(solutionFp)) {
+                path = solutionFp;
             }
             else if (activeDocument != null) {
-                path=activeDocument.FullName;
+                path = activeDocument.FullName;
             }
 
-            string[] pathparts = SplitPath(path);
+            var pathParts = this.SplitPath(path);
 
-            pattern=rePattern.Replace(pattern, (Match match) =>
-            {
-                string mtext = match.Groups[1].Value;
-                switch (mtext)
-                {
-                case "configurationName": return Globals.GetActiveConfigurationNameOrEmpty(solution) ??  "";
-                case "platformName": return Globals.GetPlatformNameOrEmpty(solution)?? "";
-                case "projectName": return Globals.GetActiveProjectNameOrEmpty()?? "";
-                case "solutionName": return Globals.GetSolutionNameOrEmpty(solution)?? "";
-                case "alternateSolutionName": return Globals.GetAlternateSolutionNameOrEmpty(solution)?? "";
-                case "gitBranchName":
-                    Globals.UpdateGitExePath(this.Settings.GitDirectory); // there is likely a better way to adjust the git path
-                    return Globals.GetGitBranchNameOrEmpty(solution)?? "";
-                case "workspaceName": return Globals.GetWorkspaceNameOrEmpty(solution)?? "";
-                case "workspaceOwnerName": return Globals.GetWorkspaceOwnerNameOrEmpty(solution)?? "";
-                case "documentName": return Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow)?? "";
-                case "vsMajorVersion": return Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture)?? "";
-                case "vsMajorVersionYear": return Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture)?? "";
-                case "ideName": return this.IDEName?? "";
-                case "parentPath":
-
-                    return GetParentPath(pathparts) ?? "";
-                default:
-                    if (mtext.StartsWith("parent"))
-                    {
-                        int n;
-                        if (int.TryParse(mtext.Substring(6 /*length of parent*/), out n))
-                        {
-                            if (n>0 && n<=pathparts.Length)
-                            {
-                                return pathparts[pathparts.Length-n]; // n=1 means direct parent
-                            }
-                            else
-                                return string.Empty;
-
+            pattern = this.TagRegex.Replace(pattern, match => {
+                try {
+                    var tag = match.Groups[1].Value;
+                    try {
+                        switch (tag) {
+                            case "configurationName":
+                                return Globals.GetActiveConfigurationNameOrEmpty(solution) ?? "";
+                            case "platformName":
+                                return Globals.GetPlatformNameOrEmpty(solution) ?? "";
+                            case "projectName":
+                                return Globals.GetActiveProjectNameOrEmpty() ?? "";
+                            case "solutionName":
+                                return Globals.GetSolutionNameOrEmpty(solution) ?? "";
+                            case "gitBranchName":
+                                Globals.UpdateGitExecFp(this.Settings.GitDirectory); // there is likely a better way to adjust the git path
+                                return Globals.GetGitBranchNameOrEmpty(solution) ?? "";
+                            case "workspaceName":
+                                return Globals.GetWorkspaceNameOrEmpty(solution) ?? "";
+                            case "workspaceOwnerName":
+                                return Globals.GetWorkspaceOwnerNameOrEmpty(solution) ?? "";
+                            case "documentName":
+                                return Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow) ?? "";
+                            case "vsMajorVersion":
+                                return Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture);
+                            case "vsMajorVersionYear":
+                                return Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture);
+                            case "ideName":
+                                return this.IDEName ?? "";
+                            case "parentPath":
+                                var closestParentDepth = this.Settings.ClosestParentDepth;
+                                var farthestParentDepth = this.Settings.FarthestParentDepth;
+                                if (settingsOverride != null) {
+                                    int v;
+                                    if (TryGetSettingValue(settings: settingsOverride, key: "ClosestParentDepth", value: out v)) {
+                                        closestParentDepth = v;
+                                    }
+                                    if (TryGetSettingValue(settings: settingsOverride, key: "FarthestParentDepth", value: out v)) {
+                                        farthestParentDepth = v;
+                                    }
+                                }
+                                return GetParentPath(pathParts, closestParentDepth: closestParentDepth, farthestParentDepth: farthestParentDepth) ?? "";
+                            default:
+                                if (tag.StartsWith("parent")) {
+                                    int n;
+                                    if (int.TryParse(tag.Substring(6 /*length of parent*/), out n)) {
+                                        if (n >= 0 && n <= pathParts.Length) {
+                                            return pathParts[pathParts.Length - n - 1]; // n=1 means direct parent
+                                        }
+                                        return string.Empty;
+                                    }
+                                    return "[invalid:" + tag + "]";
+                                }
+                                break;
                         }
-                        else
-                            return "[INVALID-PATTERN]";
+                        return match.Value;
                     }
-                    break;
+                    catch (Exception ex) {
+                        if (this.Settings.EnableDebugMode) {
+                            WriteOutput("ReplaceTag (" + tag + ") failed: " + ex);
+                        }
+                        throw;
+                    }
                 }
-                return match.Value;
+                catch {
+                    return "";
+                }
             });
-            return pattern + " " + this.Settings.AppendedString;
+            var appendedString = this.Settings.AppendedString;
+            if (settingsOverride != null) {
+                string v;
+                if (TryGetSettingValue(settings: settingsOverride, key: "AppendedString", value: out v)) {
+                    appendedString = v;
+                }
+            }
+            return pattern + " " + appendedString;
         }
 
-        private string[] SplitPath(string path)
-        {
-            if (string.IsNullOrEmpty(path))
+        private string[] SplitPath(string path) {
+            if (string.IsNullOrEmpty(path)) {
                 return new string[0];
+            }
 
-            string root = Path.GetPathRoot(path);
-            List<string> parts = new List<string>();
-            if (!string.IsNullOrEmpty(root))
+            var root = Path.GetPathRoot(path);
+            var parts = new List<string>();
+            if (!string.IsNullOrEmpty(root)) {
                 parts.Add(root);
-            parts.AddRange(path.Substring(root.Length).Split(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries));
-            if(parts.Count>0) // =0 should not happen
-                parts.RemoveAt(parts.Count-1);
+            }
+            parts.AddRange(path.Substring(root.Length).Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries));
             return parts.ToArray();
         }
 
-
-        private string GetParentPath(string[] parents) {
-            //TODO: handle drive letter better if (path1.Substring(path1.Length - 1, 1) == ":") path1 += System.IO.Path.DirectorySeparatorChar; http://stackoverflow.com/questions/1527942/why-path-combine-doesnt-add-the-path-directoryseparatorchar-after-the-drive-des?rq=1
-            return Path.Combine(parents.Reverse().Skip(this.Settings.ClosestParentDepth - 1)
-                .Take(this.Settings.FarthestParentDepth - this.Settings.ClosestParentDepth + 1)
+        private static string GetParentPath(string[] parents, int closestParentDepth, int farthestParentDepth) {
+            return Path.Combine(parents.Reverse().Skip(closestParentDepth)
+                .Take(farthestParentDepth - closestParentDepth + 1)
                 .Reverse()
                 .ToArray());
-        }
-
-        private string ReplaceParentTags(string pattern, string[] parents) {
-            var matches = new Regex("\\[parent([0-9]+)\\]").Matches(pattern);
-            foreach (Match m in matches) {
-                if (!m.Success) {
-                    continue;
-                }
-                var depth = int.Parse(m.Groups[1].Captures[0].Value);
-                if (depth <= parents.Length) {
-                    pattern = pattern.Replace("[parent" + depth.ToString(CultureInfo.InvariantCulture) + "]", parents[depth]);
-                }
-            }
-            return pattern;
         }
 
         private void ChangeWindowTitle(string title) {
@@ -417,6 +447,101 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     WriteOutput("ChangeWindowTitle failed: " + ex);
                 }
             }
+        }
+
+        private static readonly System.Web.Script.Serialization.JavaScriptSerializer JsonSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+        private readonly Dictionary<string, Dictionary<string, object>> SettingsOverridesCache = new Dictionary<string, Dictionary<string, object>>();
+
+        private Dictionary<string, object> GetSettingsOverride(string solutionFp) {
+            if (string.IsNullOrWhiteSpace(solutionFp) || !this.Settings.AllowSolutionSettingsOverrides && (string.IsNullOrWhiteSpace(this.Settings.GlobalSolutionSettingsOverridesFp) || !File.Exists(this.Settings.GlobalSolutionSettingsOverridesFp))) {
+                return null;
+            }
+            Dictionary<string, object> settings;
+            //this.SettingsOverridesCache.Clear();
+            if (this.SettingsOverridesCache.TryGetValue(solutionFp, out settings)) {
+                return settings;
+            }
+            try {
+                if (File.Exists(solutionFp)) {
+                    if (!string.IsNullOrWhiteSpace(this.Settings.GlobalSolutionSettingsOverridesFp) && File.Exists(this.Settings.GlobalSolutionSettingsOverridesFp)) {
+                        var lines = JsonSerializer.Deserialize<Dictionary<string, object>[]>(File.ReadAllText(this.Settings.GlobalSolutionSettingsOverridesFp));
+                        foreach (var line in lines) {
+                            object sln;
+                            if (line.TryGetValue("SolutionFilePath", out sln) && solutionFp.EndsWith(sln as string ?? "")) {
+                                this.SettingsOverridesCache.Add(solutionFp, line);
+                                return line;
+                            }
+                        }
+                    }
+                    var fp = solutionFp + ".rncfg";
+                    if (this.Settings.AllowSolutionSettingsOverrides && File.Exists(fp)) {
+                        settings = JsonSerializer.Deserialize<Dictionary<string, object>>(File.ReadAllText(fp));
+                        this.SettingsOverridesCache.Add(solutionFp, settings);
+                        return settings;
+                    }
+                }
+            }
+            catch (Exception ex) {
+                if (this.Settings.EnableDebugMode) {
+                    WriteOutput("Failed fetching settings overrides: " + ex);
+                }
+            }
+            this.SettingsOverridesCache.Add(solutionFp, null);
+            return null;
+        }
+
+        private Dictionary<string, object> GetSettingsOverrideOld(string solutionFp) {
+            if (string.IsNullOrWhiteSpace(solutionFp) || !this.Settings.AllowSolutionSettingsOverrides && (string.IsNullOrWhiteSpace(this.Settings.GlobalSolutionSettingsOverridesFp) || !File.Exists(this.Settings.GlobalSolutionSettingsOverridesFp))) {
+                return null;
+            }
+            Dictionary<string, object> settings;
+            if (this.SettingsOverridesCache.TryGetValue(solutionFp, out settings)) {
+                return settings;
+            }
+            try {
+                if (File.Exists(solutionFp)) {
+                    var fp = solutionFp + ".rncfg";
+                    if (File.Exists(this.Settings.GlobalSolutionSettingsOverridesFp)) {
+                        var lines = File.ReadAllLines(this.Settings.GlobalSolutionSettingsOverridesFp);
+                        foreach (var line in lines) {
+                            settings = (Dictionary<string, object>)JsonSerializer.DeserializeObject(line);
+                            object sln;
+                            if (settings.TryGetValue("SolutionFilePath", out sln) && solutionFp.EndsWith(sln as string ?? "")) {
+                                this.SettingsOverridesCache.Add(solutionFp, settings);
+                                return settings;
+                            }
+                        }
+                    }
+                    if (File.Exists(fp)) {
+                        settings = (Dictionary<string, object>)JsonSerializer.DeserializeObject(File.ReadAllText(fp));
+                        this.SettingsOverridesCache.Add(solutionFp, settings);
+                        return settings;
+                    }
+                }
+            }
+            catch (Exception ex) {
+                if (this.Settings.EnableDebugMode) {
+                    WriteOutput("Failed fetching settings overrides: " + ex);
+                }
+            }
+            this.SettingsOverridesCache.Add(solutionFp, null);
+            return null;
+        }
+
+        private static bool TryGetSettingValue<T>(Dictionary<string, object> settings, string key, out T value) {
+            value = default(T);
+            try {
+                object v;
+                if (settings.TryGetValue(key, out v)) {
+                    value = (T)v;
+                    return true;
+                }
+            }
+            catch {
+                // do nothing
+            }
+            return false;
         }
 
         private static void WriteOutput(string str) {

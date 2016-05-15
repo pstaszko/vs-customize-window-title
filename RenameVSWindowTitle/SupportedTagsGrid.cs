@@ -34,7 +34,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 html += "<body oncontextmenu=\'return false;\'><h1>Supported tags (clicking on a tag will copy it to the clipboard)</h1><table><thead><tr><th>Tag</th><th>Description</th></tr></thead><tbody>";
                 foreach (var tag in this.SupportedTags)
                 {
-                    string LocalizedDescription = global::ErwinMayerLabs.RenameVSWindowTitle.Resources.ResourceManager.GetString("tag_"+tag);
+                    string LocalizedDescription = Resources.ResourceManager.GetString("tag_"+tag);
 
                     html += "<tr><td onclick=\'selectText(this)\'><strong>[" + tag+ "]</strong></td>";
                     html += "<td>" + LocalizedDescription + "</td></tr>";
