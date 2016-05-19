@@ -11,6 +11,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Collections.Generic;
+using System.Xml;
 
 // The PackageRegistration attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class
 // is a package.
@@ -41,9 +42,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             Globals.DTE.Events.DebuggerEvents.OnEnterRunMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnEnterDesignMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnContextChanged += this.OnIdeEvent;
-            Globals.DTE.Events.SolutionEvents.AfterClosing += this.OnIdeEvent;
-            Globals.DTE.Events.SolutionEvents.Opened += this.OnIdeEvent;
-            Globals.DTE.Events.SolutionEvents.Renamed += this.OnIdeEvent;
+            Globals.DTE.Events.SolutionEvents.AfterClosing += this.OnIdeSolutionEvent;
+            Globals.DTE.Events.SolutionEvents.Opened += this.OnIdeSolutionEvent;
+            Globals.DTE.Events.SolutionEvents.Renamed += this.OnIdeSolutionEvent;
             Globals.DTE.Events.WindowEvents.WindowCreated += this.OnIdeEvent;
             Globals.DTE.Events.WindowEvents.WindowClosing += this.OnIdeEvent;
             Globals.DTE.Events.WindowEvents.WindowActivated += this.OnIdeEvent;
@@ -63,7 +64,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.OnIdeEvent();
         }
 
-        private void OnIdeEvent(string oldname) {
+        private void OnIdeSolutionEvent(string oldname) {
             this.OnIdeEvent();
         }
 
@@ -86,6 +87,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.UpdateWindowTitleAsync(this, EventArgs.Empty);
         }
 
+        // clear settings cache and update
+        private void OnIdeSolutionEvent() {
+            ClearSettingsCache();
+            OnIdeEvent();
+        }
+
         ///'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         // Overriden Package Implementation
 
@@ -97,11 +104,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         /// </summary>
         protected override void Initialize() {
             base.Initialize();
+
+            GlobalSettings.SettingsCleared = this.OnSettingsCleared;
+            SolutionSettings.SettingsCleared = this.OnSettingsCleared;
+
             //Every 5 seconds, we check the window titles in case we missed an event.
             this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = 5000 };
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
         }
+
 
         protected override void Dispose(bool disposing) {
             this.ResetTitleTimer.Dispose();
@@ -110,7 +122,26 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         #endregion
 
-        private OptionPageGrid Settings => (OptionPageGrid)this.GetDialogPage(typeof(OptionPageGrid));
+
+        private OptionPageGrid _SettingsPage = null;
+
+        private OptionPageGrid Settings
+        {
+            get
+            {
+                if (_SettingsPage==null)
+                {
+                    _SettingsPage=this.GetDialogPage(typeof(OptionPageGrid)) as OptionPageGrid;  // as is faster than cast
+                    _SettingsPage.SettingsChanged+= _SettingsPage_SettingsChanged;
+                }
+                return _SettingsPage;
+            }
+        }
+
+        private void _SettingsPage_SettingsChanged(object sender, EventArgs e)
+        {
+            this.OnIdeSolutionEvent();
+        }
 
         private string GetIDEName(string str) {
             try {
@@ -247,9 +278,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 }
                 var solution = Globals.DTE.Solution;
                 var solutionFp = solution?.FullName;
-                Dictionary<string, object> settingsOverride = this.GetSettingsOverride(solutionFp: solutionFp);
-                var pattern = this.GetPattern(solutionFp: solutionFp, useDefault: useDefaultPattern, settingsOverride: settingsOverride);
-                this.ChangeWindowTitle(this.GetNewTitle(solution: solution, pattern: pattern, settingsOverride: settingsOverride));
+
+                SettingsSet config = GetSettings(solutionFp);
+
+                var pattern = this.GetPattern(solutionFp, useDefaultPattern, config);
+                this.ChangeWindowTitle(this.GetNewTitle(solution, pattern, config));
             }
             catch (Exception ex) {
                 try {
@@ -266,50 +299,130 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private string GetPattern(string solutionFp, bool useDefault, Dictionary<string, object> settingsOverride) {
+        SettingsWatcher SolutionSettings = new SettingsWatcher(false);
+        SettingsWatcher GlobalSettings = new SettingsWatcher(true);
+        SettingsSet CurrentConfig;
+
+        private void ClearSettingsCache()
+        {
+            if (this.Settings.EnableDebugMode) WriteOutput("ClearSettingsCache.");
+
+            SolutionSettings.Clear();
+            GlobalSettings.Clear();
+            CurrentConfig = null;
+        }
+
+        private void OnSettingsCleared()
+        {
+            CurrentConfig=null; // force reload
+        }
+
+
+        private SettingsSet GetSettings(string solutionFp)
+        {
+            GlobalSettings.Update(this.Settings.GlobalSolutionSettingsOverridesFp);
+            SolutionSettings.Update(string.IsNullOrEmpty(solutionFp) ? null : solutionFp+Globals.SolutionConfigExt);
+
+            // config already loaded, use cache
+            if (CurrentConfig!=null && CurrentConfig.SolutionFilePath==solutionFp)
+            {
+                return CurrentConfig;
+            }
+
+            // init values from settings
+            CurrentConfig = new SettingsSet
+            {
+                ClosestParentDepth= this.Settings.ClosestParentDepth,
+                FarthestParentDepth=this.Settings.FarthestParentDepth,
+                AppendedString=this.Settings.AppendedString,
+                PatternIfBreakMode = this.Settings.PatternIfBreakMode,
+                PatternIfDesignMode= this.Settings.PatternIfDesignMode,
+                PatternIfRunningMode= this.Settings.PatternIfRunningMode,
+            };
+            if (string.IsNullOrEmpty(solutionFp))
+                return CurrentConfig;
+
+            CurrentConfig.SolutionFilePath=solutionFp;
+            CurrentConfig.SolutionFileName=Path.GetFileName(solutionFp);
+            CurrentConfig.SolutionName= Path.GetFileNameWithoutExtension(solutionFp);
+
+            // no override allowed, return
+            if (!this.Settings.AllowSolutionSettingsOverrides)
+                return CurrentConfig;
+
+            // check global override file
+            if (GlobalSettings.TryUpdate(CurrentConfig))
+            {
+                return CurrentConfig;
+            }
+
+            // check solution override file
+            if (SolutionSettings.TryUpdate(CurrentConfig))
+            {
+                return CurrentConfig;
+            }
+            return CurrentConfig;
+        }
+
+        private static bool isSameFile(ref DateTime? writeTime, string path)
+        {
+            DateTime? newTime;
+            if (string.IsNullOrEmpty(path))
+                newTime=null;
+            else
+            {
+                var fi = new FileInfo(path);
+                if (fi.Exists)
+                    newTime=fi.LastWriteTimeUtc;
+                else
+                    newTime=null;
+            }
+            if (writeTime!=newTime)
+            {
+                writeTime=newTime;
+                return false;
+            }
+            return true;
+        }
+
+        const string DefaultDesignModePattern = "[solutionName] - [ideName]";
+        const string DefaultBreakModePattern = "[solutionName] (Debugging) - [ideName]";
+        const string DefaultRunningModePattern = "[solutionName] (Running) - [ideName]";
+        const string DefaultPatternIfDocumentButNoSolutionOpen = "[documentName] - [ideName]";
+        const string DefaultPatternIfNothingOpen = "[ideName]";
+
+        private string GetPattern(string solutionFp, bool useDefault, SettingsSet settingsOverride) {
             if (string.IsNullOrEmpty(solutionFp)) {
                 var document = Globals.DTE.ActiveDocument;
                 var window = Globals.DTE.ActiveWindow;
                 if (string.IsNullOrEmpty(document?.FullName) && string.IsNullOrEmpty(window?.Caption)) {
-                    return useDefault ? "[ideName]" : this.Settings.PatternIfNothingOpen;
+                    return useDefault ? DefaultPatternIfNothingOpen : this.Settings.PatternIfNothingOpen;
                 }
-                return useDefault ? "[documentName] - [ideName]" : this.Settings.PatternIfDocumentButNoSolutionOpen;
+                return useDefault ? DefaultPatternIfDocumentButNoSolutionOpen : this.Settings.PatternIfDocumentButNoSolutionOpen;
             }
-            var designModePattern = "[solutionName] - [ideName]";
-            var breakModePattern = "[solutionName] (Debugging) - [ideName]";
-            var runningModePattern = "[solutionName] (Running) - [ideName]";
+            string designModePattern = null;
+            string breakModePattern = null;
+            string runningModePattern = null;
             if (!useDefault) {
-                designModePattern = this.Settings.PatternIfDesignMode;
-                breakModePattern = this.Settings.PatternIfBreakMode;
-                runningModePattern = this.Settings.PatternIfRunningMode;
-                if (settingsOverride != null) {
-                    string v;
-                    if (TryGetSettingValue(settings: settingsOverride, key: "PatternIfDesignMode", value: out v)) {
-                        designModePattern = v;
-                    }
-                    if (TryGetSettingValue(settings: settingsOverride, key: "PatternIfBreakMode", value: out v)) {
-                        breakModePattern = v;
-                    }
-                    if (TryGetSettingValue(settings: settingsOverride, key: "PatternIfRunningMode", value: out v)) {
-                        runningModePattern = v;
-                    }
-                }
+                designModePattern = settingsOverride?.PatternIfDesignMode ?? this.Settings.PatternIfDesignMode;
+                breakModePattern = settingsOverride?.PatternIfBreakMode ?? this.Settings.PatternIfBreakMode;
+                runningModePattern = settingsOverride?.PatternIfRunningMode ?? this.Settings.PatternIfRunningMode;
             }
             if (Globals.DTE.Debugger == null || Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgDesignMode) {
-                return designModePattern;
+                return designModePattern ?? DefaultDesignModePattern;
             }
             if (Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgBreakMode) {
-                return breakModePattern;
+                return breakModePattern ?? DefaultBreakModePattern;
             }
             if (Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgRunMode) {
-                return runningModePattern;
+                return runningModePattern ?? DefaultRunningModePattern;
             }
             throw new Exception("No matching state found");
         }
 
         readonly Regex TagRegex = new Regex(@"\[([^\]]+)\]", RegexOptions.Multiline);
 
-        private string GetNewTitle(Solution solution, string pattern, Dictionary<string, object> settingsOverride) {
+        private string GetNewTitle(Solution solution, string pattern, SettingsSet cfg) {
             var activeDocument = Globals.DTE.ActiveDocument;
             var activeWindow = Globals.DTE.ActiveWindow;
             var solutionFp = solution?.FullName;
@@ -335,54 +448,43 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     var tag = match.Groups[1].Value;
                     try {
                         switch (tag) {
-                            case "configurationName":
-                                return Globals.GetActiveConfigurationNameOrEmpty(solution) ?? "";
-                            case "platformName":
-                                return Globals.GetPlatformNameOrEmpty(solution) ?? "";
-                            case "projectName":
-                                return Globals.GetActiveProjectNameOrEmpty() ?? "";
-                            case "solutionName":
-                                return Globals.GetSolutionNameOrEmpty(solution) ?? "";
-                            case "gitBranchName":
-                                Globals.UpdateGitExecFp(this.Settings.GitDirectory); // there is likely a better way to adjust the git path
-                                return Globals.GetGitBranchNameOrEmpty(solution) ?? "";
-                            case "workspaceName":
-                                return Globals.GetWorkspaceNameOrEmpty(solution) ?? "";
-                            case "workspaceOwnerName":
-                                return Globals.GetWorkspaceOwnerNameOrEmpty(solution) ?? "";
-                            case "documentName":
-                                return Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow) ?? "";
-                            case "vsMajorVersion":
-                                return Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture);
-                            case "vsMajorVersionYear":
-                                return Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture);
-                            case "ideName":
-                                return this.IDEName ?? "";
-                            case "parentPath":
-                                var closestParentDepth = this.Settings.ClosestParentDepth;
-                                var farthestParentDepth = this.Settings.FarthestParentDepth;
-                                if (settingsOverride != null) {
-                                    int v;
-                                    if (TryGetSettingValue(settings: settingsOverride, key: "ClosestParentDepth", value: out v)) {
-                                        closestParentDepth = v;
+                        case "configurationName":
+                            return Globals.GetActiveConfigurationNameOrEmpty(solution) ?? string.Empty;
+                        case "platformName":
+                            return Globals.GetPlatformNameOrEmpty(solution) ?? string.Empty;
+                        case "projectName":
+                            return Globals.GetActiveProjectNameOrEmpty() ?? string.Empty;
+                        case "solutionName":
+                            return cfg.SolutionName ?? string.Empty;
+                         case "gitBranchName":
+                            Globals.UpdateGitExecFp(this.Settings.GitDirectory); // there is likely a better way to adjust the git path
+                            return Globals.GetGitBranchNameOrEmpty(solution) ?? string.Empty;
+                        case "workspaceName":
+                            return Globals.GetWorkspaceNameOrEmpty(solution) ?? string.Empty;
+                        case "workspaceOwnerName":
+                            return Globals.GetWorkspaceOwnerNameOrEmpty(solution) ?? string.Empty;
+                        case "documentName":
+                            return Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow) ?? string.Empty;
+                        case "vsMajorVersion":
+                            return Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture);
+                        case "vsMajorVersionYear":
+                            return Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture);
+                        case "ideName":
+                            return this.IDEName ?? string.Empty;
+                        case "parentPath":
+                            return GetParentPath(pathParts, cfg?.ClosestParentDepth ?? this.Settings.ClosestParentDepth, cfg?.FarthestParentDepth ?? this.Settings.FarthestParentDepth) ?? string.Empty;
+                        default:
+                            if (tag.StartsWith("parent")) {
+                                int n;
+                                if (int.TryParse(tag.Substring(6 /*length of parent*/), out n)) {
+                                    if (n >= 0 && n <= pathParts.Length) {
+                                        return pathParts[pathParts.Length - n - 1]; // n=1 means direct parent
                                     }
-                                    if (TryGetSettingValue(settings: settingsOverride, key: "FarthestParentDepth", value: out v)) {
-                                        farthestParentDepth = v;
-                                    }
+                                    return string.Empty;
                                 }
-                                return GetParentPath(pathParts, closestParentDepth: closestParentDepth, farthestParentDepth: farthestParentDepth) ?? "";
-                            default:
-                                if (tag.StartsWith("parent")) {
-                                    int n;
-                                    if (int.TryParse(tag.Substring(6 /*length of parent*/), out n)) {
-                                        if (n >= 0 && n <= pathParts.Length) {
-                                            return pathParts[pathParts.Length - n - 1]; // n=1 means direct parent
-                                        }
-                                        return string.Empty;
-                                    }
-                                    return "[invalid:" + tag + "]";
-                                }
-                                break;
+                                return "[invalid:" + tag + "]";
+                            }
+                            break;
                         }
                         return match.Value;
                     }
@@ -397,13 +499,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     return "";
                 }
             });
-            var appendedString = this.Settings.AppendedString;
-            if (settingsOverride != null) {
-                string v;
-                if (TryGetSettingValue(settings: settingsOverride, key: "AppendedString", value: out v)) {
-                    appendedString = v;
-                }
-            }
+            string appendedString = cfg?.AppendedString ?? this.Settings.AppendedString;
             return pattern + " " + appendedString;
         }
 
@@ -449,102 +545,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private static readonly System.Web.Script.Serialization.JavaScriptSerializer JsonSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-        private readonly Dictionary<string, Dictionary<string, object>> SettingsOverridesCache = new Dictionary<string, Dictionary<string, object>>();
-
-        private Dictionary<string, object> GetSettingsOverride(string solutionFp) {
-            if (string.IsNullOrWhiteSpace(solutionFp) || !this.Settings.AllowSolutionSettingsOverrides && (string.IsNullOrWhiteSpace(this.Settings.GlobalSolutionSettingsOverridesFp) || !File.Exists(this.Settings.GlobalSolutionSettingsOverridesFp))) {
-                return null;
-            }
-            Dictionary<string, object> settings;
-            //this.SettingsOverridesCache.Clear();
-            if (this.SettingsOverridesCache.TryGetValue(solutionFp, out settings)) {
-                return settings;
-            }
-            try {
-                if (File.Exists(solutionFp)) {
-                    if (!string.IsNullOrWhiteSpace(this.Settings.GlobalSolutionSettingsOverridesFp) && File.Exists(this.Settings.GlobalSolutionSettingsOverridesFp)) {
-                        var lines = JsonSerializer.Deserialize<Dictionary<string, object>[]>(File.ReadAllText(this.Settings.GlobalSolutionSettingsOverridesFp));
-                        foreach (var line in lines) {
-                            object sln;
-                            if (line.TryGetValue("SolutionFilePath", out sln) && solutionFp.EndsWith(sln as string ?? "")) {
-                                this.SettingsOverridesCache.Add(solutionFp, line);
-                                return line;
-                            }
-                        }
-                    }
-                    var fp = solutionFp + ".rncfg";
-                    if (this.Settings.AllowSolutionSettingsOverrides && File.Exists(fp)) {
-                        settings = JsonSerializer.Deserialize<Dictionary<string, object>>(File.ReadAllText(fp));
-                        this.SettingsOverridesCache.Add(solutionFp, settings);
-                        return settings;
-                    }
-                }
-            }
-            catch (Exception ex) {
-                if (this.Settings.EnableDebugMode) {
-                    WriteOutput("Failed fetching settings overrides: " + ex);
-                }
-            }
-            this.SettingsOverridesCache.Add(solutionFp, null);
-            return null;
-        }
-
-        private Dictionary<string, object> GetSettingsOverrideOld(string solutionFp) {
-            if (string.IsNullOrWhiteSpace(solutionFp) || !this.Settings.AllowSolutionSettingsOverrides && (string.IsNullOrWhiteSpace(this.Settings.GlobalSolutionSettingsOverridesFp) || !File.Exists(this.Settings.GlobalSolutionSettingsOverridesFp))) {
-                return null;
-            }
-            Dictionary<string, object> settings;
-            if (this.SettingsOverridesCache.TryGetValue(solutionFp, out settings)) {
-                return settings;
-            }
-            try {
-                if (File.Exists(solutionFp)) {
-                    var fp = solutionFp + ".rncfg";
-                    if (File.Exists(this.Settings.GlobalSolutionSettingsOverridesFp)) {
-                        var lines = File.ReadAllLines(this.Settings.GlobalSolutionSettingsOverridesFp);
-                        foreach (var line in lines) {
-                            settings = (Dictionary<string, object>)JsonSerializer.DeserializeObject(line);
-                            object sln;
-                            if (settings.TryGetValue("SolutionFilePath", out sln) && solutionFp.EndsWith(sln as string ?? "")) {
-                                this.SettingsOverridesCache.Add(solutionFp, settings);
-                                return settings;
-                            }
-                        }
-                    }
-                    if (File.Exists(fp)) {
-                        settings = (Dictionary<string, object>)JsonSerializer.DeserializeObject(File.ReadAllText(fp));
-                        this.SettingsOverridesCache.Add(solutionFp, settings);
-                        return settings;
-                    }
-                }
-            }
-            catch (Exception ex) {
-                if (this.Settings.EnableDebugMode) {
-                    WriteOutput("Failed fetching settings overrides: " + ex);
-                }
-            }
-            this.SettingsOverridesCache.Add(solutionFp, null);
-            return null;
-        }
-
-        private static bool TryGetSettingValue<T>(Dictionary<string, object> settings, string key, out T value) {
-            value = default(T);
-            try {
-                object v;
-                if (settings.TryGetValue(key, out v)) {
-                    value = (T)v;
-                    return true;
-                }
-            }
-            catch {
-                // do nothing
-            }
-            return false;
-        }
-
-        private static void WriteOutput(string str) {
+        private static void WriteOutput(string str, params object[] args) {
             try {
                 Globals.InvokeOnUIThread(() => {
                     var outWindow = GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
@@ -553,7 +554,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     if (outWindow != null) {
                         IVsOutputWindowPane generalPane;
                         outWindow.GetPane(ref generalPaneGuid, out generalPane);
-                        generalPane.OutputString("RenameVSWindowTitle: " + str + "\r\n");
+                        generalPane.OutputString("RenameVSWindowTitle: " + string.Format(str,args) + "\r\n");
                         generalPane.Activate();
                     }
                 });

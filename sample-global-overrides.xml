@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RenameVSWindowTitle>
+    <SettingsSet
+    Path="C:\xtt\vs-rename\Backup - Kopie\RenameVSWindowTitle.sln"
+    AlternateSolutionName="Tschakka"
+    />
+    <SettingsSet
+    Path="Info.sln"
+    AlternateSolutionName="WinTschakka Blub"
+    />    
+    <SettingsSet
+    Path="C:\My\VS14\WinInfo\WinInfo.sln"
+    AlternateSolutionName="WinTschakka 汉语/漢語"
+    />
+</RenameVSWindowTitle>

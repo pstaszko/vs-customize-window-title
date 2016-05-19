@@ -116,15 +116,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alternate solution name.
-        /// </summary>
-        internal static string tag_alternateSolutionName {
-            get {
-                return ResourceManager.GetString("tag_alternateSolutionName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Current configuration name (e.g. Release)..
         /// </summary>
         internal static string tag_configurationName {

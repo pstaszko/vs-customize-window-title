@@ -11,6 +11,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
     public static class Globals {
         public static DTE2 DTE;
 
+        public const string SolutionConfigExt=".rnxcfg";
+        public const string TagPath = "Path";
+        public const string TagSolutionName = "SolutionName";
+        public const string TagClosestParentDepth = "ClosestParentDepth";
+        public const string TagFarthestParentDepth = "FarthestParentDepth";
+        public const string TagAppendedString = "AppendedString";
+        public const string TagPatternIfRunningMode = "PatternIfRunningMode";
+        public const string TagPatternIfBreakMode = "PatternIfBreakMode";
+        public const string TagPatternIfDesignMode = "PatternIfDesignMode";
+
         private static int? _VsMajorVersion;
         public static int VsMajorVersion {
             get {
@@ -24,11 +34,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         private static int? _VsMajorVersionYear;
         public static int VsMajorVersionYear => _VsMajorVersionYear ?? (_VsMajorVersionYear = GetYearFromVsMajorVersion(VsMajorVersion)).Value;
-
-        public static string GetSolutionNameOrEmpty(Solution solution) {
-            var sn = solution?.FullName;
-            return string.IsNullOrEmpty(sn) ? "" : Path.GetFileNameWithoutExtension(sn);
-        }
 
         public static string GetActiveProjectNameOrEmpty() {
             Project project;
