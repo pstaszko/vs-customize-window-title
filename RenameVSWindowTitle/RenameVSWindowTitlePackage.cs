@@ -26,6 +26,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
     public sealed class RenameVSWindowTitle : Package {
         private string IDEName;
 
+        public static RenameVSWindowTitle CurrentPackage;
+
         private System.Windows.Forms.Timer ResetTitleTimer;
         //Private VersionSpecificAssembly As Assembly
 
@@ -37,6 +39,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         /// initialization is the Initialize method.
         /// </summary>
         public RenameVSWindowTitle() {
+            CurrentPackage=this;
             Globals.DTE = (DTE2)GetGlobalService(typeof(DTE));
             Globals.DTE.Events.DebuggerEvents.OnEnterBreakMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnEnterRunMode += this.OnIdeEvent;
@@ -104,6 +107,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         /// </summary>
         protected override void Initialize() {
             base.Initialize();
+            CurrentPackage=this;
 
             GlobalSettings.SettingsCleared = this.OnSettingsCleared;
             SolutionSettings.SettingsCleared = this.OnSettingsCleared;
@@ -125,7 +129,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         private OptionPageGrid _SettingsPage = null;
 
-        private OptionPageGrid Settings
+        internal OptionPageGrid Settings
         {
             get
             {
@@ -318,7 +322,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
 
-        private SettingsSet GetSettings(string solutionFp)
+        internal SettingsSet GetSettings(string solutionFp)
         {
             GlobalSettings.Update(this.Settings.GlobalSolutionSettingsOverridesFp);
             SolutionSettings.Update(string.IsNullOrEmpty(solutionFp) ? null : solutionFp+Globals.SolutionConfigExt);
@@ -385,11 +389,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return true;
         }
 
-        const string DefaultDesignModePattern = "[solutionName] - [ideName]";
-        const string DefaultBreakModePattern = "[solutionName] (Debugging) - [ideName]";
-        const string DefaultRunningModePattern = "[solutionName] (Running) - [ideName]";
-        const string DefaultPatternIfDocumentButNoSolutionOpen = "[documentName] - [ideName]";
-        const string DefaultPatternIfNothingOpen = "[ideName]";
+        public const string DefaultDesignModePattern = "[solutionName] - [ideName]";
+        public const string DefaultBreakModePattern = "[solutionName] (Debugging) - [ideName]";
+        public const string DefaultRunningModePattern = "[solutionName] (Running) - [ideName]";
+        public const string DefaultPatternIfDocumentButNoSolutionOpen = "[documentName] - [ideName]";
+        public const string DefaultPatternIfNothingOpen = "[ideName]";
+        public const string DefaultAppendedString = "*";
+        public const int DefaultClosestParentDepth = 1;
+        public const int DefaultFarthestParentDepth = 1;
 
         private string GetPattern(string solutionFp, bool useDefault, SettingsSet settingsOverride) {
             if (string.IsNullOrEmpty(solutionFp)) {

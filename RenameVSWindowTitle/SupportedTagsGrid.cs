@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.IO;
+using System;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
     public class SupportedTagsGrid : DialogPage { 
@@ -46,6 +48,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 }
                 sb.Append("</tbody></table>");
 
+                /*
                 sb.Append("<table><thead><tr><th>Misc operations</th></tr></thead><tbody>");
                 foreach (var kv in new Dictionary<string,string> {
                     { "CopyRNX", "Copy example rnxcfg for current solution" },
@@ -60,6 +63,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 }
                 sb.Append("</tbody></table>");                
                 sb.Append("</body></html>");
+                */
                 wb.DocumentText = sb.ToString();
                 wb.ObjectForScripting = new ScriptHelper();
                 return supportedTagsControl;
@@ -72,8 +76,20 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             var solution = Globals.DTE.Solution;
             supportedTagsControl.SolutionPath=solution?.FullName;
 
-        }
+            if (RenameVSWindowTitle.CurrentPackage!=null)
+            {
+                //  if no global settingsfile defined, use default file name
+                string gfp = RenameVSWindowTitle.CurrentPackage.Settings.GlobalSolutionSettingsOverridesFp;
+                if(string.IsNullOrEmpty(gfp))
+                    gfp=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "RenameVSWindowTitle-global.xml");
 
+                supportedTagsControl.GlobalSettingsPath=gfp; // if opened, the opening will set the global settings path
+            }
+            else
+            {
+                supportedTagsControl.GlobalSettingsPath=null;
+            }
+        }
 
     }
 
