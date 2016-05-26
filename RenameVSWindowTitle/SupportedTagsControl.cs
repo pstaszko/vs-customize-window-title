@@ -57,7 +57,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         private void OpenText(string path, bool bGlobal)
         {
             SettingsSet cfg = RenameVSWindowTitle.CurrentPackage?.GetSettings(solutionPath);
-           string sampleSln = string.IsNullOrEmpty(solutionPath) ? Path.Combine(Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments), @"SampleDir\SampleDir2\SampleDir3\SampleDir4\Sample.sln") : solutionPath;
+            string sampleSln = Globals.GetExampleSolution(solutionPath);
             try
             {
                 bool bIsNewFile = !File.Exists(path);

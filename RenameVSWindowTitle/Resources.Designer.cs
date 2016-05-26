@@ -161,7 +161,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parent folder at the specified depth X (e.g. parent1 for document/solution file parent folder)..
+        ///   Looks up a localized string similar to Parent folder at the specified depth X (e.g. [parent1] for document/solution file parent folder)..
         /// </summary>
         internal static string tag_parentX {
             get {

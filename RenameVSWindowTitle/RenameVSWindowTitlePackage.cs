@@ -12,6 +12,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Collections.Generic;
 using System.Xml;
+using System.Text;
 
 // The PackageRegistration attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class
 // is a package.
@@ -333,15 +334,17 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 return CurrentConfig;
             }
 
+            var Settings = this.Settings;
+
             // init values from settings
             CurrentConfig = new SettingsSet
             {
-                ClosestParentDepth= this.Settings.ClosestParentDepth,
-                FarthestParentDepth=this.Settings.FarthestParentDepth,
-                AppendedString=this.Settings.AppendedString,
-                PatternIfBreakMode = this.Settings.PatternIfBreakMode,
-                PatternIfDesignMode= this.Settings.PatternIfDesignMode,
-                PatternIfRunningMode= this.Settings.PatternIfRunningMode,
+                ClosestParentDepth= Settings.ClosestParentDepth,
+                FarthestParentDepth=Settings.FarthestParentDepth,
+                AppendedString=Settings.AppendedString,
+                PatternIfBreakMode = Settings.PatternIfBreakMode,
+                PatternIfDesignMode= Settings.PatternIfDesignMode,
+                PatternIfRunningMode= Settings.PatternIfRunningMode,
             };
             if (string.IsNullOrEmpty(solutionFp))
                 return CurrentConfig;
@@ -399,21 +402,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public const int DefaultFarthestParentDepth = 1;
 
         private string GetPattern(string solutionFp, bool useDefault, SettingsSet settingsOverride) {
+            var Settings = this.Settings;
             if (string.IsNullOrEmpty(solutionFp)) {
                 var document = Globals.DTE.ActiveDocument;
                 var window = Globals.DTE.ActiveWindow;
                 if (string.IsNullOrEmpty(document?.FullName) && string.IsNullOrEmpty(window?.Caption)) {
-                    return useDefault ? DefaultPatternIfNothingOpen : this.Settings.PatternIfNothingOpen;
+                    return useDefault ? DefaultPatternIfNothingOpen : Settings.PatternIfNothingOpen;
                 }
-                return useDefault ? DefaultPatternIfDocumentButNoSolutionOpen : this.Settings.PatternIfDocumentButNoSolutionOpen;
+                return useDefault ? DefaultPatternIfDocumentButNoSolutionOpen : Settings.PatternIfDocumentButNoSolutionOpen;
             }
             string designModePattern = null;
             string breakModePattern = null;
             string runningModePattern = null;
             if (!useDefault) {
-                designModePattern = settingsOverride?.PatternIfDesignMode ?? this.Settings.PatternIfDesignMode;
-                breakModePattern = settingsOverride?.PatternIfBreakMode ?? this.Settings.PatternIfBreakMode;
-                runningModePattern = settingsOverride?.PatternIfRunningMode ?? this.Settings.PatternIfRunningMode;
+                designModePattern = settingsOverride?.PatternIfDesignMode ?? Settings.PatternIfDesignMode;
+                breakModePattern = settingsOverride?.PatternIfBreakMode ?? Settings.PatternIfBreakMode;
+                runningModePattern = settingsOverride?.PatternIfRunningMode ?? Settings.PatternIfRunningMode;
             }
             if (Globals.DTE.Debugger == null || Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgDesignMode) {
                 return designModePattern ?? DefaultDesignModePattern;
@@ -427,9 +431,25 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             throw new Exception("No matching state found");
         }
 
+        public static readonly string[] SupportedTags = new string[] {
+            "documentName",
+            "projectName",
+            "solutionName",
+            "parentX",
+            "parentPath",
+            "ideName",
+            "configurationName",
+            "platformName",
+            "vsMajorVersion",
+            "vsMajorVersionYear",
+            "gitBranchName",
+            "workspaceName",
+            "workspaceOwnerName",
+        };
+
         readonly Regex TagRegex = new Regex(@"\[([^\]]+)\]", RegexOptions.Multiline);
 
-        private string GetNewTitle(Solution solution, string pattern, SettingsSet cfg) {
+        internal string GetNewTitle(Solution solution, string pattern, SettingsSet cfg) {
             var activeDocument = Globals.DTE.ActiveDocument;
             var activeWindow = Globals.DTE.ActiveWindow;
             var solutionFp = solution?.FullName;
@@ -463,7 +483,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             return Globals.GetActiveProjectNameOrEmpty() ?? string.Empty;
                         case "solutionName":
                             return cfg.SolutionName ?? string.Empty;
-                         case "gitBranchName":
+                        case "gitBranchName":
                             Globals.UpdateGitExecFp(this.Settings.GitDirectory); // there is likely a better way to adjust the git path
                             return Globals.GetGitBranchNameOrEmpty(solution) ?? string.Empty;
                         case "workspaceName":
@@ -478,18 +498,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             return Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture);
                         case "ideName":
                             return this.IDEName ?? string.Empty;
+                        case "path":
+                            return solution?.FullName ?? string.Empty;
                         case "parentPath":
                             return GetParentPath(pathParts, cfg?.ClosestParentDepth ?? this.Settings.ClosestParentDepth, cfg?.FarthestParentDepth ?? this.Settings.FarthestParentDepth) ?? string.Empty;
+                        case "parentX":
+                            return "[invalid: replace X with number]";
+                        case "pathX":
+                            return "[invalid: replace X with number]";
                         default:
                             if (tag.StartsWith("parent")) {
-                                int n;
-                                if (int.TryParse(tag.Substring(6 /*length of parent*/), out n)) {
-                                    if (n >= 0 && n <= pathParts.Length) {
-                                        return pathParts[pathParts.Length - n - 1]; // n=1 means direct parent
-                                    }
-                                    return string.Empty;
-                                }
-                                return "[invalid:" + tag + "]";
+                                string smartParent = SmartParent(pathParts, tag.Substring(6 /*length of "parent"*/));
+                                return smartParent ?? "[invalid:" + tag + "]";
+                            } else
+                            if (tag.StartsWith("path")) {
+                                string smartPath = SmartPath(pathParts, tag.Substring(4 /*length of "path"*/));
+                                return smartPath?? "[invalid:" + tag + "]";
                             }
                             break;
                         }
@@ -510,6 +534,55 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return pattern + " " + appendedString;
         }
 
+        // pattern supports: 
+
+        static char[] smartSep = new char[] { ',' };
+        private static string SmartParent(string[] pathParts, string pattern)
+        {
+            int z = pattern.IndexOf('-');
+            if (z==-1)
+            {
+                int n;
+                if (!int.TryParse(pattern, out n))
+                    return null;
+
+                if (n >= 0 && n < pathParts.Length)
+                {
+                    return pathParts[pathParts.Length - n - 1]; // n=1 means direct parent
+                }
+                return string.Empty;
+            }
+            int a, e;
+            if (int.TryParse(pattern.Substring(0,z), out a) && int.TryParse(pattern.Substring(z+1), out e))
+            {
+                return GetParentPath(pathParts, a, e);
+            }
+            return null;
+        }
+
+        private static string SmartPath(string[] pathParts, string pattern)
+        {
+            int z = pattern.IndexOf('-');
+            if (z==-1)
+            {
+                int n;
+                if (!int.TryParse(pattern, out n))
+                    return null;
+
+                if (n >= 0 && n < pathParts.Length)
+                {
+                    return pathParts[n]; // n=1 means direct parent
+                }
+                return string.Empty;
+            }
+            int a, e;
+            if (int.TryParse(pattern.Substring(0,z), out a) && int.TryParse(pattern.Substring(z+1), out e))
+            {
+                return GetPathRange(pathParts, a, e);
+            }
+            return null;
+        }
+
         private string[] SplitPath(string path) {
             if (string.IsNullOrEmpty(path)) {
                 return new string[0];
@@ -525,9 +598,28 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
         private static string GetParentPath(string[] parents, int closestParentDepth, int farthestParentDepth) {
+            if(closestParentDepth>farthestParentDepth)
+            {
+                // swap if provided in wrong order
+                int t = closestParentDepth;
+                closestParentDepth=farthestParentDepth;
+                farthestParentDepth=t;
+            }
             return Path.Combine(parents.Reverse().Skip(closestParentDepth)
                 .Take(farthestParentDepth - closestParentDepth + 1)
                 .Reverse()
+                .ToArray());
+        }
+       private static string GetPathRange(string[] parents, int closest, int farthest) {
+            if(closest>farthest)
+            {
+                // swap if provided in wrong order
+                int t = closest;
+                closest=farthest;
+                farthest=t;
+            }
+            return Path.Combine(parents.Skip(closest)
+                .Take(farthest - closest + 1)
                 .ToArray());
         }
 

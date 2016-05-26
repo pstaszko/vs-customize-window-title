@@ -18,7 +18,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         readonly bool IsGlobalConfig;
 
         //loaded sets (null means reload pending, empty list means missing or error)
-        List<SettingsSet> Sets;
+        List<SettingsSet> Sets=new List<SettingsSet>();
         bool NeedReload = false;
         string SettingsPath;
         FileSystemWatcher Watcher;
@@ -35,7 +35,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 
         public void Clear()
         {
-            Sets=null;
+            Sets.Clear();
             NeedReload=true;
             stopWatching();
             if (SettingsCleared!=null)
@@ -105,7 +105,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                 return;
 
             stopWatching();
-            Watcher =new FileSystemWatcher(Path.GetDirectoryName(SettingsPath), Path.GetFileName(SettingsPath));
+            try
+            {
+                Watcher =new FileSystemWatcher(Path.GetDirectoryName(SettingsPath), Path.GetFileName(SettingsPath));
+            } catch
+            {
+                // cannot setup watcher because of missing folder
+                Clear();
+                return;
+            }
             Watcher.Changed+=Watcher_Changed;
             Watcher.Renamed+=Watcher_Renamed;
             Watcher.Deleted+=Watcher_Deleted;

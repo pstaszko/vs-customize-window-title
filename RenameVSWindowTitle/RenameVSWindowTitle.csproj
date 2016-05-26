@@ -96,6 +96,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -124,6 +125,14 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditablePattern.cs" />
+    <Compile Include="EditablePatternControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditablePatternControl.Designer.cs">
+      <DependentUpon>EditablePatternControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilePickerEditor.cs" />
     <Compile Include="SettingsSet.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Guids.cs" />
@@ -151,6 +160,9 @@
     <Compile Include="WorkspaceInfoGetter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EditablePatternControl.resx">
+      <DependentUpon>EditablePatternControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

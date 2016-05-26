@@ -140,7 +140,7 @@
     <value>Current solution path or, if no solution open, document path, with depth range as set in settings.</value>
   </data>
   <data name="tag_parentX" xml:space="preserve">
-    <value>Parent folder at the specified depth X (e.g. parent1 for document/solution file parent folder).</value>
+    <value>Parent folder at the specified depth X (e.g. [parent1] for document/solution file parent folder).</value>
   </data>
   <data name="tag_platformName" xml:space="preserve">
     <value>Current platform name (e.g. x86).</value>

@@ -93,6 +93,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return name;
         }
 
+        public static string GetExampleSolution(string solutionPath)
+        {
+            return string.IsNullOrEmpty(solutionPath) ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"SampleDir\SampleDir2\SampleDir3\SampleDir4\Sample.sln") : solutionPath;
+        }
+
         public static string GetGitBranch(string workingDirectory) {
             using (var pProcess = new System.Diagnostics.Process {
                 StartInfo = {
@@ -111,7 +116,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private const string GitExecFn = "git.exe";
+        public const string GitExecFn = "git.exe";
         private static string GitExecFp = GitExecFn;
 
         public static void UpdateGitExecFp(string gitDp) {
