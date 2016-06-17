@@ -13,7 +13,11 @@ function selectText(obj) { // adapted from Denis Sadowski (via StackOverflow.com
         range.selectNode(obj);
         window.getSelection().addRange(range);
     }
-    copy = document.selection.createRange();
-    copy.execCommand("Copy");
+    //copy = document.selection.createRange();
+    //copy.execCommand("Copy");
     return false;
+}
+
+function copyText(text) {
+    window.external.CopyTag(text);
 }

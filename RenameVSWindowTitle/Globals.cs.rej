@@ -1,0 +1,13 @@
+diff a/RenameVSWindowTitle/Globals.cs b/RenameVSWindowTitle/Globals.cs	(rejected hunks)
+@@ -35,11 +35,6 @@
+         private static int? _VsMajorVersionYear;
+         public static int VsMajorVersionYear => _VsMajorVersionYear ?? (_VsMajorVersionYear = GetYearFromVsMajorVersion(VsMajorVersion)).Value;
+ 
+-        public static string GetSolutionNameOrEmpty(Solution solution) {
+-            var sn = solution?.FullName;
+-            return string.IsNullOrEmpty(sn) ? "" : Path.GetFileNameWithoutExtension(sn);
+-        }
+-
+         public static string GetActiveProjectNameOrEmpty() {
+             Project project;
+             return TryGetActiveProject(DTE, out project) ? project.Name : "";

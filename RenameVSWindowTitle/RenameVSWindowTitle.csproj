@@ -133,10 +133,13 @@
       <DependentUpon>EditablePatternControl.cs</DependentUpon>
     </Compile>
     <Compile Include="FilePickerEditor.cs" />
+    <Compile Include="SettingsOverridesPageGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SettingsSet.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Guids.cs" />
-    <Compile Include="OptionPageGrid.cs">
+    <Compile Include="GlobalSettingsPageGrid.cs">
       <SubType>component</SubType>
     </Compile>
     <Compile Include="Resources.Designer.cs">
@@ -148,6 +151,12 @@
     <Compile Include="RenameVSWindowTitlePackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsWatcher.cs" />
+    <Compile Include="SettingsOverridesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsOverridesControl.Designer.cs">
+      <DependentUpon>SettingsOverridesControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="SupportedTagsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -157,6 +166,8 @@
     <Compile Include="SupportedTagsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Lib\UtilsExtensions.cs" />
+    <Compile Include="Lib\Wildcard.cs" />
     <Compile Include="WorkspaceInfoGetter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +178,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsOverridesControl.resx">
+      <DependentUpon>SettingsOverridesControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupportedTagsControl.resx">
       <DependentUpon>SupportedTagsControl.cs</DependentUpon>
@@ -187,6 +201,7 @@
     <None Include="Key.snk" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\normalize.css" />
     <Content Include="Screenshot.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

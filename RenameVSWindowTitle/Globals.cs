@@ -11,15 +11,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
     public static class Globals {
         public static DTE2 DTE;
 
-        public const string SolutionConfigExt=".rnxcfg";
-        public const string TagPath = "Path";
-        public const string TagSolutionName = "SolutionName";
-        public const string TagClosestParentDepth = "ClosestParentDepth";
-        public const string TagFarthestParentDepth = "FarthestParentDepth";
-        public const string TagAppendedString = "AppendedString";
-        public const string TagPatternIfRunningMode = "PatternIfRunningMode";
-        public const string TagPatternIfBreakMode = "PatternIfBreakMode";
-        public const string TagPatternIfDesignMode = "PatternIfDesignMode";
+        public const string SolutionSettingsOverrideExtension = ".rn.xml";
+        public const string PathTag = "Path";
+        public const string SolutionNameTag = "SolutionName";
+        public const string ClosestParentDepthTag = "ClosestParentDepth";
+        public const string FarthestParentDepthTag = "FarthestParentDepth";
+        public const string AppendedStringTag = "AppendedString";
+        public const string PatternIfRunningModeTag = "PatternIfRunningMode";
+        public const string PatternIfBreakModeTag = "PatternIfBreakMode";
+        public const string PatternIfDesignModeTag = "PatternIfDesignMode";
 
         private static int? _VsMajorVersion;
         public static int VsMajorVersion {
@@ -34,6 +34,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         private static int? _VsMajorVersionYear;
         public static int VsMajorVersionYear => _VsMajorVersionYear ?? (_VsMajorVersionYear = GetYearFromVsMajorVersion(VsMajorVersion)).Value;
+
+        public static string GetSolutionNameOrEmpty(Solution solution) {
+            var sn = solution?.FullName;
+            return string.IsNullOrEmpty(sn) ? "" : Path.GetFileNameWithoutExtension(sn);
+        }
 
         public static string GetActiveProjectNameOrEmpty() {
             Project project;
@@ -93,8 +98,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return name;
         }
 
-        public static string GetExampleSolution(string solutionPath)
-        {
+        public static string GetExampleSolution(string solutionPath) {
             return string.IsNullOrEmpty(solutionPath) ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"SampleDir\SampleDir2\SampleDir3\SampleDir4\Sample.sln") : solutionPath;
         }
 
@@ -177,7 +181,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DllImport("ole32.dll")]
         static extern int CreateBindCtx(uint reserved, out IBindCtx ppbc);
 
-        static readonly Regex m_DTEComObjectNameRegex = new Regex(@"^!VisualStudio\.DTE\.(?<dte_version>\d+\.\d+).*$");
+        static readonly Regex m_DTEComObjectNameRegex = new Regex(@"^!VisualStudio\.DTE\.(?<dte_version>\d+\.\d+).*$", RegexOptions.Compiled);
 
         public struct VSMultiInstanceInfo {
             public bool multiple_instances;

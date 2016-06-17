@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="normalize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\normalize.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="script" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\script.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -131,16 +134,28 @@
     <value>Active document or window name.</value>
   </data>
   <data name="tag_gitBranchName" xml:space="preserve">
-    <value>Current Git branch name. Make sure Git\'s executable directory is added to the Windows PATH variable.</value>
+    <value>Current Git branch name. Make sure Git\'s executable directory is added to the Windows PATH variable or specify its location in settings.</value>
   </data>
   <data name="tag_ideName" xml:space="preserve">
     <value>Name of the IDE (e.g. Microsoft Visual Studio).</value>
   </data>
   <data name="tag_parentPath" xml:space="preserve">
-    <value>Current solution path or, if no solution open, document path, with depth range as set in settings.</value>
+    <value>Current solution path or, if no solution open, document path, with depth determined by "Farthest parent folder depth" and "Closest parent folder depth" settings.</value>
   </data>
   <data name="tag_parentX" xml:space="preserve">
-    <value>Parent folder at the specified depth X (e.g. [parent1] for document/solution file parent folder).</value>
+    <value>Path parent element at the specified index (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [parent:0] = MySolution.sln [parent:1] = MySolutionFolder)</value>
+  </data>
+  <data name="tag_parentXY" xml:space="preserve">
+    <value>Path parent segment over the specified range (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [parent:2:1] =F1\MySolutionFolder, [parent:1:2] = MySolutionFolder\F1)</value>
+  </data>
+  <data name="tag_path" xml:space="preserve">
+    <value>Current solution full path or, if no solution open, document full path.</value>
+  </data>
+  <data name="tag_pathX" xml:space="preserve">
+    <value>Path element at the specified index (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [path:0] = C:\, [path:1] = C:\F1)</value>
+  </data>
+  <data name="tag_pathXY" xml:space="preserve">
+    <value>Path segment over the specified range (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [path:0:2] = C:\F1\MySolutionFolder, [path:2:0] = MySolutionFolder\F1\C:)</value>
   </data>
   <data name="tag_platformName" xml:space="preserve">
     <value>Current platform name (e.g. x86).</value>

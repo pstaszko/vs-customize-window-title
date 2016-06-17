@@ -61,6 +61,37 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
+        ///
+        ////**
+        /// * 1. Change the default font family in all browsers (opinionated).
+        /// * 2. Prevent adjustments of font size after orientation changes in IE and iOS.
+        /// */
+        ///
+        ///html {
+        ///  font-family: sans-serif; /* 1 */
+        ///  -ms-text-size-adjust: 100%; /* 2 */
+        ///  -webkit-text-size-adjust: 100%; /* 2 */
+        ///}
+        ///
+        ////**
+        /// * Remove the margin in all browsers (opinionated).
+        /// */
+        ///
+        ///body {
+        ///  margin: 0;
+        ///}
+        ///
+        ////* HTML5 display definitions
+        ///   ==================================== [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string normalize {
+            get {
+                return ResourceManager.GetString("normalize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to //http://stackoverflow.com/questions/200162/allow-only-copy-paste-context-menu-in-system-windows-forms-webbrowser-control/200194#200194
         /////&lt;div id=&apos;ContextMenu&apos; style=&apos;display: none; z-index: 1000; padding: 1px 10px; background-color: white; border: 2px solid lightgreen; position: absolute;&apos;&gt;&lt;a href=&apos;#&apos; id=&apos;CopyBtn&apos; style=&apos;display: block; color: black; text-decoration: none;&apos;&gt;Copy&lt;/a&gt;&lt;/div&gt;
         ///
@@ -76,38 +107,39 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         
         /// <summary>
         ///   Looks up a localized string similar to body {
-        ///	background: #fafafa;
-        ///	color: #444;
-        ///	font: 100%/30px &apos;Helvetica Neue&apos;, helvetica, arial, sans-serif;
+        ///    background: #fafafa;
+        ///    color: #333;
+        ///    font: 100%/30px &apos;Helvetica Neue&apos;, helvetica, arial, sans-serif;
+        ///    margin: 8px;
         ///}
         ///
-        ///h1 {
+        ////*h1 {
         ///  font-size: 15pt;
         ///  margin-bottom: 10px;
         ///  font-weight: bold;
+        ///}*/
+        ///
+        ///h2 {
+        ///    font-size: 1.2em;
+        ///    text-align: center;
+        ///    margin-top: 0em;
+        ///    margin-bottom: 0.2em;
         ///}
         ///
         ///strong {
-        ///	font-weight: bold; 
+        ///    font-weight: bold;
         ///}
         ///
         ///em {
-        ///	font-style: italic; 
+        ///    font-style: italic;
         ///}
         ///
         ///table {
-        ///	background: #f5f5f5;
-        ///	font-size: 10pt;
-        ///	line-height: 24px;
-        ///	text-align: left;
-        ///}	
-        ///
-        ///th {
-        ///	background: #333;
-        ///	border-left: 1px solid #555;
-        ///	border-right: 1px solid #777;
-        ///	border-top: 1px solid #555;
-        ///	border-bottom: 1px solid #333 [rest of string was truncated]&quot;;.
+        ///    background: #f5f5f5;
+        ///    font-size: 10pt;
+        ///    line-height: 22px;
+        ///    text-align: left;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string style {
             get {
@@ -134,7 +166,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current Git branch name. Make sure Git\&apos;s executable directory is added to the Windows PATH variable..
+        ///   Looks up a localized string similar to Current Git branch name. Make sure Git\&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
         internal static string tag_gitBranchName {
             get {
@@ -152,7 +184,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current solution path or, if no solution open, document path, with depth range as set in settings..
+        ///   Looks up a localized string similar to Current solution path or, if no solution open, document path, with depth determined by &quot;Farthest parent folder depth&quot; and &quot;Closest parent folder depth&quot; settings..
         /// </summary>
         internal static string tag_parentPath {
             get {
@@ -161,11 +193,47 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parent folder at the specified depth X (e.g. [parent1] for document/solution file parent folder)..
+        ///   Looks up a localized string similar to Path parent element at the specified index (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [parent:0] = MySolution.sln [parent:1] = MySolutionFolder).
         /// </summary>
         internal static string tag_parentX {
             get {
                 return ResourceManager.GetString("tag_parentX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path parent segment over the specified range (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [parent:2:1] =F1\MySolutionFolder, [parent:1:2] = MySolutionFolder\F1).
+        /// </summary>
+        internal static string tag_parentXY {
+            get {
+                return ResourceManager.GetString("tag_parentXY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current solution full path or, if no solution open, document full path..
+        /// </summary>
+        internal static string tag_path {
+            get {
+                return ResourceManager.GetString("tag_path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path element at the specified index (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [path:0] = C:\, [path:1] = C:\F1).
+        /// </summary>
+        internal static string tag_pathX {
+            get {
+                return ResourceManager.GetString("tag_pathX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path segment over the specified range (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [path:0:2] = C:\F1\MySolutionFolder, [path:2:0] = MySolutionFolder\F1\C:).
+        /// </summary>
+        internal static string tag_pathXY {
+            get {
+                return ResourceManager.GetString("tag_pathXY", resourceCulture);
             }
         }
         
