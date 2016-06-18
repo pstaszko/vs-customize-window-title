@@ -46,26 +46,26 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [Category("Patterns")]
         [DisplayName("Solution in design mode")]
         [Description("Default: [parentPath]\\[solutionName] - [ideName]. See 'Supported tags' section on the left for more guidance.")]
-        [DefaultValue(RenameVSWindowTitle.DefaultPatternIfDesignMode)]
+        [DefaultValue("[parentPath]\\[solutionName] - [ideName]")]
         [EditorAttribute(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
-        public string PatternIfDesignMode { get; set; } = RenameVSWindowTitle.DefaultPatternIfDesignMode;
+        public string PatternIfDesignMode { get; set; } = "[parentPath]\\[solutionName] - [ideName]";
 
         [Category("Patterns")]
         [DisplayName("Solution in break mode")]
         [Description("Default: [parentPath]\\[solutionName] (Debugging) - [ideName]. The appended string parameter will be added at the end automatically to identify that the title is being improved. See 'Supported tags' section on the left for more guidance.")]
-        [DefaultValue(RenameVSWindowTitle.DefaultPatternIfBreakMode)]
+        [DefaultValue("[parentPath]\\[solutionName] (Debugging) - [ideName]")]
         [EditorAttribute(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
-        public string PatternIfBreakMode { get; set; } = RenameVSWindowTitle.DefaultPatternIfBreakMode;
+        public string PatternIfBreakMode { get; set; } = "[parentPath]\\[solutionName] (Debugging) - [ideName]";
 
         [Category("Patterns")]
         [DisplayName("Solution in running mode")]
         [Description("Default: [parentPath]\\[solutionName] (Running) - [ideName]. The appended string parameter will be added at the end automatically to identify that the title is being improved. See 'Supported tags' section on the left for more guidance.")]
-        [DefaultValue(RenameVSWindowTitle.DefaultPatternIfRunningMode)]
+        [DefaultValue("[parentPath]\\[solutionName] (Running) - [ideName]")]
         [EditorAttribute(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
-        public string PatternIfRunningMode { get; set; } = RenameVSWindowTitle.DefaultPatternIfRunningMode;
+        public string PatternIfRunningMode { get; set; } = "[parentPath]\\[solutionName] (Running) - [ideName]";
 
         [Category("Patterns")]
         [DisplayName("Appended string")]
