@@ -429,7 +429,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             "workspaceOwnerName"
         };
 
-        readonly Regex TagRegex = new Regex(@"\[([^\]]+)\]", RegexOptions.Multiline | RegexOptions.Compiled);
+        readonly Regex TagRegex = new Regex(@"\[([^\[\]]+)\]", RegexOptions.Multiline | RegexOptions.Compiled);
 
         internal string GetNewTitle(Solution solution, string pattern, SettingsSet cfg) {
             var activeDocument = Globals.DTE.ActiveDocument;
