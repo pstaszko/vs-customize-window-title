@@ -55,7 +55,18 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return "";
         }
 
-        public static string GetActiveConfigurationNameOrEmpty(Solution solution) {
+        public static string GetActiveDocumentPathOrEmpty(Document activeDocument, Window activeWindow)
+        {
+            if (activeDocument != null) {
+                return Path.GetFullPath(activeDocument.FullName);
+            }
+            if (activeWindow != null && activeWindow.Caption != DTE.MainWindow.Caption) {
+                return activeWindow.Caption;
+            }
+            return "";
+         }
+
+         public static string GetActiveConfigurationNameOrEmpty(Solution solution) {
             if (string.IsNullOrEmpty(solution?.FullName)) return "";
             var activeConfig = (SolutionConfiguration2)solution.SolutionBuild.ActiveConfiguration;
             return activeConfig != null ? activeConfig.Name : "";

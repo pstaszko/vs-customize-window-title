@@ -411,6 +411,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         public static readonly string[] SupportedTags = {
             "documentName",
+            "documentPath",
             "projectName",
             "solutionName",
             "parentPath",
@@ -477,6 +478,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                                 return Globals.GetWorkspaceOwnerNameOrEmpty(solution) ?? string.Empty;
                             case "documentName":
                                 return Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow) ?? string.Empty;
+                            case "documentPath":
+                                return Globals.GetActiveDocumentPathOrEmpty(activeDocument, activeWindow) ?? string.Empty;
                             case "vsMajorVersion":
                                 return Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture);
                             case "vsMajorVersionYear":
