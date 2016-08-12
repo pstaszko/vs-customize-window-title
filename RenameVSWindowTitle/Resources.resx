@@ -133,6 +133,9 @@
   <data name="tag_documentName" xml:space="preserve">
     <value>Active document or window name.</value>
   </data>
+  <data name="tag_documentPath" xml:space="preserve">
+    <value>Active document or window full file path.</value>
+  </data>
   <data name="tag_gitBranchName" xml:space="preserve">
     <value>Current Git branch name. Make sure Git\'s executable directory is added to the Windows PATH variable or specify its location in settings.</value>
   </data>

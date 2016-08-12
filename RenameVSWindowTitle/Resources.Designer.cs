@@ -166,6 +166,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active document or window full file path..
+        /// </summary>
+        internal static string tag_documentPath {
+            get {
+                return ResourceManager.GetString("tag_documentPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Git branch name. Make sure Git\&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
         internal static string tag_gitBranchName {
