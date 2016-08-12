@@ -149,7 +149,7 @@
     <value>Active document path segment over the specified range (e.g. for C:\F1\Foo.cs, [path:0:2] = C:\F1\Foo.cs, [path:2:0] = Foo.cs\F1\C:)</value>
   </data>
   <data name="tag_gitBranchName" xml:space="preserve">
-    <value>Current Git branch name. Make sure Git\'s executable directory is added to the Windows PATH variable or specify its location in settings.</value>
+    <value>Current Git branch name. Make sure Git's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
   </data>
   <data name="tag_ideName" xml:space="preserve">
     <value>Name of the IDE (e.g. Microsoft Visual Studio).</value>

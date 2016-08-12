@@ -211,7 +211,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current Git branch name. Make sure Git\&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
+        ///   Looks up a localized string similar to Current Git branch name. Make sure Git&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
         internal static string tag_gitBranchName {
             get {
