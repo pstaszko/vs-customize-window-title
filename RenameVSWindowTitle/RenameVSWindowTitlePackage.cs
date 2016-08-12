@@ -411,20 +411,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         public static readonly string[] SupportedTags = {
             "documentName",
-            "documentPath",
             "projectName",
             "solutionName",
-            "parentPath",
+            "documentPath",
+            "documentPath:X",
+            "documentPath:X:Y",
+            "documentParentPath:X",
+            "documentParentPath:X:Y",
             "path",
-            "parent:X",
-            "parent:X:Y",
             "path:X",
             "path:X:Y",
+            "parentPath",
+            "parent:X",
+            "parent:X:Y",
             "ideName",
-            "configurationName",
-            "platformName",
             "vsMajorVersion",
             "vsMajorVersionYear",
+            "platformName",
+            "configurationName",
             "gitBranchName",
             "workspaceName",
             "workspaceOwnerName"
@@ -442,18 +446,26 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     return this.IDEName;
                 }
             }
-            var path = string.Empty;
+            string path;
+            var documentName = Globals.GetActiveDocumentNameOrEmpty(activeDocument);
+            var documentPath = Globals.GetActiveDocumentPathOrEmpty(activeDocument);
+            var windowName = Globals.GetActiveWindowNameOrEmpty(activeWindow);
 
             if (!string.IsNullOrEmpty(solutionFp)) {
                 path = solutionFp;
             }
-            else if (activeDocument != null) {
-                path = activeDocument.FullName;
+            else {
+                path = documentPath;
             }
 
             var pathParts = this.SplitPath(path);
             if (!string.IsNullOrEmpty(path)) {
                 pathParts[0] = Path.GetPathRoot(path).Replace("\\", "");
+            }
+
+            var documentPathParts = this.SplitPath(documentPath);
+            if (!string.IsNullOrEmpty(documentPath)) {
+                documentPathParts[0] = Path.GetPathRoot(documentPath).Replace("\\", "");
             }
 
             pattern = this.TagRegex.Replace(pattern, match => {
@@ -462,24 +474,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     try {
                         switch (tag) {
                             case "configurationName":
-                                return Globals.GetActiveConfigurationNameOrEmpty(solution) ?? string.Empty;
+                                return Globals.GetActiveConfigurationNameOrEmpty(solution);
                             case "platformName":
-                                return Globals.GetPlatformNameOrEmpty(solution) ?? string.Empty;
+                                return Globals.GetPlatformNameOrEmpty(solution);
                             case "projectName":
-                                return Globals.GetActiveProjectNameOrEmpty() ?? string.Empty;
+                                return Globals.GetActiveProjectNameOrEmpty();
                             case "solutionName":
                                 return cfg.SolutionName ?? string.Empty;
                             case "gitBranchName":
                                 Globals.UpdateGitExecFp(this.GlobalSettings.GitDirectory); // there is likely a better way to adjust the git path
-                                return Globals.GetGitBranchNameOrEmpty(solution) ?? string.Empty;
+                                return Globals.GetGitBranchNameOrEmpty(solution);
                             case "workspaceName":
-                                return Globals.GetWorkspaceNameOrEmpty(solution) ?? string.Empty;
+                                return Globals.GetWorkspaceNameOrEmpty(solution);
                             case "workspaceOwnerName":
-                                return Globals.GetWorkspaceOwnerNameOrEmpty(solution) ?? string.Empty;
+                                return Globals.GetWorkspaceOwnerNameOrEmpty(solution);
                             case "documentName":
-                                return Globals.GetActiveDocumentNameOrEmpty(activeDocument, activeWindow) ?? string.Empty;
+                                return string.IsNullOrEmpty(documentName) ? windowName : documentName;
                             case "documentPath":
-                                return Globals.GetActiveDocumentPathOrEmpty(activeDocument, activeWindow) ?? string.Empty;
+                                return string.IsNullOrEmpty(documentName) ? windowName : documentPath;
                             case "vsMajorVersion":
                                 return Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture);
                             case "vsMajorVersionYear":
@@ -487,7 +499,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             case "ideName":
                                 return this.IDEName ?? string.Empty;
                             case "path":
-                                return path;
+                                return string.IsNullOrEmpty(path) ? windowName : path;
                             case "parentPath":
                                 return GetParentPath(pathParts, cfg?.ClosestParentDepth ?? this.GlobalSettings.ClosestParentDepth, cfg?.FarthestParentDepth ?? this.GlobalSettings.FarthestParentDepth) ?? string.Empty;
                             default:
@@ -517,6 +529,34 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                                     if (m.Success) {
                                         var index = Math.Min(pathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
                                         return pathParts.Any() ? pathParts[index] : string.Empty;
+                                    }
+                                }
+                                if (tag.StartsWith("documentPath")) {
+                                    var m = RangeRegex.Match(tag.Substring("documentPath".Length));
+                                    if (m.Success) {
+                                        var startIndex = Math.Min(documentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture)));
+                                        var endIndex = Math.Min(documentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture)));
+                                        var pathRange = documentPathParts.GetRange(startIndex: startIndex, endIndex: endIndex).ToArray();
+                                        return GetPathForTitle(pathRange);
+                                    }
+                                    m = IndexRegex.Match(tag.Substring("documentPath".Length));
+                                    if (m.Success) {
+                                        var index = Math.Min(documentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
+                                        return documentPathParts.Any() ? documentPathParts[index] : string.Empty;
+                                    }
+                                }
+                                if (tag.StartsWith("documentParentPath")) {
+                                    var m = RangeRegex.Match(tag.Substring("documentParentPath".Length));
+                                    if (m.Success) {
+                                        var startIndex = Math.Min(documentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture)));
+                                        var endIndex = Math.Min(documentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture)));
+                                        var pathRange = documentPathParts.GetRange(startIndex: documentPathParts.Length - 1 - startIndex, endIndex: documentPathParts.Length - 1 - endIndex).ToArray();
+                                        return GetPathForTitle(pathRange);
+                                    }
+                                    m = IndexRegex.Match(tag.Substring("documentParentPath".Length));
+                                    if (m.Success) {
+                                        var index = Math.Min(documentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
+                                        return documentPathParts.Any() ? documentPathParts[documentPathParts.Length - 1 - index] : string.Empty;
                                     }
                                 }
                                 break;

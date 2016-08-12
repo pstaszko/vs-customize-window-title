@@ -39,7 +39,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Document (no solution) open")]
         [Description("Default: [documentName] - [ideName]. See 'Supported tags' section on the left for more guidance.")]
         [DefaultValue(RenameVSWindowTitle.DefaultPatternIfDocumentButNoSolutionOpen)]
-        [EditorAttribute(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Document)]
         public string PatternIfDocumentButNoSolutionOpen { get; set; } = RenameVSWindowTitle.DefaultPatternIfDocumentButNoSolutionOpen;
 
@@ -47,7 +47,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Solution in design mode")]
         [Description("Default: [parentPath]\\[solutionName] - [ideName]. See 'Supported tags' section on the left for more guidance.")]
         [DefaultValue("[parentPath]\\[solutionName] - [ideName]")]
-        [EditorAttribute(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
         public string PatternIfDesignMode { get; set; } = "[parentPath]\\[solutionName] - [ideName]";
 
@@ -55,7 +55,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Solution in break mode")]
         [Description("Default: [parentPath]\\[solutionName] (Debugging) - [ideName]. The appended string parameter will be added at the end automatically to identify that the title is being improved. See 'Supported tags' section on the left for more guidance.")]
         [DefaultValue("[parentPath]\\[solutionName] (Debugging) - [ideName]")]
-        [EditorAttribute(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
         public string PatternIfBreakMode { get; set; } = "[parentPath]\\[solutionName] (Debugging) - [ideName]";
 
@@ -63,7 +63,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Solution in running mode")]
         [Description("Default: [parentPath]\\[solutionName] (Running) - [ideName]. The appended string parameter will be added at the end automatically to identify that the title is being improved. See 'Supported tags' section on the left for more guidance.")]
         [DefaultValue("[parentPath]\\[solutionName] (Running) - [ideName]")]
-        [EditorAttribute(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
         public string PatternIfRunningMode { get; set; } = "[parentPath]\\[solutionName] (Running) - [ideName]";
 
@@ -76,8 +76,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [Category("Git")]
         [DisplayName("Git binaries directory")]
         [Description("Default: Empty. Search windows PATH for git if empty.")]
-        [EditorAttribute(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [FilePickerAttribute(true, Globals.GitExecFn, "Git executable(git.exe)|git.exe|All files(*.*)|*.*", 1)]
+        [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [FilePicker(true, Globals.GitExecFn, "Git executable(git.exe)|git.exe|All files(*.*)|*.*", 1)]
         [DefaultValue("")]
         public string GitDirectory { get; set; } = "";
 

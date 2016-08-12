@@ -42,47 +42,47 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         public static string GetActiveProjectNameOrEmpty() {
             Project project;
-            return TryGetActiveProject(DTE, out project) ? project.Name : "";
+            return TryGetActiveProject(DTE, out project) ? project.Name ?? string.Empty : "";
         }
 
-        public static string GetActiveDocumentNameOrEmpty(Document activeDocument, Window activeWindow) {
+        public static string GetActiveDocumentNameOrEmpty(Document activeDocument) {
             if (activeDocument != null) {
                 return Path.GetFileName(activeDocument.FullName);
             }
-            if (activeWindow != null && activeWindow.Caption != DTE.MainWindow.Caption) {
-                return activeWindow.Caption;
-            }
-            return "";
+            return string.Empty;
         }
 
-        public static string GetActiveDocumentPathOrEmpty(Document activeDocument, Window activeWindow)
-        {
+        public static string GetActiveDocumentPathOrEmpty(Document activeDocument) {
             if (activeDocument != null) {
-                return Path.GetFullPath(activeDocument.FullName);
+                return activeDocument.FullName;
             }
-            if (activeWindow != null && activeWindow.Caption != DTE.MainWindow.Caption) {
-                return activeWindow.Caption;
-            }
-            return "";
-         }
+            return string.Empty;
+        }
 
-         public static string GetActiveConfigurationNameOrEmpty(Solution solution) {
-            if (string.IsNullOrEmpty(solution?.FullName)) return "";
+        public static string GetActiveWindowNameOrEmpty(Window activeWindow) {
+            if (activeWindow != null && activeWindow.Caption != DTE.MainWindow.Caption) {
+                return activeWindow.Caption ?? string.Empty;
+            }
+            return string.Empty;
+        }
+
+        public static string GetActiveConfigurationNameOrEmpty(Solution solution) {
+            if (string.IsNullOrEmpty(solution?.FullName)) return string.Empty;
             var activeConfig = (SolutionConfiguration2)solution.SolutionBuild.ActiveConfiguration;
-            return activeConfig != null ? activeConfig.Name : "";
+            return activeConfig != null ? activeConfig.Name ?? string.Empty : string.Empty;
         }
 
         public static string GetPlatformNameOrEmpty(Solution solution) {
-            if (string.IsNullOrEmpty(solution?.FullName)) return "";
+            if (string.IsNullOrEmpty(solution?.FullName)) return string.Empty;
             var activeConfig = (SolutionConfiguration2)solution.SolutionBuild.ActiveConfiguration;
-            return activeConfig != null ? activeConfig.PlatformName : "";
+            return activeConfig != null ? activeConfig.PlatformName ?? string.Empty : string.Empty;
         }
 
         public static string GetGitBranchNameOrEmpty(Solution solution) {
             var sn = solution?.FullName;
-            if (string.IsNullOrEmpty(sn)) return "";
+            if (string.IsNullOrEmpty(sn)) return string.Empty;
             var workingDirectory = new FileInfo(sn).DirectoryName;
-            return IsGitRepository(workingDirectory) ? GetGitBranch(workingDirectory) : "";
+            return IsGitRepository(workingDirectory) ? GetGitBranch(workingDirectory) ?? string.Empty : string.Empty;
         }
 
         public static string GetWorkspaceNameOrEmpty(Solution solution) {
@@ -91,10 +91,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             //    return vce.SolutionWorkspace.Name;
             //}  
             var sn = solution?.FullName;
-            if (string.IsNullOrEmpty(sn)) return "";
-            var name = "";
+            if (string.IsNullOrEmpty(sn)) return string.Empty;
+            var name = string.Empty;
             InvokeOnUIThread(() => name = WorkspaceInfoGetter.Instance().GetName(sn));
-            return name;
+            return name ?? string.Empty;
         }
 
         public static string GetWorkspaceOwnerNameOrEmpty(Solution solution) {
@@ -103,10 +103,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             //    return vce.SolutionWorkspace.OwnerName;
             //}  
             var sn = solution?.FullName;
-            if (string.IsNullOrEmpty(sn)) return "";
-            var name = "";
+            if (string.IsNullOrEmpty(sn)) return string.Empty;
+            var name = string.Empty;
             InvokeOnUIThread(() => name = WorkspaceInfoGetter.Instance().GetOwner(sn));
-            return name;
+            return name ?? string.Empty;
         }
 
         public static string GetExampleSolution(string solutionPath) {

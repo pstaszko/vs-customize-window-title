@@ -83,7 +83,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         ///}
         ///
         ////* HTML5 display definitions
-        ///   ==================================== [rest of string was truncated]&quot;;.
+        ///   ============== [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string normalize {
             get {
@@ -157,7 +157,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active document or window name..
+        ///   Looks up a localized string similar to Active document or, if no active document, window name..
         /// </summary>
         internal static string tag_documentName {
             get {
@@ -166,11 +166,47 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active document or window full file path..
+        ///   Looks up a localized string similar to Active document path parent element at the specified index (e.g. for C:\F1\Foo.cs, [parent:0] = Foo.cs [parent:1] = F1).
+        /// </summary>
+        internal static string tag_documentParentPathX {
+            get {
+                return ResourceManager.GetString("tag_documentParentPathX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active document path parent segment over the specified range (e.g. for C:\F1\Foo.cs, [parent:1:0] =F1\Foo.cs, [parent:0:1] = Foo.cs\F1).
+        /// </summary>
+        internal static string tag_documentParentPathXY {
+            get {
+                return ResourceManager.GetString("tag_documentParentPathXY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active document full path or, if no active document, window name..
         /// </summary>
         internal static string tag_documentPath {
             get {
                 return ResourceManager.GetString("tag_documentPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active document path element at the specified index (e.g. for C:\F1\Foo.cs, [documentPath:0] = C:\, [documentPath:1] = C:\F1)..
+        /// </summary>
+        internal static string tag_documentPathX {
+            get {
+                return ResourceManager.GetString("tag_documentPathX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active document path segment over the specified range (e.g. for C:\F1\Foo.cs, [path:0:2] = C:\F1\Foo.cs, [path:2:0] = Foo.cs\F1\C:).
+        /// </summary>
+        internal static string tag_documentPathXY {
+            get {
+                return ResourceManager.GetString("tag_documentPathXY", resourceCulture);
             }
         }
         
@@ -220,7 +256,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current solution full path or, if no solution open, document full path..
+        ///   Looks up a localized string similar to Current solution full path or, if no solution open, document full path or, if no active document, window name..
         /// </summary>
         internal static string tag_path {
             get {
