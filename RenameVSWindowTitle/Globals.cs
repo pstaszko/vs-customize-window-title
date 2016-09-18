@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Text.RegularExpressions;
 using EnvDTE;
 using EnvDTE80;
@@ -119,6 +120,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     FileName = GitExecFp,
                     Arguments = "symbolic-ref --short -q HEAD", //As per: http://git-blame.blogspot.sg/2013/06/checking-current-branch-programatically.html. Or: "rev-parse --abbrev-ref HEAD"
                     UseShellExecute = false,
+                    StandardOutputEncoding = Encoding.UTF8,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
                     WorkingDirectory = workingDirectory
@@ -148,6 +150,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     FileName = GitExecFp,
                     Arguments = "rev-parse --is-inside-work-tree",
                     UseShellExecute = false,
+                    StandardOutputEncoding = Encoding.UTF8,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true,
                     WorkingDirectory = workingDirectory
