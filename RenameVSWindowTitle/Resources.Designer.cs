@@ -211,6 +211,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active document project file name (if the document is part of a loaded project).
+        /// </summary>
+        internal static string tag_documentProjectFileName {
+            get {
+                return ResourceManager.GetString("tag_documentProjectFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active document project name (if the document is part of a loaded project).
+        /// </summary>
+        internal static string tag_documentProjectName {
+            get {
+                return ResourceManager.GetString("tag_documentProjectName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Git branch name. Make sure Git&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
         internal static string tag_gitBranchName {
