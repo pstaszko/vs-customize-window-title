@@ -15,6 +15,10 @@ Solution-specific overriding rules are available as well to cover virtually any 
 
 It can also be configured so that the rules apply only when at least two instances of Visual Studio are running with the same window title.
 
+**Documentation**
+
+Full documentation is available on the [Visual Studio Gallery page](https://visualstudiogallery.msdn.microsoft.com/f3f23845-5b1e-4811-882f-60b7181fa6d6).
+
 **Supported editions**
 
 Visual Studio 2010, 2012, 2013, 2015+.
