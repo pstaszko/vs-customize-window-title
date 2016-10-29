@@ -238,6 +238,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Mercurial branch name. Make sure Mercurial&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
+        /// </summary>
+        internal static string tag_hgBranchName {
+            get {
+                return ResourceManager.GetString("tag_hgBranchName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name of the IDE (e.g. Microsoft Visual Studio)..
         /// </summary>
         internal static string tag_ideName {

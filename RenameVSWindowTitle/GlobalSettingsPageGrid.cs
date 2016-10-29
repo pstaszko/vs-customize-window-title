@@ -73,13 +73,21 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DefaultValue(RenameVSWindowTitle.DefaultAppendedString)]
         public string AppendedString { get; set; } = RenameVSWindowTitle.DefaultAppendedString;
 
-        [Category("Git")]
+        [Category("Source control")]
         [DisplayName("Git binaries directory")]
         [Description("Default: Empty. Search windows PATH for git if empty.")]
         [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [FilePicker(true, Globals.GitExecFn, "Git executable(git.exe)|git.exe|All files(*.*)|*.*", 1)]
         [DefaultValue("")]
         public string GitDirectory { get; set; } = "";
+
+        [Category("Source control")]
+        [DisplayName("Hg binaries directory")]
+        [Description("Default: Empty. Search windows PATH for hg if empty.")]
+        [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [FilePicker(true, Globals.GitExecFn, "Git executable(hg.exe)|hg.exe|All files(*.*)|*.*", 1)]
+        [DefaultValue("")]
+        public string HgDirectory { get; set; } = "";
 
         [Category("Debug")]
         [DisplayName("Enable debug mode")]

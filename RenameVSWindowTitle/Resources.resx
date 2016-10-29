@@ -157,6 +157,9 @@
   <data name="tag_gitBranchName" xml:space="preserve">
     <value>Current Git branch name. Make sure Git's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
   </data>
+  <data name="tag_hgBranchName" xml:space="preserve">
+    <value>Current Mercurial branch name. Make sure Mercurial's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
+  </data>
   <data name="tag_ideName" xml:space="preserve">
     <value>Name of the IDE (e.g. Microsoft Visual Studio).</value>
   </data>

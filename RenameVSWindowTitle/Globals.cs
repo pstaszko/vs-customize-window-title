@@ -89,6 +89,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return IsGitRepository(workingDirectory) ? GetGitBranch(workingDirectory) ?? string.Empty : string.Empty;
         }
 
+        public static string GetHgBranchNameOrEmpty(Solution solution) {
+            var sn = solution?.FullName;
+            if (string.IsNullOrEmpty(sn)) return string.Empty;
+            var workingDirectory = new FileInfo(sn).DirectoryName;
+            return IsHgRepository(workingDirectory) ? GetHgBranch(workingDirectory) ?? string.Empty : string.Empty;
+        }
+
         public static string GetWorkspaceNameOrEmpty(Solution solution) {
             //dynamic vce = Globals.DTE.GetObject("Microsoft.VisualStudio.TeamFoundation.VersionControl.VersionControlExt");
             //if (vce != null && vce.SolutionWorkspace != null) {
@@ -117,6 +124,25 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return string.IsNullOrEmpty(solutionPath) ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"SampleDir\SampleDir2\SampleDir3\SampleDir4\Sample.sln") : solutionPath;
         }
 
+        public static string GetHgBranch(string workingDirectory) {
+            using (var pProcess = new System.Diagnostics.Process {
+                StartInfo = {
+                    FileName = HgExecFp,
+                    Arguments = "branch",
+                    UseShellExecute = false,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    WorkingDirectory = workingDirectory
+                }
+            }) {
+                pProcess.Start();
+                var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
+                pProcess.WaitForExit();
+                return branchName;
+            }
+        }
+
         public static string GetGitBranch(string workingDirectory) {
             using (var pProcess = new System.Diagnostics.Process {
                 StartInfo = {
@@ -134,6 +160,17 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 pProcess.WaitForExit();
                 return branchName;
             }
+        }
+
+        public const string HgExecFn = "hg.exe";
+        private static string HgExecFp = HgExecFn;
+
+        public static void UpdateHgExecFp(string hgDp) {
+            if (string.IsNullOrEmpty(hgDp)) {
+                HgExecFp = HgExecFn;
+                return;
+            }
+            HgExecFp = Path.Combine(hgDp, HgExecFn);
         }
 
         public const string GitExecFn = "git.exe";
@@ -163,6 +200,26 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 var res = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
                 pProcess.WaitForExit();
                 return res == "true";
+            }
+        }
+
+        public static bool IsHgRepository(string workingDirectory) {
+            using (var pProcess = new System.Diagnostics.Process {
+                StartInfo = {
+                    FileName = HgExecFp,
+                    Arguments = "root",
+                    UseShellExecute = false,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    RedirectStandardOutput = true,
+                    //RedirectStandardError = true, var error = pProcess.StandardError.ReadToEnd();
+                    CreateNoWindow = true,
+                    WorkingDirectory = workingDirectory
+                }
+            }) {
+                pProcess.Start();
+                var res = pProcess.StandardOutput.ReadToEnd().TrimEnd('\r', '\n', Path.DirectorySeparatorChar);
+                pProcess.WaitForExit();
+                return !string.IsNullOrWhiteSpace(res) && workingDirectory.TrimEnd(Path.DirectorySeparatorChar).StartsWith(res);
             }
         }
 
