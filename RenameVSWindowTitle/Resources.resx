@@ -196,6 +196,9 @@
   <data name="tag_vsMajorVersionYear" xml:space="preserve">
     <value>Major version of Visual Studio, in year form (e.g. 2008, 2010, 2012, 2013, 2015...).</value>
   </data>
+  <data name="tag_vsProcessID" xml:space="preserve">
+    <value>Process-ID of Visual Studio</value>
+  </data>
   <data name="tag_workspaceName" xml:space="preserve">
     <value>Current Team Foundation Server (TFS) workspace name.</value>
   </data>
