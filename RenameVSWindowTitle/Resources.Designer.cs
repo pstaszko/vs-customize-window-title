@@ -83,7 +83,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         ///}
         ///
         ////* HTML5 display definitions
-        ///   ==================================== [rest of string was truncated]&quot;;.
+        ///   ============== [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string normalize {
             get {
@@ -355,7 +355,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process-ID of Visual Studio.
+        ///   Looks up a localized string similar to Process ID of Visual Studio.
         /// </summary>
         internal static string tag_vsProcessID {
             get {

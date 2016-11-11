@@ -22,6 +22,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public const string PatternIfBreakModeTag = "PatternIfBreakMode";
         public const string PatternIfDesignModeTag = "PatternIfDesignMode";
 
+        public static readonly Lazy<int> VsProcessId = new Lazy<int>(() => {
+            using (var process = System.Diagnostics.Process.GetCurrentProcess()) {
+                return process.Id;
+            }
+        });
+
         private static int? _VsMajorVersion;
         public static int VsMajorVersion {
             get {

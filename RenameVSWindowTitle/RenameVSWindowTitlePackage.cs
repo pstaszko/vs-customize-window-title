@@ -272,16 +272,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                         useDefaultPattern = false;
                     }
                     else {
-                        var currentInstance = System.Diagnostics.Process.GetCurrentProcess();
                         var vsInstances = System.Diagnostics.Process.GetProcessesByName("devenv");
-                        if (vsInstances.Length >= 2) {
-                            //Check if multiple instances of devenv have identical original names. If so, then rewrite the title of current instance (normally the extension will run on each instance so no need to rewrite them as well). Otherwise do not rewrite the title.
-                            //The best would be to get the EnvDTE.DTE object of the other instances, and compare the solution or project names directly instead of relying on window titles (which may be hacked by third party software as well). But using moniker it will only work if they are launched with the same privilege.
-                            var currentInstanceName = Path.GetFileNameWithoutExtension(Globals.DTE.Solution.FullName);
-                            if (string.IsNullOrEmpty(currentInstanceName) || (from vsInstance in vsInstances
-                                                                              where vsInstance.Id != currentInstance.Id
-                                                                              select this.GetVSSolutionName(vsInstance.MainWindowTitle)).Any(vsInstanceName => vsInstanceName != null && currentInstanceName == vsInstanceName)) {
-                                useDefaultPattern = false;
+                        try {
+                            if (vsInstances.Length >= 2) {
+                                //Check if multiple instances of devenv have identical original names. If so, then rewrite the title of current instance (normally the extension will run on each instance so no need to rewrite them as well). Otherwise do not rewrite the title.
+                                //The best would be to get the EnvDTE.DTE object of the other instances, and compare the solution or project names directly instead of relying on window titles (which may be hacked by third party software as well). But using moniker it will only work if they are launched with the same privilege.
+                                var currentInstanceName = Path.GetFileNameWithoutExtension(Globals.DTE.Solution.FullName);
+                                if (string.IsNullOrEmpty(currentInstanceName) || (from vsInstance in vsInstances
+                                                                                  where vsInstance.Id != Globals.VsProcessId.Value
+                                                                                  select this.GetVSSolutionName(vsInstance.MainWindowTitle)).Any(vsInstanceName => vsInstanceName != null && currentInstanceName == vsInstanceName)) {
+                                    useDefaultPattern = false;
+                                }
+                            }
+                        }
+                        finally {
+                            foreach (var p in vsInstances) {
+                                p.Dispose();
                             }
                         }
                     }
@@ -519,7 +525,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             case "vsMajorVersionYear":
                                 return Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture);
                             case "vsProcessID":
-                                return System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
+                                return Globals.VsProcessId.Value.ToString(CultureInfo.InvariantCulture);
                             case "ideName":
                                 return this.IDEName ?? string.Empty;
                             case "path":
