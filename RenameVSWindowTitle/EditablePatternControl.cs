@@ -24,6 +24,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             get { return this.txEdit.Text; }
             set {
                 this.txEdit.Text = value;
+                this.txEdit.Focus();
+                this.txEdit.Select(this.txEdit.Text.Length, 0); // set insert point to the end
                 this.updatePreview();
 
             }
@@ -47,6 +49,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         private void setToDefault_Click(object sender, EventArgs e) {
             this.txEdit.Text = this.DefaultPattern;
+            this.txEdit.Select(this.txEdit.Text.Length, 0); // set insert point to the end
         }
 
         private void insertTag_Click(object sender, EventArgs e) {

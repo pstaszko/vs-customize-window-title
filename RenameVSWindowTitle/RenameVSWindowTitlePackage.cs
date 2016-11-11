@@ -434,7 +434,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             "gitBranchName",
             "hgBranchName",
             "workspaceName",
-            "workspaceOwnerName"
+            "workspaceOwnerName",
+            "vsProcessID"
         };
 
         readonly Regex TagRegex = new Regex(@"\[([^\[\]]+)\]", RegexOptions.Multiline | RegexOptions.Compiled);
@@ -517,6 +518,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                                 return Globals.VsMajorVersion.ToString(CultureInfo.InvariantCulture);
                             case "vsMajorVersionYear":
                                 return Globals.VsMajorVersionYear.ToString(CultureInfo.InvariantCulture);
+                            case "vsProcessID":
+                                return System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
                             case "ideName":
                                 return this.IDEName ?? string.Empty;
                             case "path":
