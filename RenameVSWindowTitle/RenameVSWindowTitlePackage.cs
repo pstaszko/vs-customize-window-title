@@ -441,7 +441,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             "hgBranchName",
             "workspaceName",
             "workspaceOwnerName",
-            "vsProcessID"
+            "vsProcessID",
+            "env:X"
         };
 
         readonly Regex TagRegex = new Regex(@"\[([^\[\]]+)\]", RegexOptions.Multiline | RegexOptions.Compiled);
@@ -532,7 +533,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                                 return string.IsNullOrEmpty(path) ? windowName : path;
                             case "parentPath":
                                 return GetParentPath(pathParts, cfg?.ClosestParentDepth ?? this.GlobalSettings.ClosestParentDepth, cfg?.FarthestParentDepth ?? this.GlobalSettings.FarthestParentDepth) ?? string.Empty;
-                            default:
+                            default: 
                                 if (tag.StartsWith("parent")) {
                                     var m = RangeRegex.Match(tag.Substring("parent".Length));
                                     if (m.Success) {
@@ -596,6 +597,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                                         var index = Math.Min(documentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
                                         return documentPathParts[documentPathParts.Length - 1 - index];
                                     }
+                                } 
+                                {
+                                    var m = EnvRegex.Match(tag);
+                                    if (m.Success) {
+                                        return Environment.GetEnvironmentVariable(m.Groups[1].Value);
+                                    }
                                 }
                                 break;
                         }
@@ -616,6 +623,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return pattern + " " + appendedString;
         }
 
+        static readonly Regex EnvRegex = new Regex(@"^env:(.+)$", RegexOptions.Compiled);
         static readonly Regex IndexRegex = new Regex(@"^:?(?<index>[0-9]+)$", RegexOptions.Compiled);
         static readonly Regex RangeRegex = new Regex(@"^:(?<startIndex>[0-9]+):(?<endIndex>[0-9]+)$", RegexOptions.Compiled);
 

@@ -154,6 +154,9 @@
   <data name="tag_documentProjectName" xml:space="preserve">
     <value>Active document project name (if the document is part of a loaded project)</value>
   </data>
+  <data name="tag_envX" xml:space="preserve">
+    <value>Environment variable X for current Visual Studio process.</value>
+  </data>
   <data name="tag_gitBranchName" xml:space="preserve">
     <value>Current Git branch name. Make sure Git's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
   </data>

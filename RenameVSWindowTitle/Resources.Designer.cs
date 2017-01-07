@@ -229,6 +229,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Environment variable X for current Visual Studio process..
+        /// </summary>
+        internal static string tag_envX {
+            get {
+                return ResourceManager.GetString("tag_envX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Git branch name. Make sure Git&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
         internal static string tag_gitBranchName {
