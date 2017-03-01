@@ -74,7 +74,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             path.Equals(settings.SolutionFileName, StringComparison.CurrentCultureIgnoreCase) :
                             path.Equals(settings.SolutionFilePath, StringComparison.CurrentCultureIgnoreCase)) ||
                             (path.Contains("*") || path.Contains("?")) && new Wildcard(path, RegexOptions.IgnoreCase).IsMatch(settings.SolutionFilePath);
-                         if (bMatched) break;
+                        if (bMatched) break;
                     }
                 }
                 if (bMatched) {
@@ -119,18 +119,31 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return null;
         }
 
-        private static void TryUpdateSetting<T>(ref T target, XmlElement node, string name) {
+        private static void TryUpdateSetting(ref string target, XmlElement node, string name) {
             try {
                 var val = GetAttributeOrChild(node, name);
                 if (string.IsNullOrEmpty(val))
                     return;
-                target = (T)Convert.ChangeType(val, typeof(T), CultureInfo.InvariantCulture);
+                target = val;
             }
             catch {
                 // do nothing
             }
         }
-        
+
+        private static void TryUpdateSetting(ref int? target, XmlElement node, string name) {
+            try {
+                var val = GetAttributeOrChild(node, name);
+                if (string.IsNullOrEmpty(val))
+                    return;
+                target = int.Parse(val, CultureInfo.InvariantCulture);
+            }
+            catch {
+                // do nothing
+            }
+        }
+
+        private static readonly string[] NodePaths = { "CustomizeVSWindowTitle/SettingsSet", "RenameVSWindowTitle/SettingsSet" };
         private void LoadSettings() {
             this.SettingsSets = new List<SettingsSet>();
 
@@ -148,34 +161,36 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 Debug.WriteLine("Error {0}", x);
             }
 
-            var nodes = doc.SelectNodes("RenameVSWindowTitle/SettingsSet");
+            foreach (var np in NodePaths) {
+                var nodes = doc.SelectNodes(np);
+                if (nodes == null) continue;
+                foreach (XmlElement node in nodes) {
+                    var settingsSet = new SettingsSet { Paths = new List<string>() };
 
-            foreach (XmlElement node in nodes) {
-                var settingsSet = new SettingsSet { Paths = new List<string>() };
+                    // read paths (Path attribute and Path child elements)
+                    var path = node.GetAttribute(Globals.PathTag);
+                    if (!string.IsNullOrEmpty(path))
+                        settingsSet.Paths.Add(path);
 
-                // read paths (Path attribute and Path child elements)
-                var path = node.GetAttribute(Globals.PathTag);
-                if (!string.IsNullOrEmpty(path))
-                    settingsSet.Paths.Add(path);
-
-                var paths = node.GetElementsByTagName(Globals.PathTag);
-                if (paths.Count > 0) {
-                    foreach (XmlElement elem in paths) {
-                        path = elem.InnerText;
-                        if (!string.IsNullOrEmpty(path))
-                            settingsSet.Paths.Add(path);
+                    var paths = node.GetElementsByTagName(Globals.PathTag);
+                    if (paths.Count > 0) {
+                        foreach (XmlElement elem in paths) {
+                            path = elem.InnerText;
+                            if (!string.IsNullOrEmpty(path))
+                                settingsSet.Paths.Add(path);
+                        }
                     }
+
+                    TryUpdateSetting(ref settingsSet.SolutionName, node, Globals.SolutionNameTag);
+                    TryUpdateSetting(ref settingsSet.ClosestParentDepth, node, Globals.ClosestParentDepthTag);
+                    TryUpdateSetting(ref settingsSet.FarthestParentDepth, node, Globals.FarthestParentDepthTag);
+                    TryUpdateSetting(ref settingsSet.AppendedString, node, Globals.AppendedStringTag);
+                    TryUpdateSetting(ref settingsSet.PatternIfRunningMode, node, Globals.PatternIfRunningModeTag);
+                    TryUpdateSetting(ref settingsSet.PatternIfBreakMode, node, Globals.PatternIfBreakModeTag);
+                    TryUpdateSetting(ref settingsSet.PatternIfDesignMode, node, Globals.PatternIfDesignModeTag);
+
+                    this.SettingsSets.Add(settingsSet);
                 }
-
-                TryUpdateSetting(ref settingsSet.SolutionName, node, Globals.SolutionNameTag);
-                TryUpdateSetting(ref settingsSet.ClosestParentDepth, node, Globals.ClosestParentDepthTag);
-                TryUpdateSetting(ref settingsSet.FarthestParentDepth, node, Globals.FarthestParentDepthTag);
-                TryUpdateSetting(ref settingsSet.AppendedString, node, Globals.AppendedStringTag);
-                TryUpdateSetting(ref settingsSet.PatternIfRunningMode, node, Globals.PatternIfRunningModeTag);
-                TryUpdateSetting(ref settingsSet.PatternIfBreakMode, node, Globals.PatternIfBreakModeTag);
-                TryUpdateSetting(ref settingsSet.PatternIfDesignMode, node, Globals.PatternIfDesignModeTag);
-
-                this.SettingsSets.Add(settingsSet);
             }
         }
 

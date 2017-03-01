@@ -70,7 +70,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     this.ctxMenu.Items.RemoveAt(i);
             var z = this.ctxMenu.Items.IndexOf(this.insertTag);
 
-            foreach (var tag in RenameVSWindowTitle.SupportedTags) {
+            foreach (var tag in CustomizeVSWindowTitle.SupportedTags) {
                 var LocalizedDescription = Resources.ResourceManager.GetString("tag_" + tag.Replace(":",""));
                 var m = new ToolStripMenuItem(string.Format(this.insertTag.Text, tag)) {
                     ToolTipText = LocalizedDescription,
@@ -122,9 +122,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     }
                     break;
             }
-            var settings = RenameVSWindowTitle.CurrentPackage.GetSettings(solutionFp);
+            var settings = CustomizeVSWindowTitle.CurrentPackage.GetSettings(solutionFp);
             var pattern = this.txEdit.Text;
-            this.lbPreview.Text = "preview: " + RenameVSWindowTitle.CurrentPackage.GetNewTitle(solution, pattern, settings);
+            this.lbPreview.Text = "preview: " + CustomizeVSWindowTitle.CurrentPackage.GetNewTitle(solution, pattern, settings);
         }
     }
 }
