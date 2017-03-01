@@ -20,12 +20,15 @@ using ErwinMayerLabs.Lib;
 // in the Help/About dialog of Visual Studio.
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
-    [PackageRegistration(UseManagedResourcesOnly = true), InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400), ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string), ProvideMenuResource("Menus.ctmenu", 1), Guid(GuidList.guidRenameVSWindowTitle2PkgString)]
+    [PackageRegistration(UseManagedResourcesOnly = true), InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string), ProvideMenuResource("Menus.ctmenu", 1)]
+    [Guid(GuidList.guidRenameVSWindowTitle2PkgString)]
     [ProvideOptionPage(typeof(GlobalSettingsPageGrid), "Rename VS Window Title", "Global rules", 0, 0, true)]
     [ProvideOptionPage(typeof(SettingsOverridesPageGrid), "Rename VS Window Title", "Solution-specific overrides", 51, 500, true)]
     [ProvideOptionPage(typeof(SupportedTagsGrid), "Rename VS Window Title", "Supported tags", 101, 1000, true)]
     public sealed class RenameVSWindowTitle : Package {
         private string IDEName;
+        private string ElevationSuffix;
 
         public static RenameVSWindowTitle CurrentPackage;
 
@@ -223,6 +226,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
         private string GetVSState(string str) {
+            if (string.IsNullOrWhiteSpace(str)) return null;
             try {
                 var m = new Regex(@" \((.*)\) - (" + Globals.DTE.Name + ".*) " + Regex.Escape(this.GlobalSettings.AppendedString) + "$", RegexOptions.RightToLeft).Match(str);
                 if (!m.Success) {
@@ -247,6 +251,19 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         private void UpdateWindowTitleAsync(object state, EventArgs e) {
             if (this.IDEName == null && Globals.DTE.MainWindow != null) {
                 this.IDEName = this.GetIDEName(Globals.DTE.MainWindow.Caption);
+                if (!string.IsNullOrWhiteSpace(this.IDEName)) {
+                    try {
+                        var m = new Regex(@".*( \(.+\)).*$", RegexOptions.RightToLeft).Match(this.IDEName);
+                        if (m.Success) {
+                            this.ElevationSuffix = m.Groups[1].Captures[0].Value;
+                        }
+                    }
+                    catch (Exception ex) {
+                        if (this.GlobalSettings.EnableDebugMode) {
+                            WriteOutput("UpdateWindowTitleAsync Exception: " + this.IDEName + (". Details: " + ex));
+                        }
+                    }
+                }
             }
             if (this.IDEName == null) {
                 return;
@@ -433,6 +450,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             "parent:X",
             "parent:X:Y",
             "ideName",
+            "elevationSuffix",
             "vsMajorVersion",
             "vsMajorVersionYear",
             "platformName",
@@ -529,11 +547,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                                 return Globals.VsProcessId.Value.ToString(CultureInfo.InvariantCulture);
                             case "ideName":
                                 return this.IDEName ?? string.Empty;
+                            case "elevationSuffix":
+                                return this.ElevationSuffix ?? string.Empty;
                             case "path":
                                 return string.IsNullOrEmpty(path) ? windowName : path;
                             case "parentPath":
                                 return GetParentPath(pathParts, cfg?.ClosestParentDepth ?? this.GlobalSettings.ClosestParentDepth, cfg?.FarthestParentDepth ?? this.GlobalSettings.FarthestParentDepth) ?? string.Empty;
-                            default: 
+                            default:
                                 if (tag.StartsWith("parent")) {
                                     var m = RangeRegex.Match(tag.Substring("parent".Length));
                                     if (m.Success) {
@@ -597,8 +617,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                                         var index = Math.Min(documentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
                                         return documentPathParts[documentPathParts.Length - 1 - index];
                                     }
-                                } 
-                                {
+                                } {
                                     var m = EnvRegex.Match(tag);
                                     if (m.Success) {
                                         return Environment.GetEnvironmentVariable(m.Groups[1].Value);
@@ -629,7 +648,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         private static string GetPathForTitle(string[] pathRange) {
             if (pathRange.Any()) {
-                if (pathRange.Length >= 2 && pathRange[0].EndsWith(":")) {
+                if (pathRange.Length >= 2 && pathRange[0].EndsWith(":", StringComparison.Ordinal)) {
                     pathRange = pathRange.ToArray();
                     pathRange[0] += Path.DirectorySeparatorChar;
                 }
@@ -659,10 +678,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 closestParentDepth = farthestParentDepth;
                 farthestParentDepth = t;
             }
-            return Path.Combine(pathParts.Reverse().Skip(closestParentDepth)
-                .Take(farthestParentDepth - closestParentDepth + 1)
-                .Reverse()
-                .ToArray());
+            pathParts = pathParts.Reverse().Skip(closestParentDepth)
+                                     .Take(farthestParentDepth - closestParentDepth + 1)
+                                     .Reverse()
+                                     .ToArray();
+            if (pathParts.Length >= 2 && pathParts[0].EndsWith(":", StringComparison.Ordinal)) {
+                pathParts[0] += Path.DirectorySeparatorChar;
+            }
+            return Path.Combine(pathParts);
         }
 
         private void ChangeWindowTitle(string title) {

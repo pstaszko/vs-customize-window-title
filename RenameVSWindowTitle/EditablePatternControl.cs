@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.IO;
+using ErwinMayerLabs.RenameVSWindowTitle.Properties;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
     public partial class EditablePatternControl : UserControl {

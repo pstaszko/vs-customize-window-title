@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Diagnostics;
 using System.IO;
+using ErwinMayerLabs.RenameVSWindowTitle.Properties;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
     public class SupportedTagsGrid : DialogPage {

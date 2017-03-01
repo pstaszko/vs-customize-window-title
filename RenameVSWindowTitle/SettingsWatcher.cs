@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Xml;
 using ErwinMayerLabs.Lib;
 
@@ -72,7 +73,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                         bMatched = (-1 == path.IndexOfAny(PathSeparators) ?
                             path.Equals(settings.SolutionFileName, StringComparison.CurrentCultureIgnoreCase) :
                             path.Equals(settings.SolutionFilePath, StringComparison.CurrentCultureIgnoreCase)) ||
-                            (path.Contains("*") || path.Contains("?")) && new Wildcard(path).IsMatch(settings.SolutionFilePath);
+                            (path.Contains("*") || path.Contains("?")) && new Wildcard(path, RegexOptions.IgnoreCase).IsMatch(settings.SolutionFilePath);
                          if (bMatched) break;
                     }
                 }

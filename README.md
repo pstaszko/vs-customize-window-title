@@ -1,4 +1,4 @@
-# Customize Window Title - Visual Studio Extension
+# Customize Visual Studio Window Title - Visual Studio Extension
 ![Screenshot](/RenameVSWindowTitle/Screenshot.png?raw=true "Screenshot")
 
 This is the official repository for:  
@@ -17,10 +17,12 @@ It can also be configured so that the rules apply only when at least two instanc
 
 **Documentation**
 
-Full documentation is available on the [Visual Studio Gallery page](https://visualstudiogallery.msdn.microsoft.com/f3f23845-5b1e-4811-882f-60b7181fa6d6).
+Full documentation is available on the [Visual Studio Marketplace page](https://visualstudiogallery.msdn.microsoft.com/f3f23845-5b1e-4811-882f-60b7181fa6d6).
 
 **Supported editions**
 
-Visual Studio 2010, 2012, 2013, 2015+.
+Visual Studio 2012, 2013, 2015, 2017+.  
+
+Visual Studio 2010 support has been dropped due to limitations imposed by Microsoft's VSIX format to support Visual Studio 2017. The last stable release supporting Visual Studio 2010 can however be downloaded [here](https://github.com/mayerwin/vs-customize-window-title/releases/tag/3.3.6).
 
 You are welcome to contribute to this project!
