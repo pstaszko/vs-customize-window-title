@@ -1,5 +1,5 @@
-# Customize Visual Studio Window Title - Visual Studio Extension
-![Screenshot](/RenameVSWindowTitle/Screenshot.png?raw=true "Screenshot")
+# Customize Visual Studio Window Title - VS Extension
+![Screenshot](/CustomizeVSWindowTitle/Screenshot.png?raw=true "Screenshot")
 
 This is the official repository for:  
 https://visualstudiogallery.msdn.microsoft.com/f3f23845-5b1e-4811-882f-60b7181fa6d6
