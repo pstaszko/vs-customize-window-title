@@ -2,7 +2,7 @@
 ![Screenshot](/CustomizeVSWindowTitle/Screenshot.png?raw=true "Screenshot")
 
 This is the official repository for:  
-https://visualstudiogallery.msdn.microsoft.com/f3f23845-5b1e-4811-882f-60b7181fa6d6
+https://marketplace.visualstudio.com/items?itemName=mayerwin.RenameVisualStudioWindowTitle
 
 Initial release page here:  
 http://erwinmayer.com/labs/visual-studio-2010-extension-rename-visual-studio-window-title
@@ -17,7 +17,7 @@ It can also be configured so that the rules apply only when at least two instanc
 
 **Documentation**
 
-Full documentation is available on the [Visual Studio Marketplace page](https://visualstudiogallery.msdn.microsoft.com/f3f23845-5b1e-4811-882f-60b7181fa6d6).
+Full documentation is available on the [Visual Studio Marketplace page](https://marketplace.visualstudio.com/items?itemName=mayerwin.RenameVisualStudioWindowTitle).
 
 **Supported editions**
 
