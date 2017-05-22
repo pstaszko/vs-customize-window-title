@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Text.RegularExpressions;
 using EnvDTE;
 using EnvDTE80;
@@ -22,228 +22,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public const string PatternIfBreakModeTag = "PatternIfBreakMode";
         public const string PatternIfDesignModeTag = "PatternIfDesignMode";
 
-        public static readonly Lazy<int> VsProcessId = new Lazy<int>(() => {
-            using (var process = System.Diagnostics.Process.GetCurrentProcess()) {
-                return process.Id;
-            }
-        });
+        public static readonly Regex IndexRegex = new Regex(@"^:?(?<index>[0-9]+)$", RegexOptions.Compiled);
+        public static readonly Regex RangeRegex = new Regex(@"^:(?<startIndex>[0-9]+):(?<endIndex>[0-9]+)$", RegexOptions.Compiled);
 
-        private static int? _VsMajorVersion;
-        public static int VsMajorVersion {
-            get {
-                if (!_VsMajorVersion.HasValue) {
-                    Version v;
-                    _VsMajorVersion = Version.TryParse(DTE.Version, out v) ? v.Major : 10;
+        public static string GetPathForTitle(string[] pathRange) {
+            if (pathRange.Any()) {
+                if (pathRange.Length >= 2 && pathRange[0].EndsWith(":", StringComparison.Ordinal)) {
+                    pathRange = pathRange.ToArray();
+                    pathRange[0] += Path.DirectorySeparatorChar;
                 }
-                return _VsMajorVersion.Value;
-            }
-        }
-
-        private static int? _VsMajorVersionYear;
-        public static int VsMajorVersionYear => _VsMajorVersionYear ?? (_VsMajorVersionYear = GetYearFromVsMajorVersion(VsMajorVersion)).Value;
-
-        public static string GetSolutionNameOrEmpty(Solution solution) {
-            var sn = solution?.FullName;
-            return string.IsNullOrEmpty(sn) ? "" : Path.GetFileNameWithoutExtension(sn);
-        }
-
-        public static string GetActiveProjectNameOrEmpty() {
-            Project project;
-            return TryGetActiveProject(DTE, out project) ? project.Name ?? string.Empty : "";
-        }
-
-        public static string GetActiveDocumentProjectNameOrEmpty(Document activeDocument) {
-            return activeDocument?.ProjectItem?.ContainingProject?.Name ?? string.Empty;
-        }
-
-        public static string GetActiveDocumentProjectFileNameOrEmpty(Document activeDocument) {
-            var fn = activeDocument?.ProjectItem?.ContainingProject?.FullName;
-            return fn != null ? Path.GetFileName(fn) : string.Empty;
-        }
-
-        public static string GetActiveDocumentNameOrEmpty(Document activeDocument) {
-            return activeDocument != null ? Path.GetFileName(activeDocument.FullName) : string.Empty;
-        }
-
-        public static string GetActiveDocumentPathOrEmpty(Document activeDocument) {
-            return activeDocument != null ? activeDocument.FullName : string.Empty;
-        }
-
-        public static string GetActiveWindowNameOrEmpty(Window activeWindow) {
-            if (activeWindow != null && activeWindow.Caption != DTE.MainWindow.Caption) {
-                return activeWindow.Caption ?? string.Empty;
+                return Path.Combine(pathRange);
             }
             return string.Empty;
         }
 
-        public static string GetActiveConfigurationNameOrEmpty(Solution solution) {
-            if (string.IsNullOrEmpty(solution?.FullName)) return string.Empty;
-            var activeConfig = (SolutionConfiguration2)solution.SolutionBuild.ActiveConfiguration;
-            return activeConfig != null ? activeConfig.Name ?? string.Empty : string.Empty;
-        }
-
-        public static string GetPlatformNameOrEmpty(Solution solution) {
-            if (string.IsNullOrEmpty(solution?.FullName)) return string.Empty;
-            var activeConfig = (SolutionConfiguration2)solution.SolutionBuild.ActiveConfiguration;
-            return activeConfig != null ? activeConfig.PlatformName ?? string.Empty : string.Empty;
-        }
-
-        public static string GetGitBranchNameOrEmpty(Solution solution) {
-            var sn = solution?.FullName;
-            if (string.IsNullOrEmpty(sn)) return string.Empty;
-            var workingDirectory = new FileInfo(sn).DirectoryName;
-            return IsGitRepository(workingDirectory) ? GetGitBranch(workingDirectory) ?? string.Empty : string.Empty;
-        }
-
-        public static string GetHgBranchNameOrEmpty(Solution solution) {
-            var sn = solution?.FullName;
-            if (string.IsNullOrEmpty(sn)) return string.Empty;
-            var workingDirectory = new FileInfo(sn).DirectoryName;
-            return IsHgRepository(workingDirectory) ? GetHgBranch(workingDirectory) ?? string.Empty : string.Empty;
-        }
-
-        public static string GetWorkspaceNameOrEmpty(Solution solution) {
-            //dynamic vce = Globals.DTE.GetObject("Microsoft.VisualStudio.TeamFoundation.VersionControl.VersionControlExt");
-            //if (vce != null && vce.SolutionWorkspace != null) {
-            //    return vce.SolutionWorkspace.Name;
-            //}  
-            var sn = solution?.FullName;
-            if (string.IsNullOrEmpty(sn)) return string.Empty;
-            var name = string.Empty;
-            InvokeOnUIThread(() => name = WorkspaceInfoGetter.Instance().GetName(sn));
-            return name ?? string.Empty;
-        }
-
-        public static string GetWorkspaceOwnerNameOrEmpty(Solution solution) {
-            //dynamic vce = Globals.DTE.GetObject("Microsoft.VisualStudio.TeamFoundation.VersionControl.VersionControlExt");
-            //if (vce != null && vce.SolutionWorkspace != null) {
-            //    return vce.SolutionWorkspace.OwnerName;
-            //}  
-            var sn = solution?.FullName;
-            if (string.IsNullOrEmpty(sn)) return string.Empty;
-            var name = string.Empty;
-            InvokeOnUIThread(() => name = WorkspaceInfoGetter.Instance().GetOwner(sn));
-            return name ?? string.Empty;
-        }
-
         public static string GetExampleSolution(string solutionPath) {
             return string.IsNullOrEmpty(solutionPath) ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"SampleDir\SampleDir2\SampleDir3\SampleDir4\Sample.sln") : solutionPath;
-        }
-
-        public static string GetHgBranch(string workingDirectory) {
-            using (var pProcess = new System.Diagnostics.Process {
-                StartInfo = {
-                    FileName = HgExecFp,
-                    Arguments = "branch",
-                    UseShellExecute = false,
-                    StandardOutputEncoding = Encoding.UTF8,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true,
-                    WorkingDirectory = workingDirectory
-                }
-            }) {
-                pProcess.Start();
-                var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
-                pProcess.WaitForExit();
-                return branchName;
-            }
-        }
-
-        public static string GetGitBranch(string workingDirectory) {
-            using (var pProcess = new System.Diagnostics.Process {
-                StartInfo = {
-                    FileName = GitExecFp,
-                    Arguments = "symbolic-ref --short -q HEAD", //As per: http://git-blame.blogspot.sg/2013/06/checking-current-branch-programatically.html. Or: "rev-parse --abbrev-ref HEAD"
-                    UseShellExecute = false,
-                    StandardOutputEncoding = Encoding.UTF8,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true,
-                    WorkingDirectory = workingDirectory
-                }
-            }) {
-                pProcess.Start();
-                var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
-                pProcess.WaitForExit();
-                return branchName;
-            }
-        }
-
-        public const string HgExecFn = "hg.exe";
-        private static string HgExecFp = HgExecFn;
-
-        public static void UpdateHgExecFp(string hgDp) {
-            if (string.IsNullOrEmpty(hgDp)) {
-                HgExecFp = HgExecFn;
-                return;
-            }
-            HgExecFp = Path.Combine(hgDp, HgExecFn);
-        }
-
-        public const string GitExecFn = "git.exe";
-        private static string GitExecFp = GitExecFn;
-
-        public static void UpdateGitExecFp(string gitDp) {
-            if (string.IsNullOrEmpty(gitDp)) {
-                GitExecFp = GitExecFn;
-                return;
-            }
-            GitExecFp = Path.Combine(gitDp, GitExecFn);
-        }
-
-        public static bool IsGitRepository(string workingDirectory) {
-            using (var pProcess = new System.Diagnostics.Process {
-                StartInfo = {
-                    FileName = GitExecFp,
-                    Arguments = "rev-parse --is-inside-work-tree",
-                    UseShellExecute = false,
-                    StandardOutputEncoding = Encoding.UTF8,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true,
-                    WorkingDirectory = workingDirectory
-                }
-            }) {
-                pProcess.Start();
-                var res = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
-                pProcess.WaitForExit();
-                return res == "true";
-            }
-        }
-
-        public static bool IsHgRepository(string workingDirectory) {
-            using (var pProcess = new System.Diagnostics.Process {
-                StartInfo = {
-                    FileName = HgExecFp,
-                    Arguments = "root",
-                    UseShellExecute = false,
-                    StandardOutputEncoding = Encoding.UTF8,
-                    RedirectStandardOutput = true,
-                    //RedirectStandardError = true, var error = pProcess.StandardError.ReadToEnd();
-                    CreateNoWindow = true,
-                    WorkingDirectory = workingDirectory
-                }
-            }) {
-                pProcess.Start();
-                var res = pProcess.StandardOutput.ReadToEnd().TrimEnd('\r', '\n', Path.DirectorySeparatorChar);
-                pProcess.WaitForExit();
-                return !string.IsNullOrWhiteSpace(res) && workingDirectory.TrimEnd(Path.DirectorySeparatorChar).StartsWith(res);
-            }
-        }
-
-        public static bool TryGetActiveProject(DTE2 dte, out Project activeProject) {
-            activeProject = null;
-            try {
-                if (dte.ActiveSolutionProjects != null) {
-                    var activeSolutionProjects = dte.ActiveSolutionProjects as Array;
-                    if (activeSolutionProjects != null && activeSolutionProjects.Length > 0) {
-                        activeProject = activeSolutionProjects.GetValue(0) as Project;
-                        return true;
-                    }
-                }
-            }
-            catch {
-                // ignored
-            }
-            return false;
         }
 
         public static void InvokeOnUIThread(Action action) {
@@ -278,11 +72,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             vs_instance_info.multiple_instances_same_version = false;
             vs_instance_info.nb_instances_same_solution = 0;
             try {
-                IRunningObjectTable running_object_table;
-                if (VSConstants.S_OK != GetRunningObjectTable(0, out running_object_table))
+                if (VSConstants.S_OK != GetRunningObjectTable(0, out IRunningObjectTable running_object_table))
                     return;
-                IEnumMoniker moniker_enumerator;
-                running_object_table.EnumRunning(out moniker_enumerator);
+                running_object_table.EnumRunning(out IEnumMoniker moniker_enumerator);
                 moniker_enumerator.Reset();
 
                 var monikers = new IMoniker[1];
@@ -291,17 +83,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 int dte_count_our_version = 0;
                 //Will only return if same privilege as per http://stackoverflow.com/questions/11835617/understanding-the-running-object-table 
                 while (VSConstants.S_OK == moniker_enumerator.Next(1, monikers, num_fetched)) {
-                    IBindCtx ctx;
-                    if (VSConstants.S_OK != CreateBindCtx(0, out ctx))
+                    if (VSConstants.S_OK != CreateBindCtx(0, out IBindCtx ctx))
                         continue;
 
-                    string name;
-                    monikers[0].GetDisplayName(ctx, null, out name);
+                    monikers[0].GetDisplayName(ctx, null, out string name);
                     if (!name.StartsWith("!VisualStudio.DTE."))
                         continue;
 
-                    object com_object;
-                    if (VSConstants.S_OK != running_object_table.GetObject(monikers[0], out com_object))
+                    if (VSConstants.S_OK != running_object_table.GetObject(monikers[0], out object com_object))
                         continue;
 
                     var dte = com_object as DTE2;
@@ -328,25 +117,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             catch {
                 vs_instance_info.multiple_instances = false;
                 vs_instance_info.multiple_instances_same_version = false;
-            }
-        }
-
-        private static int GetYearFromVsMajorVersion(int version) {
-            switch (version) {
-                case 9:
-                    return 2008;
-                case 10:
-                    return 2010;
-                case 11:
-                    return 2012;
-                case 12:
-                    return 2013;
-                case 14:
-                    return 2015;
-                case 15:
-                    return 2017;
-                default:
-                    return version;
             }
         }
     }

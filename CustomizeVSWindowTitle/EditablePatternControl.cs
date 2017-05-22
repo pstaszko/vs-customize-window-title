@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.IO;
 using ErwinMayerLabs.RenameVSWindowTitle.Properties;
+using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
     public partial class EditablePatternControl : UserControl {
@@ -70,8 +71,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     this.ctxMenu.Items.RemoveAt(i);
             var z = this.ctxMenu.Items.IndexOf(this.insertTag);
 
-            foreach (var tag in CustomizeVSWindowTitle.SupportedTags) {
-                var LocalizedDescription = Resources.ResourceManager.GetString("tag_" + tag.Replace(":",""));
+            foreach (var tag in CustomizeVSWindowTitle.CurrentPackage.SupportedTags) {
+                var LocalizedDescription = Resources.ResourceManager.GetString("tag_" + tag.Replace(":", ""));
                 var m = new ToolStripMenuItem(string.Format(this.insertTag.Text, tag)) {
                     ToolTipText = LocalizedDescription,
                     Tag = tag
@@ -106,9 +107,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                         this.lbPreview.Text = "please close solution to enable preview!";
                         return;
                     }
-                    var ad = Globals.GetActiveDocumentNameOrEmpty(activeDocument);
+                    var ad = DocumentHelper.GetActiveDocumentNameOrEmpty(activeDocument);
                     if (string.IsNullOrEmpty(ad)) {
-                        ad = Globals.GetActiveWindowNameOrEmpty(activeWindow);
+                        ad = DocumentHelper.GetActiveWindowNameOrEmpty(activeWindow);
                     }
                     if (string.IsNullOrEmpty(ad)) {
                         this.lbPreview.Text = "please load any document or open any window to enable preview!";

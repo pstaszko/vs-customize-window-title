@@ -74,7 +74,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
 
         private void btGlobalConfig_Click(object sender, EventArgs e) {
-            CustomizeVSWindowTitle.CurrentPackage.SettingsOverrides.GlobalSolutionSettingsOverridesFp = this._GlobalSettingsFp;
+            CustomizeVSWindowTitle.CurrentPackage.UiSettingsOverridesOptions.GlobalSolutionSettingsOverridesFp = this._GlobalSettingsFp;
 
             if (this._GlobalSettingsFp != null) {
                 try {

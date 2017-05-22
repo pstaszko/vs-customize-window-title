@@ -355,6 +355,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Startup project(s) name(s), separated with &quot; &amp; &quot; if multiple..
+        /// </summary>
+        internal static string tag_startupProjectsNames {
+            get {
+                return ResourceManager.GetString("tag_startupProjectsNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Startup project(s) name(s), separated with X if multiple. Do not use &quot;[&quot;, &quot;]&quot;, &quot;-&quot;, or &quot;:&quot; for X to avoid parsing conflicts. Recommended values: &quot; &amp; &quot;, &quot; , &quot; or &quot; | &quot;..
+        /// </summary>
+        internal static string tag_startupProjectsNamesX {
+            get {
+                return ResourceManager.GetString("tag_startupProjectsNamesX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Major version of Visual Studio (e.g. 11, 12, 14, 15...)..
         /// </summary>
         internal static string tag_vsMajorVersion {

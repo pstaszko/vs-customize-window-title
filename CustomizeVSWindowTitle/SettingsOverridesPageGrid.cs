@@ -54,7 +54,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
             if (CustomizeVSWindowTitle.CurrentPackage != null) {
                 // if no global settingsfile defined, use default file name
-                var gfp = CustomizeVSWindowTitle.CurrentPackage.SettingsOverrides.GlobalSolutionSettingsOverridesFp;
+                var gfp = CustomizeVSWindowTitle.CurrentPackage.UiSettingsOverridesOptions.GlobalSolutionSettingsOverridesFp;
                 if (string.IsNullOrEmpty(gfp))
                     gfp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "CustomizeVSWindowTitle-global.xml");
 

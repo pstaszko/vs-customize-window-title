@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 using Microsoft.VisualStudio.Shell;
 
 //http://stackoverflow.com/questions/24291249/dialogpage-string-array-not-persisted
@@ -77,7 +78,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Git binaries directory")]
         [Description("Default: Empty. Search windows PATH for git if empty.")]
         [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [FilePicker(true, Globals.GitExecFn, "Git executable(git.exe)|git.exe|All files(*.*)|*.*", 1)]
+        [FilePicker(true, GitBranchNameResolver.GitExecFn, "Git executable(git.exe)|git.exe|All files(*.*)|*.*", 1)]
         [DefaultValue("")]
         public string GitDirectory { get; set; } = "";
 
@@ -85,7 +86,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Hg binaries directory")]
         [Description("Default: Empty. Search windows PATH for hg if empty.")]
         [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [FilePicker(true, Globals.GitExecFn, "Git executable(hg.exe)|hg.exe|All files(*.*)|*.*", 1)]
+        [FilePicker(true, HgBranchNameResolver.HgExecFn, "Hg executable(hg.exe)|hg.exe|All files(*.*)|*.*", 1)]
         [DefaultValue("")]
         public string HgDirectory { get; set; } = "";
 

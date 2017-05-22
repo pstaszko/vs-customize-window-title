@@ -78,8 +78,21 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     }
                 }
                 if (bMatched) {
-                    settings.Merge(settingsSet);
-                    return true;
+                    try {
+                        settings.Merge(settingsSet);
+                        return true;
+                    }
+                    catch (Exception ex) {
+                        try {
+                            if (CustomizeVSWindowTitle.CurrentPackage.UiSettings.EnableDebugMode) {
+                                CustomizeVSWindowTitle.WriteOutput("settings.Merge(settingsSet) exception: " + ex);
+                            }
+                        }
+                        catch {
+                            // ignored
+                        }
+                        return false;
+                    }
                 }
             }
             return false;

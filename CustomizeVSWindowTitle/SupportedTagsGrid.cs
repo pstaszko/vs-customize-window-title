@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.Shell;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Diagnostics;
-using System.IO;
 using ErwinMayerLabs.RenameVSWindowTitle.Properties;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
@@ -26,7 +25,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 sb.Append("<p>Full documentation is available on <a href='#' onclick='window.external.OpenLinkInExternalBrowser(\"https://visualstudiogallery.msdn.microsoft.com/f3f23845-5b1e-4811-882f-60b7181fa6d6\");'>the Visual Studio Gallery page</a>.");
                 sb.Append("<p style='font-style: italic'>Tip: clicking on a tag will copy it to the clipboard.</p>");
                 sb.Append("<table><thead><tr><th>Tag</th><th>Description</th></tr></thead><tbody>");
-                foreach (var tag in CustomizeVSWindowTitle.SupportedTags) {
+                foreach (var tag in CustomizeVSWindowTitle.CurrentPackage.SupportedTags) {
                     var localizedDescription = Resources.ResourceManager.GetString("tag_" + tag.Replace(":", ""));
 
                     sb.AppendFormat("<tr><td onclick=\'selectText(this);copyText(\"{0}\");\'><strong>[{0}]</strong></td>", tag);

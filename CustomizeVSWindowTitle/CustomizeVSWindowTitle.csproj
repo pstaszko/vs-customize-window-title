@@ -41,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,8 +50,22 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Resolvers\ConfigurationResolver.cs" />
+    <Compile Include="Resolvers\DocumentResolver.cs" />
+    <Compile Include="Resolvers\ElevationSuffixResolver.cs" />
+    <Compile Include="Resolvers\GitResolver.cs" />
+    <Compile Include="Resolvers\HgResolver.cs" />
+    <Compile Include="Resolvers\IdeResolver.cs" />
+    <Compile Include="Resolvers\PathResolver.cs" />
+    <Compile Include="Resolvers\ProjectResolver.cs" />
+    <Compile Include="Resolvers\SolutionResolver.cs" />
+    <Compile Include="Resolvers\TagResolver.cs" />
+    <Compile Include="Resolvers\TfsWorkspaceResolver.cs" />
+    <None Include="app.config" />
+    <None Include="Lib\TeamFoundationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -185,7 +200,7 @@
     </Compile>
     <Compile Include="Lib\UtilsExtensions.cs" />
     <Compile Include="Lib\Wildcard.cs" />
-    <Compile Include="WorkspaceInfoGetter.cs" />
+    <Compile Include="Lib\WorkspaceInfoGetter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EditablePatternControl.resx">
