@@ -355,7 +355,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Startup project(s) name(s), separated with &quot; &amp; &quot; if multiple..
+        ///   Looks up a localized string similar to Startup project(s) name(s), separated with &apos; &amp; &apos; if multiple..
         /// </summary>
         internal static string tag_startupProjectsNames {
             get {
@@ -364,7 +364,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Startup project(s) name(s), separated with X if multiple. Do not use &quot;[&quot;, &quot;]&quot;, &quot;-&quot;, or &quot;:&quot; for X to avoid parsing conflicts. Recommended values: &quot; &amp; &quot;, &quot; , &quot; or &quot; | &quot;..
+        ///   Looks up a localized string similar to Startup project(s) name(s), separated with X if multiple. Do not use &apos;[&apos;, &apos;]&apos;, &apos;-&apos;, or &apos;:&apos; for X to avoid parsing conflicts. Recommended values: &apos; &amp; &apos;, &apos;, &apos; or &apos; | &apos; (without quotes)..
         /// </summary>
         internal static string tag_startupProjectsNamesX {
             get {
