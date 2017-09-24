@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.IO;
+using EnvDTE;
 using ErwinMayerLabs.RenameVSWindowTitle.Properties;
 using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 
@@ -98,8 +99,20 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             var solution = Globals.DTE.Solution;
             var solutionFp = solution?.FullName;
 
-            var activeDocument = Globals.DTE.ActiveDocument;
-            var activeWindow = Globals.DTE.ActiveWindow;
+            Document activeDocument = null;
+            try {
+                activeDocument = Globals.DTE.ActiveDocument;
+            }
+            catch {
+                //Do nothing
+            }
+            Window activeWindow = null;
+            try {
+                activeWindow = Globals.DTE.ActiveWindow;
+            }
+            catch {
+                //Do nothing
+            }
 
             switch (this.PreviewRequires) {
                 case PreviewRequiresAttribute.Requirement.Document:

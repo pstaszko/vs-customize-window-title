@@ -1,5 +1,7 @@
 using EnvDTE;
 using EnvDTE80;
+using System.ComponentModel;
+
 
 namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class ConfigurationNameResolver : SimpleTagResolver {

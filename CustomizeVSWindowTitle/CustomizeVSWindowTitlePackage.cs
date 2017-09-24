@@ -84,7 +84,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new WorkspaceNameResolver(),
                 new WorkspaceOwnerNameResolver(),
                 new VsProcessIdResolver(),
-                new EnvResolver()
+                new EnvResolver(),
+                new DebuggedProcessesArgsResolver()
             };
             this.SupportedTags = this.TagResolvers.SelectMany(r => r.TagNames).ToArray();
             this.SimpleTagResolvers = this.TagResolvers.OfType<ISimpleTagResolver>().ToDictionary(t => t.TagName, t => t);
@@ -506,6 +507,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                         if (System.Windows.Application.Current.MainWindow.Title != title) {
                             System.Windows.Application.Current.MainWindow.Title = title;
                         }
+                        //foreach (var windowObj in System.Windows.Application.Current.Windows) {
+                        //    var window = windowObj as Microsoft.VisualStudio.PlatformUI.Shell.Controls.FloatingWindow;
+                        //    if (window != null) {
+                        //        window.Title = Globals.DTE.MainWindow.Caption;
+                        //        if (window.Title != title) {
+                        //            window.Title = title;
+                        //        }
+                        //    }
+                        //}
                     }
                     catch (Exception) {
                         // ignored

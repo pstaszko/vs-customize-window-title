@@ -19,7 +19,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -153,6 +153,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         internal static string tag_configurationName {
             get {
                 return ResourceManager.GetString("tag_configurationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arguments of the processes currently debugged (including the executable file name before each set of arguments if more than 1 process)..
+        /// </summary>
+        internal static string tag_debuggedProcessesArgs {
+            get {
+                return ResourceManager.GetString("tag_debuggedProcessesArgs", resourceCulture);
             }
         }
         
