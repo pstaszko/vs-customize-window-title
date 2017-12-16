@@ -90,6 +90,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DefaultValue("")]
         public string HgDirectory { get; set; } = "";
 
+        [Category("Source control")]
+        [DisplayName("Svn binaries directory")]
+        [Description("Default: Empty. Search windows PATH for svn if empty.")]
+        [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [FilePicker(true, SvnDirectoryResolver.SvnExecFn, "Svn executable(svn.exe)|svn.exe|All files(*.*)|*.*", 1)]
+        [DefaultValue("")]
+        public string SvnDirectory { get; set; } = "";
+
         [Category("Debug")]
         [DisplayName("Enable debug mode")]
         [Description("Default: false. Set to true to activate debug output to Output window.")]
