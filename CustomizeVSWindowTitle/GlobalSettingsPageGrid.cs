@@ -94,7 +94,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Svn binaries directory")]
         [Description("Default: Empty. Search windows PATH for svn if empty.")]
         [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [FilePicker(true, SvnDirectoryResolver.SvnExecFn, "Svn executable(svn.exe)|svn.exe|All files(*.*)|*.*", 1)]
+        [FilePicker(true, SvnResolver.SvnExecFn, "Svn executable(svn.exe)|svn.exe|All files(*.*)|*.*", 1)]
         [DefaultValue("")]
         public string SvnDirectory { get; set; } = "";
 

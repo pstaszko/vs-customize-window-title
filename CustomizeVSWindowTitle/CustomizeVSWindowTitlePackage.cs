@@ -81,7 +81,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new ConfigurationNameResolver(),
                 new GitBranchNameResolver(),
                 new HgBranchNameResolver(),
-                new SvnDirectoryResolver(),
+                new SvnResolver(),
                 new WorkspaceNameResolver(),
                 new WorkspaceOwnerNameResolver(),
                 new VsProcessIdResolver(),
@@ -220,7 +220,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
             catch (Exception ex) {
                 if (this.UiSettings.EnableDebugMode) {
-                    WriteOutput("GetIDEName Exception: " + str + (". Details: " + ex));
+                    WriteOutput("GetIDEName Exception: " + str + ". Details: " + ex);
                 }
                 return null;
             }

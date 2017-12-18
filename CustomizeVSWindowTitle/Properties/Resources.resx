@@ -205,6 +205,9 @@
   <data name="tag_startupProjectsNamesX" xml:space="preserve">
     <value>Startup project(s) name(s), separated with X if multiple. Do not use '[', ']', '-', or ':' for X to avoid parsing conflicts. Recommended values: ' &amp; ', ', ' or ' | ' (without quotes).</value>
   </data>
+  <data name="tag_svnDirectoryName" xml:space="preserve">
+    <value>Current SVN directory name. Make sure SVN's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
+  </data>
   <data name="tag_vsMajorVersion" xml:space="preserve">
     <value>Major version of Visual Studio (e.g. 11, 12, 14, 15...).</value>
   </data>

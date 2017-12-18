@@ -4,23 +4,20 @@ using System.Linq;
 using System.Text;
 using EnvDTE;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers
-{
-    public class SvnDirectoryResolver : SimpleTagResolver {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+    public class SvnResolver : SimpleTagResolver {
 
         public const string SvnExecFn = "svn.exe";
         private static string SvnExecFp = SvnExecFn;
 
-        public SvnDirectoryResolver() : base(tagName: "svnDirectory") { }
+        public SvnResolver() : base(tagName: "svnDirectoryName") { }
 
         public override string Resolve(AvailableInfo info) {
             UpdateSvnExecFp(info.GlobalSettings.SvnDirectory);
             return GetSvnDirectoryOrEmpty(info.Solution);
         }
-        public static void UpdateSvnExecFp(string svnDp)
-        {
-            if (string.IsNullOrEmpty(svnDp))
-            {
+        public static void UpdateSvnExecFp(string svnDp) {
+            if (string.IsNullOrEmpty(svnDp)) {
                 SvnExecFp = SvnExecFn;
                 return;
             }
@@ -31,16 +28,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers
             var sn = solution?.FullName;
             if (string.IsNullOrEmpty(sn)) return string.Empty;
             var workingDirectory = new FileInfo(sn).DirectoryName;
-            return etSvnDirectory(workingDirectory) ?? string.Empty;
+            return GetSvnDirectory(workingDirectory) ?? string.Empty;
         }
 
-        public static string etSvnDirectory(string workingDirectory) {
-            try
-            {
-                using (var pProcess = new System.Diagnostics.Process
-                {
-                    StartInfo =
-                    {
+        public static string GetSvnDirectory(string workingDirectory) {
+            try {
+                using (var pProcess = new System.Diagnostics.Process {
+                    StartInfo = {
                         FileName = SvnExecFp,
                         Arguments = "info",
                         UseShellExecute = false,
@@ -49,34 +43,26 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers
                         CreateNoWindow = true,
                         WorkingDirectory = workingDirectory
                     }
-                })
-                {
+                }) {
                     pProcess.Start();
-                    string output = pProcess.StandardOutput.ReadToEnd();
+                    var output = pProcess.StandardOutput.ReadToEnd();
                     pProcess.WaitForExit();
-                    if (pProcess.ExitCode != 0)
-                    {
+                    if (pProcess.ExitCode != 0) {
                         // Not a working directory.
                         return null;
                     }
                     const string Prefix = "Relative URL: ";
-                    string branchLine = output.Split('\n').SingleOrDefault(line => line.StartsWith(Prefix, StringComparison.Ordinal));
-                    if (branchLine != null)
-                        return branchLine.Substring(Prefix.Length).Trim('^', '\n', '\r', ' ');
-                    return null;
+                    var branchLine = output.Split('\n').SingleOrDefault(line => line.StartsWith(Prefix, StringComparison.Ordinal));
+                    return branchLine?.Substring(Prefix.Length).Trim('^', '\n', '\r', ' ');
                 }
             }
-            catch (Exception ex)
-            {
-                try
-                {
-                    if (CustomizeVSWindowTitle.CurrentPackage.UiSettings.EnableDebugMode)
-                    {
-                        CustomizeVSWindowTitle.WriteOutput("svnDirectoryResolver.GetSvnBranch() exception: " + ex);
+            catch (Exception ex) {
+                try {
+                    if (CustomizeVSWindowTitle.CurrentPackage.UiSettings.EnableDebugMode) {
+                        CustomizeVSWindowTitle.WriteOutput("SvnResolver.GetSvnDirectory() exception: " + ex);
                     }
                 }
-                catch
-                {
+                catch {
                     // ignored
                 }
                 return null;
