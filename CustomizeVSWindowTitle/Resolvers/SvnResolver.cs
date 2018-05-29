@@ -1,21 +1,64 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using EnvDTE;
 
+using ErwinMayerLabs.Lib;
+
 namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
-    public class SvnResolver : SimpleTagResolver {
+    public class SvnResolver : TagResolver, ISimpleTagResolver {
 
         public const string SvnExecFn = "svn.exe";
         private static string SvnExecFp = SvnExecFn;
+        private const string tagName = "svnDirectoryName";
 
-        public SvnResolver() : base(tagName: "svnDirectoryName") { }
+        public SvnResolver() : base(tagNames: new[] { tagName, tagName + ":X", tagName + ":X:Y"}) { }
 
-        public override string Resolve(AvailableInfo info) {
+        public string TagName { get; set; } = tagName;
+
+        public string Resolve(AvailableInfo info) {
             UpdateSvnExecFp(info.GlobalSettings.SvnDirectory);
             return GetSvnDirectoryOrEmpty(info.Solution);
         }
+
+        public override bool TryResolve(string tag, AvailableInfo info, out string s) {
+            s = null;
+            if (!tag.StartsWith(tagName, StringComparison.InvariantCulture)) return false;
+
+            var svnPath = Resolve(info);
+            if (string.IsNullOrWhiteSpace(svnPath)) return false;
+            var svnPathParts = new List<string> { "/" }; // Initialize with a root
+            svnPathParts.AddRange(svnPath.Split(new[] { System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries));
+            var m = Globals.RangeRegex.Match(tag.Substring(tagName.Length));
+            if (m.Success) {
+                if (!svnPathParts.Any()) {
+                    s = string.Empty;
+                }
+                else {
+                    var startIndex = Math.Min(svnPathParts.Count - 1, Math.Max(0, int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture)));
+                    var endIndex = Math.Min(svnPathParts.Count - 1, Math.Max(0, int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture)));
+                    var pathRange = svnPathParts.GetRange(startIndex: startIndex, endIndex: endIndex).ToArray();
+                    s = Globals.GetPathForTitle(pathRange);
+                }
+                return true;
+            }
+            m = Globals.IndexRegex.Match(tag.Substring(tagName.Length));
+            if (m.Success) {
+                if (!svnPathParts.Any()) {
+                    s = string.Empty;
+                }
+                else {
+                    var index = Math.Min(svnPathParts.Count - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
+                    s = svnPathParts[index];
+                }
+                return true;
+            }
+            return false;
+        }
+
         public static void UpdateSvnExecFp(string svnDp) {
             if (string.IsNullOrEmpty(svnDp)) {
                 SvnExecFp = SvnExecFn;
