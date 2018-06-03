@@ -91,16 +91,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public string HgDirectory { get; set; } = "";
 
         [Category("Source control")]
-        [DisplayName("Svn binaries directory")]
+        [DisplayName("SVN binaries directory")]
         [Description("Default: Empty. Search windows PATH for svn if empty.")]
         [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [FilePicker(true, SvnResolver.SvnExecFn, "Svn executable(svn.exe)|svn.exe|All files(*.*)|*.*", 1)]
+        [FilePicker(true, SvnResolver.SvnExecFn, "SVN executable(svn.exe)|svn.exe|All files(*.*)|*.*", 1)]
         [DefaultValue("")]
         public string SvnDirectory { get; set; } = "";
 
         [Category("Source control")]
-        [DisplayName("Svn directory separator")]
-        [Description("Default: '/'. Specify the character used to separate the svn directories.")]
+        [DisplayName("SVN directory separator")]
+        [Description("Default: '/'. Specify the character used to separate the SVN directories.")]
         [DefaultValue("/")]
         public string SvnDirectorySeparator { get; set; } = "/";
 
