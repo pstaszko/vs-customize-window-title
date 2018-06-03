@@ -6,9 +6,11 @@ using ErwinMayerLabs.Lib;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class PathResolver : TagResolver, ISimpleTagResolver {
-        public string TagName { get; } = "path";
+        private const string tagName = "path";
 
-        public PathResolver() : base(tagNames: new[] { "path", "path:X", "path:X:Y" }) { }
+        public PathResolver() : base(tagNames: new[] { tagName, tagName + ":X", tagName + ":X:Y" }) { }
+
+        public string TagName { get; } = tagName;
 
         public string Resolve(AvailableInfo info) {
             return string.IsNullOrEmpty(info.Path) ? info.WindowName : info.Path;
@@ -16,8 +18,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
 
         public override bool TryResolve(string tag, AvailableInfo info, out string s) {
             s = null;
-            if (!tag.StartsWith("path", StringComparison.InvariantCulture)) return false;
-            var m = Globals.RangeRegex.Match(tag.Substring("path".Length));
+            if (!tag.StartsWith(tagName, StringComparison.InvariantCulture)) return false;
+            var m = Globals.RangeRegex.Match(tag.Substring(tagName.Length));
             if (m.Success) {
                 if (!info.PathParts.Any()) {
                     s = string.Empty;
@@ -30,7 +32,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                 }
                 return true;
             }
-            m = Globals.IndexRegex.Match(tag.Substring("path".Length));
+            m = Globals.IndexRegex.Match(tag.Substring(tagName.Length));
             if (m.Success) {
                 if (!info.PathParts.Any()) {
                     s = string.Empty;
@@ -46,13 +48,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     }
 
     public class ParentResolver : TagResolver {
-        public ParentResolver() : base(tagNames: new[] { "parent:X", "parent:X:Y" }) { }
+        private const string tagName = "parent";
+
+        public ParentResolver() : base(tagNames: new[] { tagName + ":X", tagName + ":X:Y" }) { }
 
         public override bool TryResolve(string tag, AvailableInfo info, out string s) {
             s = null;
-            if (!tag.StartsWith("parent", StringComparison.InvariantCulture)) return false;
+            if (!tag.StartsWith(tagName, StringComparison.InvariantCulture)) return false;
 
-            var m = Globals.RangeRegex.Match(tag.Substring("parent".Length));
+            var m = Globals.RangeRegex.Match(tag.Substring(tagName.Length));
             if (m.Success) {
                 if (!info.PathParts.Any()) {
                     s = string.Empty;
@@ -65,7 +69,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                 }
                 return true;
             }
-            m = Globals.IndexRegex.Match(tag.Substring("parent".Length));
+            m = Globals.IndexRegex.Match(tag.Substring(tagName.Length));
             if (m.Success) {
                 if (!info.PathParts.Any()) {
                     s = string.Empty;
@@ -103,5 +107,4 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             return false;
         }
     }
-
 }

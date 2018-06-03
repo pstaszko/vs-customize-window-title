@@ -209,10 +209,10 @@
     <value>Current SVN directory name. Make sure SVN's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
   </data>
   <data name="tag_svnDirectoryNameX" xml:space="preserve">
-    <value>Svn directory element at the specified index (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [path:0] = /, [path:1] = Branches)</value>
+    <value>Svn directory element at the specified index (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [svnDirectoryName:0] = /, [svnDirectoryName:1] = Branches)</value>
   </data>
   <data name="tag_svnDirectoryNameXY" xml:space="preserve">
-    <value>Svn directory segment over the specified range (e.g. for  /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [path:0:2] = /Branches/Developer, [path:2:0] = Developer/Branches//)</value>
+    <value>Svn directory segment over the specified range (e.g. for  /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [svnDirectoryName:0:2] = /Branches/Developer, [svnDirectoryName:2:0] = Developer/Branches//)</value>
   </data>
   <data name="tag_vsMajorVersion" xml:space="preserve">
     <value>Major version of Visual Studio (e.g. 11, 12, 14, 15...).</value>

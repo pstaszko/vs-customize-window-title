@@ -380,7 +380,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
                 return ResourceManager.GetString("tag_startupProjectsNamesX", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Current SVN directory name. Make sure SVN&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
@@ -391,7 +391,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Svn directory element at the specified index (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [path:0] = /, [path:1] = Branches).
+        ///   Looks up a localized string similar to Svn directory element at the specified index (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [svnDirectoryName:0] = /, [svnDirectoryName:1] = Branches).
         /// </summary>
         internal static string tag_svnDirectoryNameX {
             get {
@@ -400,7 +400,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Svn directory segment over the specified range (e.g. for  /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [path:0:2] = /Branches/Developer, [path:2:0] = Developer/Branches//).
+        ///   Looks up a localized string similar to Svn directory segment over the specified range (e.g. for  /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [svnDirectoryName:0:2] = /Branches/Developer, [svnDirectoryName:2:0] = Developer/Branches//).
         /// </summary>
         internal static string tag_svnDirectoryNameXY {
             get {

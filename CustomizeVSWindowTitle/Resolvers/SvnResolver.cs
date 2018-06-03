@@ -10,7 +10,6 @@ using ErwinMayerLabs.Lib;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class SvnResolver : TagResolver, ISimpleTagResolver {
-
         public const string SvnExecFn = "svn.exe";
         private static string SvnExecFp = SvnExecFn;
         private const string tagName = "svnDirectoryName";
@@ -31,8 +30,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             if (string.IsNullOrWhiteSpace(svnPath)) return false;
             var directorySeparator = info.GlobalSettings.SvnDirectorySeparator;
             var svnPathParts = new List<string>();
-            if (Path.IsPathRooted(svnPath))
-                svnPathParts.Add(directorySeparator);
+            if (Path.IsPathRooted(svnPath)) svnPathParts.Add(directorySeparator);
             svnPathParts.AddRange(svnPath.Split(new[] { directorySeparator }, StringSplitOptions.RemoveEmptyEntries));
             var m = Globals.RangeRegex.Match(tag.Substring(tagName.Length));
             if (m.Success) {
