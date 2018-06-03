@@ -98,6 +98,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DefaultValue("")]
         public string SvnDirectory { get; set; } = "";
 
+        [Category("Source control")]
+        [DisplayName("Svn directory separator")]
+        [Description("Default: '/'. Specify the character used to separate the svn directories.")]
+        [DefaultValue("/")]
+        public string SvnDirectorySeparator { get; set; } = "/";
+
         [Category("Debug")]
         [DisplayName("Enable debug mode")]
         [Description("Default: false. Set to true to activate debug output to Output window.")]

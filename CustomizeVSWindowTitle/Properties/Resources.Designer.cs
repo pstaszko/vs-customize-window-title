@@ -391,6 +391,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Svn directory element at the specified index (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [path:0] = /, [path:1] = Branches).
+        /// </summary>
+        internal static string tag_svnDirectoryNameX {
+            get {
+                return ResourceManager.GetString("tag_svnDirectoryNameX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Svn directory segment over the specified range (e.g. for  /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [path:0:2] = /Branches/Developer, [path:2:0] = Developer/Branches//).
+        /// </summary>
+        internal static string tag_svnDirectoryNameXY {
+            get {
+                return ResourceManager.GetString("tag_svnDirectoryNameXY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Major version of Visual Studio (e.g. 11, 12, 14, 15...)..
         /// </summary>
         internal static string tag_vsMajorVersion {
