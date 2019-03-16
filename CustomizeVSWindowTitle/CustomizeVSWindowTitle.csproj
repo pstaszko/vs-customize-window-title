@@ -7,9 +7,9 @@
     </NuGetPackageImportStamp>
     <UseCodebase>true</UseCodebase>
     <TargetFrameworkProfile />
-	<StartAction>Program</StartAction>
-	<StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
-	<StartArguments>/rootsuffix Exp</StartArguments>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -56,6 +56,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AvailableInfo.cs" />
     <Compile Include="Resolvers\ConfigurationResolver.cs" />
     <Compile Include="Resolvers\DebuggedProcessesArgsResolver.cs" />
     <Compile Include="Resolvers\DocumentResolver.cs" />
@@ -214,6 +215,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsOverridesControl.resx">
       <DependentUpon>SettingsOverridesControl.cs</DependentUpon>
