@@ -5,7 +5,7 @@ using System.Linq;
 using EnvDTE;
 using ErwinMayerLabs.Lib;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
     public static class DocumentHelper {
         public static string GetActiveDocumentProjectNameOrEmpty(Document activeDocument) {
             return activeDocument?.ProjectItem?.ContainingProject?.Name ?? string.Empty;

@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using EnvDTE;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
     public class HgBranchNameResolver : SimpleTagResolver {
         public HgBranchNameResolver() : base(tagName: "hgBranchName") { }
 

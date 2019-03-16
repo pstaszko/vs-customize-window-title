@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
     public interface ITagResolver {
         IEnumerable<string> TagNames { get; }
         bool TryResolve(string tag, AvailableInfo info, out string s);

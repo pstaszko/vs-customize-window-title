@@ -8,7 +8,7 @@ using EnvDTE;
 
 using ErwinMayerLabs.Lib;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
     public class SvnResolver : TagResolver, ISimpleTagResolver {
         public const string SvnExecFn = "svn.exe";
         private static string SvnExecFp = SvnExecFn;

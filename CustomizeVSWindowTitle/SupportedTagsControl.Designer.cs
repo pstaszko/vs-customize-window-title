@@ -1,4 +1,4 @@
-namespace ErwinMayerLabs.RenameVSWindowTitle
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension
 {
     public partial class SupportedTagsControl : System.Windows.Forms.UserControl
 	{

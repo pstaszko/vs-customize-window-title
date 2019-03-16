@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
     public partial class SettingsOverridesControl {
         public SettingsOverridesControl(SettingsOverridesPageGrid optionsPage) {
             this.InitializeComponent();

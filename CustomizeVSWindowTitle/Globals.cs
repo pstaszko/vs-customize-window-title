@@ -8,7 +8,7 @@ using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
     public static class Globals {
         public static DTE2 DTE;
 

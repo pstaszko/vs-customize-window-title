@@ -3,7 +3,7 @@ using EnvDTE80;
 using System.ComponentModel;
 
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
     public class ConfigurationNameResolver : SimpleTagResolver {
         public ConfigurationNameResolver() : base(tagName: "configurationName") { }
 

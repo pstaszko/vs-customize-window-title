@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
     public static class IdeHelper {
         private static int? _VsMajorVersion;
         public static int VsMajorVersion {
@@ -32,6 +32,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     return 2015;
                 case 15:
                     return 2017;
+                case 16:
+                    return 2019;
                 default:
                     return version;
             }

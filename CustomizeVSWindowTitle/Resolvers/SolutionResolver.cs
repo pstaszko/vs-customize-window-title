@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using EnvDTE;
 using EnvDTE80;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
     public class SolutionNameResolver : SimpleTagResolver {
         public SolutionNameResolver() : base(tagName: "solutionName") { }
 

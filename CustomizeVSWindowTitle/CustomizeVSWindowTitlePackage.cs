@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,60 +7,38 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using EnvDTE;
 using EnvDTE80;
+using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using System.Collections.Generic;
-using ErwinMayerLabs.Lib;
-using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
+using Task = System.Threading.Tasks.Task;
 
-// The PackageRegistration attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class
-// is a package.
-//
-// The InstalledProductRegistration attribute is used to register the information needed to show this package
-// in the Help/About dialog of Visual Studio.
-
-namespace ErwinMayerLabs.RenameVSWindowTitle {
-    [PackageRegistration(UseManagedResourcesOnly = true), InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string), ProvideMenuResource("Menus.ctmenu", 1)]
-    [Guid(GuidList.guidCustomizeVSWindowTitle2PkgString)]
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+    /// <summary>
+    /// This is the class that implements the package exposed by this assembly.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The minimum requirement for a class to be considered a valid package for Visual Studio
+    /// is to implement the IVsPackage interface and register itself with the shell.
+    /// This package uses the helper classes defined inside the Managed Package Framework (MPF)
+    /// to do it: it derives from the Package class that provides the implementation of the
+    /// IVsPackage interface and uses the registration attributes defined in the framework to
+    /// register itself and its components with the shell. These attributes tell the pkgdef creation
+    /// utility what data to put into .pkgdef file.
+    /// </para>
+    /// <para>
+    /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
+    /// </para>
+    /// </remarks>
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true), InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad), ProvideMenuResource("Menus.ctmenu", 1)]
+    [Guid(GuidList.guidCustomizeVSWindowTitlePkgString)]
     [ProvideOptionPage(typeof(GlobalSettingsPageGrid), "Customize VS Window Title", "Global rules", 0, 0, true)]
     [ProvideOptionPage(typeof(SettingsOverridesPageGrid), "Customize VS Window Title", "Solution-specific overrides", 51, 500, true)]
     [ProvideOptionPage(typeof(SupportedTagsGrid), "Customize VS Window Title", "Supported tags", 101, 1000, true)]
-    public sealed class CustomizeVSWindowTitle : Package {
-        public string IDEName { get; private set; }
-        public string ElevationSuffix { get; private set; }
-
-        public static CustomizeVSWindowTitle CurrentPackage;
-
-        private System.Windows.Forms.Timer ResetTitleTimer;
-        private readonly List<ITagResolver> TagResolvers;
-        private readonly Dictionary<string, ISimpleTagResolver> SimpleTagResolvers;
-
-        //Private VersionSpecificAssembly As Assembly
-
-        /// <summary>
-        /// Default constructor of the package.
-        /// Inside this method you can place any initialization code that does not require
-        /// any Visual Studio service because at this point the package object is created but
-        /// not sited yet inside Visual Studio environment. The place to do all the other
-        /// initialization is the Initialize method.
-        /// </summary>
-        public CustomizeVSWindowTitle() {
-            CurrentPackage = this;
-            Globals.DTE = (DTE2)GetGlobalService(typeof(DTE));
-            Globals.DTE.Events.DebuggerEvents.OnEnterBreakMode += this.OnIdeEvent;
-            Globals.DTE.Events.DebuggerEvents.OnEnterRunMode += this.OnIdeEvent;
-            Globals.DTE.Events.DebuggerEvents.OnEnterDesignMode += this.OnIdeEvent;
-            Globals.DTE.Events.DebuggerEvents.OnContextChanged += this.OnIdeEvent;
-            Globals.DTE.Events.SolutionEvents.AfterClosing += this.OnIdeSolutionEvent;
-            Globals.DTE.Events.SolutionEvents.Opened += this.OnIdeSolutionEvent;
-            Globals.DTE.Events.SolutionEvents.Renamed += this.OnIdeSolutionEvent;
-            Globals.DTE.Events.WindowEvents.WindowCreated += this.OnIdeEvent;
-            Globals.DTE.Events.WindowEvents.WindowClosing += this.OnIdeEvent;
-            Globals.DTE.Events.WindowEvents.WindowActivated += this.OnIdeEvent;
-            Globals.DTE.Events.DocumentEvents.DocumentOpened += this.OnIdeEvent;
-            Globals.DTE.Events.DocumentEvents.DocumentClosing += this.OnIdeEvent;
+    public sealed class CustomizeVSWindowTitle : AsyncPackage {
+        public CustomizeVSWindowTitle() : base() {
             this.TagResolvers = new List<ITagResolver> {
                 new DocumentNameResolver(),
                 new ProjectNameResolver(),
@@ -91,6 +69,61 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.SupportedTags = this.TagResolvers.SelectMany(r => r.TagNames).ToArray();
             this.SimpleTagResolvers = this.TagResolvers.OfType<ISimpleTagResolver>().ToDictionary(t => t.TagName, t => t);
         }
+        #region Package Members
+
+        /// <summary>
+        /// Initialization of the package; this method is called right after the package is sited, so this is the place
+        /// where you can put all the initialization code that rely on services provided by VisualStudio.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
+        /// <param name="progress">A provider for progress updates.</param>
+        /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress) {
+            // When initialized asynchronously, the current thread may be a background thread at this point.
+            // Do any initialization that requires the UI thread after switching to the UI thread.
+            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+
+            CurrentPackage = this;
+            Globals.DTE = (DTE2)GetGlobalService(typeof(DTE));
+            Globals.DTE.Events.DebuggerEvents.OnEnterBreakMode += this.OnIdeEvent;
+            Globals.DTE.Events.DebuggerEvents.OnEnterRunMode += this.OnIdeEvent;
+            Globals.DTE.Events.DebuggerEvents.OnEnterDesignMode += this.OnIdeEvent;
+            Globals.DTE.Events.DebuggerEvents.OnContextChanged += this.OnIdeEvent;
+            Globals.DTE.Events.SolutionEvents.AfterClosing += this.OnIdeSolutionEvent;
+            Globals.DTE.Events.SolutionEvents.Opened += this.OnIdeSolutionEvent;
+            Globals.DTE.Events.SolutionEvents.Renamed += this.OnIdeSolutionEvent;
+            Globals.DTE.Events.WindowEvents.WindowCreated += this.OnIdeEvent;
+            Globals.DTE.Events.WindowEvents.WindowClosing += this.OnIdeEvent;
+            Globals.DTE.Events.WindowEvents.WindowActivated += this.OnIdeEvent;
+            Globals.DTE.Events.DocumentEvents.DocumentOpened += this.OnIdeEvent;
+            Globals.DTE.Events.DocumentEvents.DocumentClosing += this.OnIdeEvent;
+
+            this.GlobalSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
+            this.SolutionSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
+
+            //Every 5 seconds, we check the window titles in case we missed an event.
+            this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = 5000 };
+            this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
+            this.ResetTitleTimer.Start();
+        }
+
+        protected override void Dispose(bool disposing) {
+            this.ResetTitleTimer.Dispose();
+            base.Dispose(disposing: disposing);
+        }
+
+        #endregion
+
+
+
+        public string IDEName { get; private set; }
+        public string ElevationSuffix { get; private set; }
+
+        public static CustomizeVSWindowTitle CurrentPackage;
+
+        private System.Windows.Forms.Timer ResetTitleTimer;
+        private readonly List<ITagResolver> TagResolvers;
+        private readonly Dictionary<string, ISimpleTagResolver> SimpleTagResolvers;
 
         public readonly string[] SupportedTags;
 
@@ -135,37 +168,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.ClearCachedSettings();
             this.OnIdeEvent();
         }
-
-        ///'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-        // Overriden Package Implementation
-
-        #region Package Members
-
-        /// <summary>
-        /// Initialization of the package; this method is called right after the package is sited, so this is the place
-        /// where you can put all the initilaization code that rely on services provided by VisualStudio.
-        /// </summary>
-        protected override void Initialize() {
-            base.Initialize();
-            CurrentPackage = this;
-
-            this.GlobalSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
-            this.SolutionSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
-
-            //Every 5 seconds, we check the window titles in case we missed an event.
-            this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = 5000 };
-            this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
-            this.ResetTitleTimer.Start();
-        }
-
-
-        protected override void Dispose(bool disposing) {
-            this.ResetTitleTimer.Dispose();
-            base.Dispose(disposing: disposing);
-        }
-
-        #endregion
-
 
         private GlobalSettingsPageGrid _UiSettings;
 
@@ -533,12 +535,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public static void WriteOutput(string str, params object[] args) {
             try {
                 Globals.InvokeOnUIThread(() => {
-                    var outWindow = GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
+                    ThreadHelper.ThrowIfNotOnUIThread();
                     var generalPaneGuid = VSConstants.OutputWindowPaneGuid.DebugPane_guid;
                     // P.S. There's also the VSConstants.GUID_OutWindowDebugPane available.
-                    if (outWindow != null) {
-                        IVsOutputWindowPane generalPane;
-                        outWindow.GetPane(ref generalPaneGuid, out generalPane);
+                    if (GetGlobalService(typeof(SVsOutputWindow)) is IVsOutputWindow outWindow) {
+                        outWindow.GetPane(ref generalPaneGuid, out IVsOutputWindowPane generalPane);
                         generalPane.OutputString("CustomizeVSWindowTitle: " + string.Format(str, args) + "\r\n");
                         generalPane.Activate();
                     }

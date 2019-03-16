@@ -9,7 +9,7 @@ using System.Drawing.Design;
 using System.Windows.Forms.Design;
 using System.Windows.Forms;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension
 {
     public class PreviewRequiresAttribute : Attribute
     {

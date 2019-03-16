@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Properties {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -39,7 +39,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ErwinMayerLabs.RenameVSWindowTitle.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ErwinMayerLabs.CustomizeVSWindowTitleExtension.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -409,7 +409,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Major version of Visual Studio (e.g. 11, 12, 14, 15...)..
+        ///   Looks up a localized string similar to Major version of Visual Studio (e.g. 14, 15, 16...)..
         /// </summary>
         internal static string tag_vsMajorVersion {
             get {
@@ -418,7 +418,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Major version of Visual Studio, in year form (e.g. 2012, 2013, 2015, 2017...)..
+        ///   Looks up a localized string similar to Major version of Visual Studio, in year form (e.g. 2015, 2017, 2019...)..
         /// </summary>
         internal static string tag_vsMajorVersionYear {
             get {

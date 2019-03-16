@@ -1,4 +1,4 @@
-﻿namespace ErwinMayerLabs.RenameVSWindowTitle
+﻿namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension
 {
     partial class EditablePatternControl
     {

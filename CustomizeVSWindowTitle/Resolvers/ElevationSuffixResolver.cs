@@ -1,4 +1,4 @@
-namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
     public class ElevationSuffixResolver : SimpleTagResolver {
         public ElevationSuffixResolver() : base(tagName: "elevationSuffix") { }
 

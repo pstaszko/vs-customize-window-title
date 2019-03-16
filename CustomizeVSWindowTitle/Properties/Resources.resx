@@ -215,10 +215,10 @@
     <value>SVN directory segment over the specified range (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [svnDirectoryName:0:2] = /Branches/Developer, [svnDirectoryName:2:0] = Developer/Branches//)</value>
   </data>
   <data name="tag_vsMajorVersion" xml:space="preserve">
-    <value>Major version of Visual Studio (e.g. 11, 12, 14, 15...).</value>
+    <value>Major version of Visual Studio (e.g. 14, 15, 16...).</value>
   </data>
   <data name="tag_vsMajorVersionYear" xml:space="preserve">
-    <value>Major version of Visual Studio, in year form (e.g. 2012, 2013, 2015, 2017...).</value>
+    <value>Major version of Visual Studio, in year form (e.g. 2015, 2017, 2019...).</value>
   </data>
   <data name="tag_vsProcessID" xml:space="preserve">
     <value>Process ID of Visual Studio</value>
