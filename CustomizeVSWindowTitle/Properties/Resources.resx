@@ -214,6 +214,9 @@
   <data name="tag_svnDirectoryNameXY" xml:space="preserve">
     <value>SVN directory segment over the specified range (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [svnDirectoryName:0:2] = /Branches/Developer, [svnDirectoryName:2:0] = Developer/Branches//)</value>
   </data>
+  <data name="tag_tfsBranchName" xml:space="preserve">
+    <value>Team Foundation Server (TFS) branch name of the currently loaded solution.</value>
+  </data>
   <data name="tag_vsMajorVersion" xml:space="preserve">
     <value>Major version of Visual Studio (e.g. 14, 15, 16...).</value>
   </data>

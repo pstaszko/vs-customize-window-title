@@ -65,7 +65,8 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
                 new WorkspaceOwnerNameResolver(),
                 new VsProcessIdResolver(),
                 new EnvResolver(),
-                new DebuggedProcessesArgsResolver()
+                new DebuggedProcessesArgsResolver(),
+                new TfsBranchNameResolver()
             };
             this.SupportedTags = this.TagResolvers.SelectMany(r => r.TagNames).ToArray();
             this.SimpleTagResolvers = this.TagResolvers.OfType<ISimpleTagResolver>().ToDictionary(t => t.TagName, t => t);
@@ -476,11 +477,11 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
                 try {
                     var tag = match.Groups[1].Value;
                     try {
-                        if (this.SimpleTagResolvers.TryGetValue(tag, out ISimpleTagResolver resolver)) {
+                        if (this.SimpleTagResolvers.TryGetValue(tag, out var resolver)) {
                             return resolver.Resolve(info: info);
                         }
                         foreach (var tagResolver in this.TagResolvers) {
-                            if (tagResolver.TryResolve(tag: tag, info: info, s: out string value)) {
+                            if (tagResolver.TryResolve(tag: tag, info: info, s: out var value)) {
                                 return value;
                             }
                         }
