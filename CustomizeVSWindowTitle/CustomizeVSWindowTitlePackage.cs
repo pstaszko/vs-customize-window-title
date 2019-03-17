@@ -32,12 +32,14 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true), InstalledProductRegistration("#110", "#112", "4.0", IconResourceID = 400)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad), ProvideMenuResource("Menus.ctmenu", 1)]
-    [Guid(GuidList.guidCustomizeVSWindowTitlePkgString)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    [InstalledProductRegistration("#110", "#112", "4.0", IconResourceID = 400)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideOptionPage(typeof(GlobalSettingsPageGrid), "Customize VS Window Title", "Global rules", 0, 0, true)]
     [ProvideOptionPage(typeof(SettingsOverridesPageGrid), "Customize VS Window Title", "Solution-specific overrides", 51, 500, true)]
     [ProvideOptionPage(typeof(SupportedTagsGrid), "Customize VS Window Title", "Supported tags", 101, 1000, true)]
+    [Guid(GuidList.guidCustomizeVSWindowTitlePkgString)]
     public sealed class CustomizeVSWindowTitle : AsyncPackage {
         public CustomizeVSWindowTitle() {
             this.TagResolvers = new List<ITagResolver> {
