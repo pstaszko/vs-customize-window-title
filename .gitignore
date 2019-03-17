@@ -1,5 +1,3 @@
-RenameVSWindowTitle/bin/
-RenameVSWindowTitle/obj/
 .vs/
 *.suo
 *.csproj.user
