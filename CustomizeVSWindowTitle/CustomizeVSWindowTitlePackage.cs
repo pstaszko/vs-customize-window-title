@@ -11,6 +11,7 @@ using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using SolutionEvents = Microsoft.VisualStudio.Shell.Events.SolutionEvents;
 using Task = System.Threading.Tasks.Task;
 
 namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
@@ -31,14 +32,14 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true), InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true), InstalledProductRegistration("#110", "#112", "4.0", IconResourceID = 400)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad), ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(GuidList.guidCustomizeVSWindowTitlePkgString)]
     [ProvideOptionPage(typeof(GlobalSettingsPageGrid), "Customize VS Window Title", "Global rules", 0, 0, true)]
     [ProvideOptionPage(typeof(SettingsOverridesPageGrid), "Customize VS Window Title", "Solution-specific overrides", 51, 500, true)]
     [ProvideOptionPage(typeof(SupportedTagsGrid), "Customize VS Window Title", "Supported tags", 101, 1000, true)]
     public sealed class CustomizeVSWindowTitle : AsyncPackage {
-        public CustomizeVSWindowTitle() : base() {
+        public CustomizeVSWindowTitle() {
             this.TagResolvers = new List<ITagResolver> {
                 new DocumentNameResolver(),
                 new ProjectNameResolver(),
@@ -113,9 +114,7 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
         }
 
         #endregion
-
-
-
+        
         public string IDEName { get; private set; }
         public string ElevationSuffix { get; private set; }
 
@@ -305,7 +304,7 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
             if (this.IDEName == null) {
                 return;
             }
-            System.Threading.Tasks.Task.Factory.StartNew(this.UpdateWindowTitle);
+            this.UpdateWindowTitle();
         }
 
         private readonly object UpdateWindowTitleLock = new object();
