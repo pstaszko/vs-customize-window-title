@@ -9,10 +9,10 @@ using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.IO;
 using EnvDTE;
-using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Properties;
-using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers;
+using ErwinMayerLabs.RenameVSWindowTitle.Properties;
+using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+namespace ErwinMayerLabs.RenameVSWindowTitle {
     public partial class EditablePatternControl : UserControl {
         private IWindowsFormsEditorService editorService;
         private PreviewRequiresAttribute.Requirement previewRequires;

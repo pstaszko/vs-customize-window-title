@@ -7,14 +7,14 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using EnvDTE;
 using EnvDTE80;
-using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers;
+using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using SolutionEvents = Microsoft.VisualStudio.Shell.Events.SolutionEvents;
 using Task = System.Threading.Tasks.Task;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+namespace ErwinMayerLabs.RenameVSWindowTitle {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
     /// </summary>

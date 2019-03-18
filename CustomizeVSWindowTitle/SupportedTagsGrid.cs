@@ -5,9 +5,9 @@ using Microsoft.VisualStudio.Shell;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Diagnostics;
-using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Properties;
+using ErwinMayerLabs.RenameVSWindowTitle.Properties;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+namespace ErwinMayerLabs.RenameVSWindowTitle {
     public class SupportedTagsGrid : DialogPage {
         SupportedTagsControl SupportedTagsControl;
 

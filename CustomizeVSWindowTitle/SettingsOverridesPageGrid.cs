@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+namespace ErwinMayerLabs.RenameVSWindowTitle {
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [CLSCompliant(false), ComVisible(true)]
     public class SettingsOverridesPageGrid : DialogPage {

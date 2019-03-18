@@ -2,9 +2,9 @@
 using System.Linq;
 using EnvDTE;
 using System.Collections.Generic;
-using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers;
+using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+namespace ErwinMayerLabs.RenameVSWindowTitle {
     public class AvailableInfo {
         private AvailableInfo() { }
 

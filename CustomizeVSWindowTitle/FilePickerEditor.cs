@@ -10,7 +10,7 @@ using System.Windows.Forms.Design;
 using System.Windows.Forms;
 using System.IO;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension
+namespace ErwinMayerLabs.RenameVSWindowTitle
 {
     public class FilePickerEditor : UITypeEditor
     {

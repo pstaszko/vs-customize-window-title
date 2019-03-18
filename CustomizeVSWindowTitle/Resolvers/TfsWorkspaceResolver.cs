@@ -1,6 +1,6 @@
 using EnvDTE;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class WorkspaceNameResolver : SimpleTagResolver {
         public WorkspaceNameResolver() : base(tagName: "workspaceName") { }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension
+namespace ErwinMayerLabs.RenameVSWindowTitle
 {
     public class SettingsSet
     {

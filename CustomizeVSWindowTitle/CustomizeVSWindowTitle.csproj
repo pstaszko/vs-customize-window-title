@@ -23,7 +23,7 @@
     <ProjectGuid>{EA0E0D3B-0669-4422-9E9A-C53284DDEA44}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ErwinMayerLabs.CustomizeVSWindowTitleExtension</RootNamespace>
+    <RootNamespace>ErwinMayerLabs.RenameVSWindowTitle</RootNamespace>
     <AssemblyName>CustomizeVSWindowTitle</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>

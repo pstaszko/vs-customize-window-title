@@ -2,7 +2,7 @@
 // MUST match guids.h
 using System;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension
+namespace ErwinMayerLabs.RenameVSWindowTitle
 {
     static class GuidList {
 

@@ -13,9 +13,8 @@ using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.VersionControl.Client;
 using Microsoft.TeamFoundation.VersionControl.Common;
 using System;
-using System.Net;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Lib {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Lib {
     internal static class TfsHelper {
         public static string GetBranchNameFromLocalFile(string path) {
             if (string.IsNullOrEmpty(path))
@@ -43,7 +42,7 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Lib {
                 }
                 return null;
             }
-            catch (Microsoft.TeamFoundation.VersionControl.Client.ItemNotMappedException) {
+            catch (ItemNotMappedException) {
                 return null;
             }
         }
@@ -56,7 +55,7 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Lib {
             Uri fullyQualifiedUriForName = TfsTeamProjectCollection.GetFullyQualifiedUriForName(tfsName);
             var vssCredentials = Microsoft.VisualStudio.Services.Client.VssClientCredentials.LoadCachedCredentials(fullyQualifiedUriForName, false, Microsoft.VisualStudio.Services.Common.CredentialPromptType.DoNotPrompt);
 
-            var tfsTeamProjectCollection = new TfsTeamProjectCollection(fullyQualifiedUriForName, (ICredentials)vssCredentials);
+            var tfsTeamProjectCollection = new TfsTeamProjectCollection(fullyQualifiedUriForName, vssCredentials);
             return tfsTeamProjectCollection;
         }
 

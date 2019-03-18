@@ -1,13 +1,13 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers;
+using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 using Microsoft.VisualStudio.Shell;
 
 //http://stackoverflow.com/questions/24291249/dialogpage-string-array-not-persisted
 //http://www.codeproject.com/Articles/351172/CodeStash-a-journey-into-the-dark-side-of-Visual-S
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+namespace ErwinMayerLabs.RenameVSWindowTitle {
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [CLSCompliant(false), ComVisible(true)]
     public class GlobalSettingsPageGrid : DialogPage {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Management;
 using EnvDTE80;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class DebuggedProcessesArgsResolver : SimpleTagResolver {
         public DebuggedProcessesArgsResolver() : base(tagName: "debuggedProcessesArgs") { }
 

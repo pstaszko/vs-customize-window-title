@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Properties {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ErwinMayerLabs.CustomizeVSWindowTitleExtension.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ErwinMayerLabs.RenameVSWindowTitle.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

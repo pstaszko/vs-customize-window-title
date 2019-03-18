@@ -1,8 +1,8 @@
 using EnvDTE;
-using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Lib;
 using System.IO;
+using ErwinMayerLabs.RenameVSWindowTitle.Lib;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class TfsBranchNameResolver : SimpleTagResolver {
         public TfsBranchNameResolver() : base(tagName: "tfsBranchName") { }
 

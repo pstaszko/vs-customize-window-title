@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using EnvDTE;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class GitBranchNameResolver : SimpleTagResolver {
         public GitBranchNameResolver() : base(tagName: "gitBranchName") { }
 

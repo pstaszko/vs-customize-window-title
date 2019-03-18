@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ErwinMayerLabs.Lib;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class PathResolver : TagResolver, ISimpleTagResolver {
         private const string tagName = "path";
 

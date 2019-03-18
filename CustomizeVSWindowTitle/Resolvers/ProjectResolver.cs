@@ -2,7 +2,7 @@ using System;
 using EnvDTE;
 using EnvDTE80;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers {
+namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public static class ProjectHelper {
         public static bool TryGetActiveProject(DTE2 dte, out Project activeProject) {
             activeProject = null;

@@ -1,4 +1,4 @@
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension
+namespace ErwinMayerLabs.RenameVSWindowTitle
 {
     public partial class SettingsOverridesControl : System.Windows.Forms.UserControl
 	{

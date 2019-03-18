@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using ErwinMayerLabs.Lib;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+namespace ErwinMayerLabs.RenameVSWindowTitle {
     /// <summary>
     /// This class maintains a list of config sets loaded from a single config file.
     /// File changes are observed by a filesystem watcher and reloaded on next demand.

@@ -1,8 +1,8 @@
 using System;
 using System.Reflection;
-using ErwinMayerLabs.CustomizeVSWindowTitleExtension.Resolvers;
+using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 
-namespace ErwinMayerLabs.CustomizeVSWindowTitleExtension {
+namespace ErwinMayerLabs.RenameVSWindowTitle {
     //Credit: https://github.com/pasztorpisti/vs-window-title-changer/
     class WorkspaceInfoGetter {
         static WorkspaceInfoGetter _Instance;
