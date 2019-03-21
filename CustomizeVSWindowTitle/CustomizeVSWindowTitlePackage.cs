@@ -14,6 +14,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using SolutionEvents = Microsoft.VisualStudio.Shell.Events.SolutionEvents;
 using Task = System.Threading.Tasks.Task;
 
+//If refactoring, do not change namespace as it'd cause existing settings to be lost.
 namespace ErwinMayerLabs.RenameVSWindowTitle {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -117,7 +118,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
         #endregion
-        
+
+        private static readonly Regex TagRegex = new Regex(@"\[([^\[\]]+)\]", RegexOptions.Multiline | RegexOptions.Compiled);
+
         public string IDEName { get; private set; }
         public string ElevationSuffix { get; private set; }
 
@@ -176,8 +179,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         internal GlobalSettingsPageGrid UiSettings {
             get {
                 if (this._UiSettings == null) {
-                    this._UiSettings = this.GetDialogPage(typeof(GlobalSettingsPageGrid)) as GlobalSettingsPageGrid;  // as is faster than cast
-                    this._UiSettings.SettingsChanged += (s, e) => this.OnIdeSolutionEvent();
+                    Globals.InvokeOnUIThread(() => {
+                        this._UiSettings = this.GetDialogPage(typeof(GlobalSettingsPageGrid)) as GlobalSettingsPageGrid;  // as is faster than cast
+                        this._UiSettings.SettingsChanged += (s, e) => this.OnIdeSolutionEvent();
+                    });
                 }
                 return this._UiSettings;
             }
@@ -188,8 +193,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         internal SettingsOverridesPageGrid UiSettingsOverridesOptions {
             get {
                 if (this._UiSettingsOverridesOptions == null) {
-                    this._UiSettingsOverridesOptions = this.GetDialogPage(typeof(SettingsOverridesPageGrid)) as SettingsOverridesPageGrid;  // as is faster than cast
-                    this._UiSettingsOverridesOptions.SettingsChanged += (s, e) => this.OnIdeSolutionEvent();
+                    Globals.InvokeOnUIThread(() => {
+                        this._UiSettingsOverridesOptions = this.GetDialogPage(typeof(SettingsOverridesPageGrid)) as SettingsOverridesPageGrid; // as is faster than cast
+                        this._UiSettingsOverridesOptions.SettingsChanged += (s, e) => this.OnIdeSolutionEvent();
+                    });
                 }
                 return this._UiSettingsOverridesOptions;
             }
@@ -307,7 +314,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             if (this.IDEName == null) {
                 return;
             }
-            this.UpdateWindowTitle();
+            Task.Run(() => this.UpdateWindowTitle());
         }
 
         private readonly object UpdateWindowTitleLock = new object();
@@ -322,8 +329,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     useDefaultPattern = false;
                 }
                 else {
-                    Globals.VSMultiInstanceInfo info;
-                    Globals.GetVSMultiInstanceInfo(out info);
+                    Globals.GetVSMultiInstanceInfo(out var info);
                     if (info.nb_instances_same_solution >= 2) {
                         useDefaultPattern = false;
                     }
@@ -371,8 +377,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        readonly SettingsWatcher SolutionSettingsWatcher = new SettingsWatcher(false);
-        readonly SettingsWatcher GlobalSettingsWatcher = new SettingsWatcher(true);
+        private readonly SettingsWatcher SolutionSettingsWatcher = new SettingsWatcher(false);
+        private readonly SettingsWatcher GlobalSettingsWatcher = new SettingsWatcher(true);
 
         private void ClearCachedSettings() {
             if (this.UiSettings.EnableDebugMode) {
@@ -469,13 +475,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             throw new Exception("No matching state found");
         }
 
-        readonly Regex TagRegex = new Regex(@"\[([^\[\]]+)\]", RegexOptions.Multiline | RegexOptions.Compiled);
-
         internal string GetNewTitle(Solution solution, string pattern, SettingsSet cfg) {
             var info = AvailableInfo.GetCurrent(ideName: this.IDEName, solution: solution, cfg: cfg, globalSettings: this.UiSettings);
             if (info == null) return this.IDEName;
 
-            pattern = this.TagRegex.Replace(pattern, match => {
+            pattern = TagRegex.Replace(pattern, match => {
                 try {
                     var tag = match.Groups[1].Value;
                     try {
