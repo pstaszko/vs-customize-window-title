@@ -25,9 +25,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var startIndex = Math.Min(info.PathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture)));
-                    var endIndex = Math.Min(info.PathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture)));
-                    var pathRange = info.PathParts.GetRange(startIndex: startIndex, endIndex: endIndex).ToArray();
+                    var x = int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture);
+                    var y = int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture);
+                    var pathRange = Globals.GetPathRange(info.PathParts, x, y);
                     s = Globals.GetPathForTitle(pathRange);
                 }
                 return true;
@@ -38,8 +38,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var index = Math.Min(info.PathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
-                    s = info.PathParts[index];
+                    var index = int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture);
+                    s = Globals.GetPathPart(info.PathParts, index);
                 }
                 return true;
             }
@@ -62,9 +62,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var startIndex = Math.Min(info.PathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture)));
-                    var endIndex = Math.Min(info.PathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture)));
-                    var pathRange = info.PathParts.GetRange(startIndex: info.PathParts.Length - 1 - startIndex, endIndex: info.PathParts.Length - 1 - endIndex).ToArray();
+                    var x = int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture);
+                    var y = int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture);
+                    var pathRange = Globals.GetPathRange(info.PathParts, -(x + 1), -(y + 1));
                     s = Globals.GetPathForTitle(pathRange);
                 }
                 return true;
@@ -75,8 +75,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var index = Math.Min(info.PathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
-                    s = info.PathParts[info.PathParts.Length - 1 - index];
+                    var index = int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture);
+                    s = Globals.GetPathPart(info.PathParts, -(index + 1));
                 }
                 return true;
             }

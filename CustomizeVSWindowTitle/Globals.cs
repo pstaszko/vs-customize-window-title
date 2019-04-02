@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -6,6 +7,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Text.RegularExpressions;
 using EnvDTE;
 using EnvDTE80;
+using ErwinMayerLabs.Lib;
 using Microsoft.VisualStudio;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
@@ -22,8 +24,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public const string PatternIfBreakModeTag = "PatternIfBreakMode";
         public const string PatternIfDesignModeTag = "PatternIfDesignMode";
 
-        public static readonly Regex IndexRegex = new Regex(@"^:?(?<index>[0-9]+)$", RegexOptions.Compiled);
-        public static readonly Regex RangeRegex = new Regex(@"^:(?<startIndex>[0-9]+):(?<endIndex>[0-9]+)$", RegexOptions.Compiled);
+        public static readonly Regex IndexRegex = new Regex(@"^:?(?<index>-?[0-9]+)$", RegexOptions.Compiled);
+        public static readonly Regex RangeRegex = new Regex(@"^:(?<startIndex>-?[0-9]+):(?<endIndex>-?[0-9]+)$", RegexOptions.Compiled);
+
+        public static T[] GetPathRange<T>(IReadOnlyList<T> parts, int x, int y) {
+            x = GetPathPartIndex(parts.Count, x);
+            y = GetPathPartIndex(parts.Count, y);
+            return parts.GetRange(startIndex: x, endIndex: y).ToArray();
+        }
+
+        public static T GetPathPart<T>(IReadOnlyList<T> parts, int x) {
+            return parts[GetPathPartIndex(parts.Count, x)];
+        }
+
+        public static int GetPathPartIndex(int length, int x) {
+            return x < 0 ? length - Math.Min(length, -x) : Math.Min(length, x);
+        }
 
         public static string GetPathForTitle(string[] pathRange) {
             if (pathRange.Any()) {

@@ -1,9 +1,11 @@
+using EnvDTE;
+using ErwinMayerLabs.Lib;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using EnvDTE;
-using ErwinMayerLabs.Lib;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public static class DocumentHelper {
@@ -59,9 +61,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var startIndex = Math.Min(info.DocumentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture)));
-                    var endIndex = Math.Min(info.DocumentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture)));
-                    var pathRange = info.DocumentPathParts.GetRange(startIndex: startIndex, endIndex: endIndex).ToArray();
+                    var x = int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture);
+                    var y = int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture);
+                    var pathRange = Globals.GetPathRange(info.DocumentPathParts, x, y);
                     s = Globals.GetPathForTitle(pathRange);
                 }
                 return true;
@@ -72,8 +74,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var index = Math.Min(info.DocumentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
-                    s = info.DocumentPathParts[index];
+                    var x = int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture);
+                    s = Globals.GetPathPart(info.DocumentPathParts, x);
                 }
                 return true;
             }
@@ -87,16 +89,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
         public override bool TryResolve(string tag, AvailableInfo info, out string s) {
             s = null;
             if (!tag.StartsWith("documentParentPath", StringComparison.InvariantCulture)) return false;
-            
+
             var m = Globals.RangeRegex.Match(tag.Substring("documentParentPath".Length));
             if (m.Success) {
                 if (!info.DocumentPathParts.Any()) {
                     s = string.Empty;
                 }
                 else {
-                    var startIndex = Math.Min(info.DocumentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture)));
-                    var endIndex = Math.Min(info.DocumentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture)));
-                    var pathRange = info.DocumentPathParts.GetRange(startIndex: info.DocumentPathParts.Length - 1 - startIndex, endIndex: info.DocumentPathParts.Length - 1 - endIndex).ToArray();
+                    var x = int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture);
+                    var y = int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture);
+                    var pathRange = Globals.GetPathRange(info.DocumentPathParts, -(x + 1), -(y + 1));
                     s = Globals.GetPathForTitle(pathRange);
                 }
                 return true;
@@ -107,8 +109,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var index = Math.Min(info.DocumentPathParts.Length - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
-                    s = info.DocumentPathParts[info.DocumentPathParts.Length - 1 - index];
+                    var x = int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture);
+                    s = Globals.GetPathPart(info.DocumentPathParts, -(x + 1));
                 }
                 return true;
             }

@@ -13,8 +13,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 Solution-specific overriding rules are available as well to cover virtually any possible renaming needs. It can also be configured so that the rules apply only when at least two instances of Visual Studio are running with the same window title.
 This is particularly useful when branching a solution/project: it becomes possible to easily identify which branch you are working on, in case both would have the same solution/project name.";
         public const string Language = "en-US";
-        public const string Version = "4.2.3";
+        public const string Version = "4.3.0";
         public const string Author = "Erwin Mayer";
-        public const string Tags = "Git, Hg, TFS, Team Foundation Server, SVN, Window title, solution path, path, explicit title, multiple instances, rename title, change title, replace title";
+        public const string Tags = "Git, Hg, TFS, Team Foundation Server, SVN, Window title, solution path, path, explicit title, multiple instances, rename title, change title, replace title, branch name";
     }
 }

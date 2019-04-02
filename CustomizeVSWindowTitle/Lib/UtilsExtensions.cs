@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ErwinMayerLabs.Lib {
     public static class UtilsExtensions {
-        public static IEnumerable<T> GetRange<T>(this IList<T> array, int startIndex, int endIndex) {
+        public static IEnumerable<T> GetRange<T>(this IReadOnlyList<T> array, int startIndex, int endIndex) {
             if (startIndex <= endIndex) {
                 for (var j = startIndex; j <= endIndex; ++j) {
                     yield return array[j];

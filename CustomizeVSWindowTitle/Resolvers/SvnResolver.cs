@@ -26,7 +26,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
         public override bool TryResolve(string tag, AvailableInfo info, out string s) {
             s = null;
             if (!tag.StartsWith(tagName, StringComparison.InvariantCulture)) return false;
-            var svnPath = Resolve(info);
+            var svnPath = this.Resolve(info);
             if (string.IsNullOrWhiteSpace(svnPath)) return false;
             var directorySeparator = info.GlobalSettings.SvnDirectorySeparator;
             var svnPathParts = new List<string>();
@@ -38,9 +38,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var startIndex = Math.Min(svnPathParts.Count - 1, Math.Max(0, int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture)));
-                    var endIndex = Math.Min(svnPathParts.Count - 1, Math.Max(0, int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture)));
-                    var pathRange = svnPathParts.GetRange(startIndex: startIndex, endIndex: endIndex).ToArray();
+                    var x = int.Parse(m.Groups["startIndex"].Value, CultureInfo.InvariantCulture);
+                    var y = int.Parse(m.Groups["endIndex"].Value, CultureInfo.InvariantCulture);
+                    var pathRange = Globals.GetPathRange(svnPathParts, x, y);
                     s = string.Join(directorySeparator, pathRange);
                 }
                 return true;
@@ -51,8 +51,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                     s = string.Empty;
                 }
                 else {
-                    var index = Math.Min(svnPathParts.Count - 1, Math.Max(0, int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture)));
-                    s = svnPathParts[index];
+                    var index = int.Parse(m.Groups["index"].Value, CultureInfo.InvariantCulture);
+                    s = Globals.GetPathPart(svnPathParts, index);
                 }
                 return true;
             }
