@@ -52,11 +52,21 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Lib {
         }
 
         public static TfsTeamProjectCollection CreateTfsCollection(string tfsName) {
+            //Works for VS 2017+, with assemblies from VS 15. Does not work with VS 2015 (will cause an exception saying the assembly could not be found).
             Uri fullyQualifiedUriForName = TfsTeamProjectCollection.GetFullyQualifiedUriForName(tfsName);
             var vssCredentials = Microsoft.VisualStudio.Services.Client.VssClientCredentials.LoadCachedCredentials(fullyQualifiedUriForName, false, Microsoft.VisualStudio.Services.Common.CredentialPromptType.DoNotPrompt);
-
             var tfsTeamProjectCollection = new TfsTeamProjectCollection(fullyQualifiedUriForName, vssCredentials);
             return tfsTeamProjectCollection;
+
+            //Works for VS 2015, with assemblies from VS 14, but to be compatible with VS 2017+, we'd need to:
+            //1. Add the following in AssemblyInfo.cs to redirect the assembly with newer versions:
+            //  [assembly: ProvideBindingRedirection(AssemblyName = "Microsoft.TeamFoundation.Client", NewVersion = "15.0.0.0", OldVersionLowerBound = "14.0.0.0", OldVersionUpperBound = "15.0.0.0")]
+            //2. Mark the assembly as CopyLocal = true, otherwise it won't compile, saying the file could not be found. This would cause the whole extension to gain around 1 MB.
+            //I have not tested if it would actually work for VS 2017+ (it would still require the newer assembly is retro-compatible with the one from V14).
+            /*Uri fullyQualifiedUriForName = TfsTeamProjectCollection.GetFullyQualifiedUriForName(tfsName);
+            var vssCredentials = TfsClientCredentials.LoadCachedCredentials(fullyQualifiedUriForName, false, allowInteractive: false);
+            var tfsTeamProjectCollection = new TfsTeamProjectCollection(fullyQualifiedUriForName, vssCredentials);
+            return tfsTeamProjectCollection;*/
         }
 
         public static string GetRepositoryUrl(string path) {

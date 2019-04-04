@@ -18,7 +18,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             var sn = solution?.FullName;
             if (string.IsNullOrEmpty(sn)) return string.Empty;
             var name = string.Empty;
-            Globals.InvokeOnUIThread(() => name = TfsHelper.GetBranchNameFromLocalFile(Path.GetDirectoryName(sn)));
+            //Globals.InvokeOnUIThread(() => name = TfsHelper.GetBranchNameFromLocalFile(Path.GetDirectoryName(sn))); //Causes slowness due to UI thread.
+            name = TfsHelper.GetBranchNameFromLocalFile(Path.GetDirectoryName(sn));
             return name ?? string.Empty;
         }
     }

@@ -446,22 +446,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public const int DefaultFarthestParentDepth = 1;
 
         private string GetPattern(string solutionFp, bool useDefault, SettingsSet settingsOverride) {
-            var Settings = this.UiSettings;
+            var settings = this.UiSettings;
             if (string.IsNullOrEmpty(solutionFp)) {
                 var document = Globals.DTE.ActiveDocument;
                 var window = Globals.DTE.ActiveWindow;
                 if (string.IsNullOrEmpty(document?.FullName) && string.IsNullOrEmpty(window?.Caption)) {
-                    return useDefault ? DefaultPatternIfNothingOpen : Settings.PatternIfNothingOpen;
+                    return useDefault ? DefaultPatternIfNothingOpen : settings.PatternIfNothingOpen;
                 }
-                return useDefault ? DefaultPatternIfDocumentButNoSolutionOpen : Settings.PatternIfDocumentButNoSolutionOpen;
+                return useDefault ? DefaultPatternIfDocumentButNoSolutionOpen : settings.PatternIfDocumentButNoSolutionOpen;
             }
             string designModePattern = null;
             string breakModePattern = null;
             string runningModePattern = null;
             if (!useDefault) {
-                designModePattern = settingsOverride?.PatternIfDesignMode ?? Settings.PatternIfDesignMode;
-                breakModePattern = settingsOverride?.PatternIfBreakMode ?? Settings.PatternIfBreakMode;
-                runningModePattern = settingsOverride?.PatternIfRunningMode ?? Settings.PatternIfRunningMode;
+                designModePattern = settingsOverride?.PatternIfDesignMode ?? settings.PatternIfDesignMode;
+                breakModePattern = settingsOverride?.PatternIfBreakMode ?? settings.PatternIfBreakMode;
+                runningModePattern = settingsOverride?.PatternIfRunningMode ?? settings.PatternIfRunningMode;
             }
             if (Globals.DTE.Debugger == null || Globals.DTE.Debugger.CurrentMode == dbgDebugMode.dbgDesignMode) {
                 return designModePattern ?? DefaultPatternIfDesignMode;
