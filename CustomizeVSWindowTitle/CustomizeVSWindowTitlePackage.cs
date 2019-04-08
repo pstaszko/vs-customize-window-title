@@ -43,6 +43,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
     [Guid(GuidList.guidCustomizeVSWindowTitlePkgString)]
     public sealed class CustomizeVSWindowTitle : AsyncPackage {
         public CustomizeVSWindowTitle() {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             this.TagResolvers = new List<ITagResolver> {
                 new DocumentNameResolver(),
                 new ProjectNameResolver(),
@@ -74,6 +75,23 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.SupportedTags = this.TagResolvers.SelectMany(r => r.TagNames).ToArray();
             this.SimpleTagResolvers = this.TagResolvers.OfType<ISimpleTagResolver>().ToDictionary(t => t.TagName, t => t);
         }
+
+        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
+            try {
+                if (args.Name.StartsWith("Microsoft.TeamFoundation.") || args.Name.StartsWith("Microsoft.VisualStudio.Services.")) {
+                    var aname = new System.Reflection.AssemblyName(args.Name);
+                    foreach (var asm in AppDomain.CurrentDomain.GetAssemblies()) {
+                        if (asm.GetName().Name == aname.Name)
+                            return asm;
+                    }
+                }
+            }
+            catch {
+                //Do nothing
+            }
+            return null;
+        }
+
         #region Package Members
 
         /// <summary>
