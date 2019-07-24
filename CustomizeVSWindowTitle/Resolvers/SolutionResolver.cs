@@ -44,6 +44,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             var sb = (SolutionBuild2)Globals.DTE.Solution.SolutionBuild;
             var names = new List<string>(((Array)sb.StartupProjects).Length);
             foreach (string item in (Array)sb.StartupProjects) {
+                string modifiedItem = item;
+
+                // Strip out folder path so we end up with just the project name
+                int index = modifiedItem.LastIndexOf("\\");
+                if (index > 0) {
+                    modifiedItem = modifiedItem.Substring(index + 1);
+                }
+				
                 //names.Add(Globals.DTE.Solution.Item(item).Name); // Does not work if project is nested in solution folder as only the solution folder is part of the Solution.Projects collection. 
                 //If project name is not always equal to project filename, replace with solution here: https://stackoverflow.com/questions/38740773/how-to-get-project-inside-of-solution-folder-in-vsix-project
                 names.Add(item.Substring(0, item.Length - Path.GetExtension(item).Length));
