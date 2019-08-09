@@ -1,16 +1,16 @@
-﻿using System;
+﻿using EnvDTE;
+using EnvDTE80;
+using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
-using EnvDTE;
-using EnvDTE80;
-using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using SolutionEvents = Microsoft.VisualStudio.Shell.Events.SolutionEvents;
 using Task = System.Threading.Tasks.Task;
 
@@ -313,20 +313,25 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
         private void UpdateWindowTitleAsync(object state, EventArgs e) {
-            if (this.IDEName == null && Globals.DTE.MainWindow != null) {
-                this.IDEName = this.GetIDEName(Globals.DTE.MainWindow.Caption);
-                if (!string.IsNullOrWhiteSpace(this.IDEName)) {
-                    try {
+            try {
+                if (this.IDEName == null && Globals.DTE.MainWindow != null) {
+                    this.IDEName = this.GetIDEName(Globals.DTE.MainWindow.Caption);
+                    if (!string.IsNullOrWhiteSpace(this.IDEName)) {
                         var m = new Regex(@".*( \(.+\)).*$", RegexOptions.RightToLeft).Match(this.IDEName);
                         if (m.Success) {
                             this.ElevationSuffix = m.Groups[1].Captures[0].Value;
                         }
                     }
-                    catch (Exception ex) {
-                        if (this.UiSettings.EnableDebugMode) {
-                            WriteOutput("UpdateWindowTitleAsync Exception: " + this.IDEName + (". Details: " + ex));
-                        }
+                }
+            }
+            catch (Exception ex) {
+                try {
+                    if (this.UiSettings.EnableDebugMode) {
+                        WriteOutput($"UpdateWindowTitleAsync Exception: {this.IDEName}. Details: " + ex);
                     }
+                }
+                catch {
+                    //Do nothing
                 }
             }
             if (this.IDEName == null) {
