@@ -373,6 +373,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Startup project(s) name(s), separated with &apos; &amp; &apos; if multiple, with the relative path stripped out..
+        /// </summary>
+        internal static string tag_startupProjectsNamesNonRelative {
+            get {
+                return ResourceManager.GetString("tag_startupProjectsNamesNonRelative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Startup project(s) name(s), separated with X if multiple, with the relative path stripped out. Do not use &apos;[&apos;, &apos;]&apos;, &apos;-&apos;, or &apos;:&apos; for X to avoid parsing conflicts. Recommended values: &apos; &amp; &apos;, &apos;, &apos; or &apos; | &apos; (without quotes)..
+        /// </summary>
+        internal static string tag_startupProjectsNamesNonRelativeX {
+            get {
+                return ResourceManager.GetString("tag_startupProjectsNamesNonRelativeX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Startup project(s) name(s), separated with X if multiple. Do not use &apos;[&apos;, &apos;]&apos;, &apos;-&apos;, or &apos;:&apos; for X to avoid parsing conflicts. Recommended values: &apos; &amp; &apos;, &apos;, &apos; or &apos; | &apos; (without quotes)..
         /// </summary>
         internal static string tag_startupProjectsNamesX {
