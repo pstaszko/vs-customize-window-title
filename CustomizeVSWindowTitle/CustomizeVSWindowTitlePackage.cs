@@ -51,6 +51,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new StartupProjectNamesNonRelativeResolver(),
                 new DocumentProjectNameResolver(),
                 new DocumentProjectFileNameResolver(),
+                new DocumentDirtyResolver(),
                 new SolutionNameResolver(),
                 new DocumentPathResolver(),
                 new DocumentParentPathResolver(),
@@ -71,8 +72,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new VsProcessIdResolver(),
                 new EnvResolver(),
                 new DebuggedProcessesArgsResolver(),
-                new TfsBranchNameResolver(),
-                new DocumentDirtyResolver()
+                new TfsBranchNameResolver()
             };
             this.SupportedTags = this.TagResolvers.SelectMany(r => r.TagNames).ToArray();
             this.SimpleTagResolvers = this.TagResolvers.OfType<ISimpleTagResolver>().ToDictionary(t => t.TagName, t => t);
