@@ -133,4 +133,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             return DocumentHelper.GetActiveDocumentProjectNameOrEmpty(activeDocument: info.ActiveDocument);
         }
     }
+
+    public class DocumentDirtyResolver : SimpleTagResolver
+    {
+        public DocumentDirtyResolver() : base(tagName: "documentDirty") { }
+        public override string Resolve(AvailableInfo info)
+        {
+            return (info.ActiveDocument.Saved ? "" : "[*]");
+        }
+    }
 }

@@ -51,6 +51,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new StartupProjectNamesNonRelativeResolver(),
                 new DocumentProjectNameResolver(),
                 new DocumentProjectFileNameResolver(),
+                new DocumentDirtyResolver(),
                 new SolutionNameResolver(),
                 new DocumentPathResolver(),
                 new DocumentParentPathResolver(),
