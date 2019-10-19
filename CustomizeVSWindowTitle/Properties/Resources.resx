@@ -238,4 +238,7 @@
   <data name="tag_workspaceOwnerName" xml:space="preserve">
     <value>Team Foundation Server (TFS) workspace owner name of the currently loaded solution.</value>
   </data>
+  <data name="tag_documentUnsaved" xml:space="preserve">
+    <value>Active document unsaved indicator ('*' if unsaved changes, otherwise empty).</value>
+  </data>
 </root>

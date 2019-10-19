@@ -1,8 +1,5 @@
 using EnvDTE;
-using ErwinMayerLabs.Lib;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -20,6 +17,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
 
         public static string GetActiveDocumentNameOrEmpty(Document activeDocument) {
             return activeDocument != null ? Path.GetFileName(activeDocument.FullName) : string.Empty;
+        }
+
+        public static string GetActiveDocumentUnsavedOrEmpty(Document activeDocument) {
+            return activeDocument != null ? (!activeDocument.Saved ? "*" : string.Empty) : string.Empty;
         }
 
         public static string GetActiveWindowNameOrEmpty(Window activeWindow) {
@@ -134,12 +135,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
         }
     }
 
-    public class DocumentDirtyResolver : SimpleTagResolver
-    {
-        public DocumentDirtyResolver() : base(tagName: "documentDirty") { }
-        public override string Resolve(AvailableInfo info)
-        {
-            return (info.ActiveDocument.Saved ? "" : "[*]");
+    public class DocumentUnsavedResolver : SimpleTagResolver {
+        public DocumentUnsavedResolver() : base(tagName: "documentUnsaved") { }
+        public override string Resolve(AvailableInfo info) {
+            return DocumentHelper.GetActiveDocumentUnsavedOrEmpty(activeDocument: info.ActiveDocument);
         }
     }
 }

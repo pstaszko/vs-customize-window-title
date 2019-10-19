@@ -51,7 +51,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new StartupProjectNamesNonRelativeResolver(),
                 new DocumentProjectNameResolver(),
                 new DocumentProjectFileNameResolver(),
-                new DocumentDirtyResolver(),
+                new DocumentUnsavedResolver(),
                 new SolutionNameResolver(),
                 new DocumentPathResolver(),
                 new DocumentParentPathResolver(),
@@ -109,7 +109,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             CurrentPackage = this;
-            Globals.DTE = (DTE2)GetGlobalService(typeof(DTE));
+            Globals.DTE = (DTE2)await GetServiceAsync(typeof(DTE)).ConfigureAwait(false);
+            //Globals.DTE = (DTE2)GetGlobalService(typeof(DTE));
             Globals.DTE.Events.DebuggerEvents.OnEnterBreakMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnEnterRunMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnEnterDesignMode += this.OnIdeEvent;
@@ -466,7 +467,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public const string DefaultPatternIfRunningMode = "[solutionName] (Running) - [ideName]";
         public const string DefaultPatternIfDocumentButNoSolutionOpen = "[documentName] - [ideName]";
         public const string DefaultPatternIfNothingOpen = "[ideName]";
-        public const string DefaultAppendedString = "*";
+        public const string DefaultAppendedString = "\t";
         public const int DefaultClosestParentDepth = 1;
         public const int DefaultFarthestParentDepth = 1;
 

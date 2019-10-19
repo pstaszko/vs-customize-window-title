@@ -70,7 +70,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         [Category("Patterns")]
         [DisplayName("Appended string")]
-        [Description("Default: '*'. String to be added at the end of the title to identify that it has been rewritten. If not default and Always rewrite titles, the detection of concurrent instances with the same title may not work.")]
+        [Description("Default: '\t' (tab). String to be added at the end of the title to identify that it has been rewritten. If not default or '*', and \"Always rewrite titles\" is false, the detection of concurrent instances with the same title may not work.")]
         [DefaultValue(CustomizeVSWindowTitle.DefaultAppendedString)]
         public string AppendedString { get; set; } = CustomizeVSWindowTitle.DefaultAppendedString;
 
