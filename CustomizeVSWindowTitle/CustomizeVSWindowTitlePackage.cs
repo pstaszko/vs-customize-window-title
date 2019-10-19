@@ -36,6 +36,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", "4.0", IconResourceID = 400)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasMultipleProjects_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasSingleProject_string, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideOptionPage(typeof(GlobalSettingsPageGrid), "Customize VS Window Title", "Global rules", 0, 0, true)]
     [ProvideOptionPage(typeof(SettingsOverridesPageGrid), "Customize VS Window Title", "Solution-specific overrides", 51, 500, true)]
@@ -109,8 +112,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             CurrentPackage = this;
-            Globals.DTE = (DTE2)await GetServiceAsync(typeof(DTE)).ConfigureAwait(false);
+            Globals.DTE = (DTE2)await this.GetServiceAsync(typeof(DTE)); //.ConfigureAwait(false) not recommended as we need to remain on the UI thread.
             //Globals.DTE = (DTE2)GetGlobalService(typeof(DTE));
+
             Globals.DTE.Events.DebuggerEvents.OnEnterBreakMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnEnterRunMode += this.OnIdeEvent;
             Globals.DTE.Events.DebuggerEvents.OnEnterDesignMode += this.OnIdeEvent;
