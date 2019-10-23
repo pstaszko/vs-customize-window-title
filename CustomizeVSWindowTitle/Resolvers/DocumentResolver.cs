@@ -141,4 +141,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             return DocumentHelper.GetActiveDocumentUnsavedOrEmpty(activeDocument: info.ActiveDocument);
         }
     }
+
+    public class DocumentLineResolver : SimpleTagResolver {
+        public DocumentLineResolver() : base(tagName: "documentLine") { }
+        public override string Resolve(AvailableInfo info)
+        {
+            var dte2 = info.ActiveDocument.DTE;
+            int line = ((EnvDTE.TextSelection)dte2.ActiveDocument.Selection).ActivePoint.Line;
+            return "Line: " + line.ToString();
+        }
+    }
 }

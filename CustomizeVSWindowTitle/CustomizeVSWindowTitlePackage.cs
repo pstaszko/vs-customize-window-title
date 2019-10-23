@@ -55,6 +55,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new DocumentProjectNameResolver(),
                 new DocumentProjectFileNameResolver(),
                 new DocumentUnsavedResolver(),
+                new DocumentLineResolver(),
                 new SolutionNameResolver(),
                 new DocumentPathResolver(),
                 new DocumentParentPathResolver(),
@@ -132,7 +133,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.SolutionSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
 
             //Every 5 seconds, we check the window titles in case we missed an event.
-            this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = 5000 };
+            this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = 2000 };
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
         }
