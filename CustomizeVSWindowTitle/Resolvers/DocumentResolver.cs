@@ -3,6 +3,8 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public static class DocumentHelper {
@@ -147,8 +149,19 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
         public override string Resolve(AvailableInfo info)
         {
             var dte2 = info.ActiveDocument.DTE;
-            int line = ((EnvDTE.TextSelection)dte2.ActiveDocument.Selection).ActivePoint.Line;
-            return "Line: " + line.ToString();
+            var selx = dte2?.ActiveDocument?.Selection;
+            try {
+                if (selx != null) {
+                    if (selx is EnvDTE.TextSelection q) {
+                        return string.Format("{0}:{1}", q.CurrentLine, q.CurrentColumn);
+                    }
+                }
+                return "";
+            }
+            catch  {
+                return "";
+            }
+           
         }
     }
 }
