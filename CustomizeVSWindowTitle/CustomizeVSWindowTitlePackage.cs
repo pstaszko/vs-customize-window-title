@@ -137,7 +137,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
 
-            var pts = new ParameterizedThreadStart((object obj) => SocketBorp.Listen(Globals.DTE));
+            var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
             var tt = new System.Threading.Thread(pts);
             tt.Start();
         }

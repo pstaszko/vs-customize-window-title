@@ -9,3 +9,6 @@
 // file manually.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1017:MarkAssembliesWithComVisible")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD010:Invoke single-threaded types on Main thread", Justification = "<Pending>", Scope = "member", Target = "~M:ErwinMayerLabs.RenameVSWindowTitle.SocketBorp._Listen(EnvDTE80.DTE2,System.Net.HttpListener)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD010:Invoke single-threaded types on Main thread")]

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -41,7 +42,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
 
             catch (Exception ex) {
-                //Trace.WriteLine(ex);
+                Trace.WriteLine(ex);
             }
         }
 
@@ -196,7 +197,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
             if (asComment) {
                 return;
-                S.AppendChild(doc.CreateComment(E.OuterXml));
+                //S.AppendChild(doc.CreateComment(E.OuterXml));
             }
             else {
                 S.AppendChild(E);
