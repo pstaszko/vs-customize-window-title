@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EnvDTE;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,27 +7,8 @@ using System.Text;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle
 {
-    public static class SocketBorp
+    public static class VSocket
     {
-        public static void Mxain()
-        {
-            var web = new HttpListener();
-            web.Prefixes.Add("http://localhost:8181/");
-            Console.WriteLine("Listening..");
-            web.Start();
-            Console.WriteLine(web.GetContext());
-            var context = web.GetContext();
-            var response = context.Response;
-            const string responseString = "<html><body>Hello world</body></html>";
-            var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-            response.ContentLength64 = buffer.Length;
-            var output = response.OutputStream;
-            output.Write(buffer, 0, buffer.Length);
-            Console.WriteLine(output);
-            output.Close();
-            web.Stop();
-            //Console.ReadKey();
-        }
         public class Stuff
         {
             public HttpListener listener { get; set; }
@@ -41,7 +23,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         {
             var listener = TryBindListenerOnFreePortX();
             var t = new List<string> { $"{System.Diagnostics.Process.GetCurrentProcess().Id}:{listener.port.ToString()}" };
-            System.IO.File.AppendAllLines(@"c:\temp\port.txt", t);
+            System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
             _Listen(dte, listener.listener);
         }
         public static void _Listen(EnvDTE80.DTE2 dte, HttpListener listener)
@@ -86,14 +68,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                                 dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
                                 ret = "";
                                 break;
-                            //case "DumpSolutionInfo":
-                            //    var pj = dte.Solution.Projects.Cast<EnvDTE.Project>();
-                            //    ret = $"{pj.Count()} Projects";
-                            //    foreach (var p in pj) {
-                                    
-                            //    }
-                            //    ret = "";
-                            //    break;
+                                //case "DumpSolutionInfo":
+                                //    var pj = dte.Solution.Projects.Cast<EnvDTE.Project>();
+                                //    ret = $"{pj.Count()} Projects";
+                                //    foreach (var p in pj) {
+
+                                //    }
+                                //    ret = "";
+                                //    break;
                         }
 
                     }
@@ -130,36 +112,66 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                         }
                     }
                     if (dte?.ActiveDocument?.Selection is EnvDTE.TextSelection textSelection) {
-                        switch (cmd) {
-                            case "ChangeCase":
+                        //object o = null;
+                        object vv(VirtualPoint p)
+                        {
+                            return new {
+                                p.Line
+                                    , p.DisplayColumn
+                                    , p.VirtualDisplayColumn
+                                    , p.AbsoluteCharOffset
+                                    , p.LineCharOffset
+                            };
+                        }
+                        var cmds = new Dictionary<string, Action> {
+                            ["ChangeCase"] = () => {
                                 if (Enum.TryParse(parameters["to"], out EnvDTE.vsCaseOptions x)) {
                                     textSelection.ChangeCase(x);
                                 }
-                                break;
-                            case "Position":
-                                ret = $"{textSelection.CurrentLine}:{textSelection.CurrentColumn}";
-                                break;
-                            case "GetCurrentLine":
+                            }
+                            , ["SwapAnchor"] = () => textSelection.SwapAnchor()
+                            , ["GetSelectedText"] = () => ret = textSelection.Text
+                            , ["Position"] = () =>
+                                ret = Newtonsoft.Json.JsonConvert.SerializeObject(new {
+                                    textSelection.CurrentLine
+                                    , textSelection.CurrentColumn
+                                    , textSelection.BottomLine
+                                    , textSelection.AnchorColumn
+                                    , textSelection.Mode
+                                    , textSelection.Text
+                                    , ActivePoint = vv(textSelection.ActivePoint)
+                                    , BottomPoint = vv(textSelection.BottomPoint)
+                                    , AnchorPoint = vv(textSelection.AnchorPoint)
+                                    //,textSelection.ActivePoint.DisplayColumn
+                                    //,textSelection.ActivePoint.VirtualDisplayColumn
+                                    //,textSelection.ActivePoint.AbsoluteCharOffset
+                                    //,textSelection.ActivePoint.LineCharOffset
+                                    //,textSelection.AnchorPoint.Line
+                                    //,textSelection.AnchorPoint.DisplayColumn
+                                    //,textSelection.AnchorPoint.VirtualDisplayColumn
+                                    //,textSelection.AnchorPoint.AbsoluteCharOffset
+                                    //,textSelection.AnchorPoint.LineCharOffset
+                                    //,textSelection.BottomPoint
+                                })
+                            //ret = Newtonsoft.Json.JsonConvert.SerializeObject(vv(textSelection.ActivePoint))
+                            //, ["Position"] = () => ret = $"{textSelection.CurrentLine}:{textSelection.CurrentColumn}:{textSelection.ActivePoint.Line"
+                            , ["GetCurrentLine"] = () => {
+                                textSelection.Text = parameters["to"];
+                                ret = "";
+                            }
+                            , ["SetSelectedText"] = () => ret = textSelection.Text
+                            , ["SelectedText"] = () => {
                                 ret = "";
                                 var lines = System.IO.File.ReadAllLines(dte.ActiveDocument.FullName);
                                 ret = lines[textSelection.CurrentLine - 1];
-                                break;
-                            case "SetSelectedText":
-                                textSelection.Text = parameters["to"];
-                                ret = "";
-                                break;
-                            case "SelectedText":
-                                ret = textSelection.Text;
-                                break;
-                            //case "a":
-                            //    var ap = textSelection.ActivePoint;
-                            //    var sb = new StringBuilder();
-                            //    ret = $"{ap.Line};{ap.DisplayColumn};{ap.LineLength}";
-                            //    break;
-                            default:
-                                break;
-                        }
+                            }
+                        };
+                        if (cmds.ContainsKey(cmd)) { cmds[cmd](); }
+
+
                     }
+                } else {
+                    ret = "Command not provided";
                 }
             }
             catch (Exception ex) {
