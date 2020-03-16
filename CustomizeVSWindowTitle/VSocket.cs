@@ -1,4 +1,5 @@
 ﻿using EnvDTE;
+using EnvDTE80;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +10,18 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 {
     public static class VSocket
     {
-        public class Stuff
+        public class ListenerAndPort
         {
             public HttpListener listener { get; set; }
             public int port { get; set; }
         }
-        public static Stuff TryBindListenerOnFreePortX()
+        public static void Listen(DTE2 dte)
         {
-            TryBindListenerOnFreePort(out var listener, out var port);
-            return new Stuff { listener = listener, port = port };
-        }
-        public static void Listen(EnvDTE80.DTE2 dte)
-        {
+            ListenerAndPort TryBindListenerOnFreePortX()
+            {
+                TryBindListenerOnFreePort(out var listenerz, out var port);
+                return new ListenerAndPort { listener = listenerz, port = port };
+            }
             var listener = TryBindListenerOnFreePortX();
             var t = new List<string> { $"{System.Diagnostics.Process.GetCurrentProcess().Id}:{listener.port.ToString()}" };
             System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
@@ -33,7 +34,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             , p.AbsoluteCharOffset
             , p.LineCharOffset
         };
-        public static void _Listen(EnvDTE80.DTE2 dte, HttpListener listener)
+        public static void _Listen(DTE2 dte, HttpListener listener)
         {
             var ctx = listener.GetContext();
             void writeOutput(string str)
@@ -50,12 +51,18 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             foreach (var item in headerDictionary2) {
                 parameters[item.Key] = item.Value;
             }
+            writeOutput(processParameters(dte, parameters));
+            _Listen(dte, listener);
+        }
+
+        private static string processParameters(DTE2 dte, Dictionary<string, string> parameters)
+        {
             var ret = "No action taken";
             try {
                 if (parameters.ContainsKey("cmd")) {
                     string cmd = parameters["cmd"];
                     var acts = new Dictionary<string, Action>();
-                    var funcs = new Dictionary<string, Func<string>>();
+                    var func = new Dictionary<string, Func<string>>();
                     acts["LaunchDebugger"] = () => System.Diagnostics.Debugger.Launch();
                     acts["Break"] = () => System.Diagnostics.Debugger.Break();
                     if (dte is EnvDTE80.DTE2 dte2) {
@@ -63,30 +70,29 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                         acts["WriteToOutputWindow"] = () => dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
                     }
                     if (dte?.ActiveDocument is Document doc) {
-                        funcs["DocumentProperties"] = () => {
+                        func["DocumentProperties"] = () => {
                             var retx = "";
                             var x2 = doc.ProjectItem;
                             foreach (Property prop in x2.Properties) {
                                 try {
                                     var v = prop.Value.ToString().Trim();
-                                    if (string.IsNullOrWhiteSpace(v)) {
-                                        retx += $"{prop.Name}: {prop.Value}\r\n";
+                                    if (!string.IsNullOrWhiteSpace(v)) {
+                                        retx += $"{prop.Name}: {v}\r\n";
                                     }
                                 }
-                                catch {
-                                }
+                                catch { }
                             }
                             return retx;
                         };
-                        acts["ISaved"] = () => doc.Saved.ToString();
-                        funcs["Save"] = () => {
+                        func["Save"] = () => {
                             doc.Save();
                             while (!doc.Saved) {
                                 System.Threading.Thread.Sleep(10);
                             }
                             return doc.Saved.ToString();
                         };
-                        funcs["AsyncSave"] = () => doc.Save().ToString();
+                        func["AsyncSave"] = () => doc.Save().ToString();
+                        acts["ISaved"] = () => doc.Saved.ToString();
                     }
                     if (dte?.ActiveDocument?.Selection is TextSelection textSelection) {
                         acts["ChangeCase"] = () => {
@@ -95,8 +101,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                             }
                         };
                         acts["SwapAnchor"] = () => textSelection.SwapAnchor();
-                        funcs["GetSelectedText"] = () => textSelection.Text;
-                        funcs["Position"] = () =>
+                        func["GetSelectedText"] = () => textSelection.Text;
+                        func["Position"] = () =>
                                 Newtonsoft.Json.JsonConvert.SerializeObject(new {
                                     textSelection.CurrentLine
                                     , textSelection.CurrentColumn
@@ -109,7 +115,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                                     , AnchorPoint = expandPoint(textSelection.AnchorPoint)
                                 });
                     }
-                    if (funcs.ContainsKey(cmd)) { ret = funcs[cmd](); }
+                    if (func.ContainsKey(cmd)) { ret = func[cmd](); }
                     if (acts.ContainsKey(cmd)) { acts[cmd](); }
                 } else {
                     ret = "Command not provided";
@@ -118,15 +124,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             catch (Exception ex) {
                 ret = ex.Message;
             }
-            writeOutput(ret);
-            _Listen(dte, listener);
+
+            return ret;
         }
+
         public static bool TryBindListenerOnFreePort(out HttpListener httpListener, out int port)
         {
             // IANA suggested range for dynamic or private ports
-            const int MinPort = 49215;
+            const int MinPort = 50000;
             const int MaxPort = 65535;
-
             for (port = MinPort; port < MaxPort; port++) {
                 httpListener = new HttpListener();
                 httpListener.Prefixes.Add($"http://localhost:{port}/");
@@ -135,11 +141,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                     return true;
                 }
                 catch {
-                    // nothing to do here -- the listener disposes itself when Start throws
                 }
             }
-
-
             port = 0;
             httpListener = null;
             return false;
