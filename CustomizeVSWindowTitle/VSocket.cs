@@ -26,20 +26,27 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
             _Listen(dte, listener.listener);
         }
+        public static object expandPoint(VirtualPoint p) => new {
+            p.Line
+            , p.DisplayColumn
+            , p.VirtualDisplayColumn
+            , p.AbsoluteCharOffset
+            , p.LineCharOffset
+        };
         public static void _Listen(EnvDTE80.DTE2 dte, HttpListener listener)
         {
             var ctx = listener.GetContext();
             void writeOutput(string str)
             {
-                var buffer = System.Text.Encoding.UTF8.GetBytes(str);
+                var buffer = Encoding.UTF8.GetBytes(str);
                 var response = ctx.Response;
                 response.ContentLength64 = buffer.Length;
                 var output = response.OutputStream;
                 response.ContentEncoding = System.Text.Encoding.UTF8;
                 output.Write(buffer, 0, buffer.Length);
             }
-            var headerDictionary2 = ctx.Request.Headers.AllKeys.ToDictionary((xx) => xx, (y) => ctx.Request.Headers[y]);
-            var parameters = ctx.Request.QueryString.AllKeys.ToDictionary((xx) => xx, (y) => ctx.Request.QueryString[y]);
+            var headerDictionary2 = ctx.Request.Headers.AllKeys.ToDictionary(k => k, v => ctx.Request.Headers[v]);
+            var parameters = ctx.Request.QueryString.AllKeys.ToDictionary(k => k, v => ctx.Request.QueryString[v]);
             foreach (var item in headerDictionary2) {
                 parameters[item.Key] = item.Value;
             }
@@ -47,129 +54,63 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             try {
                 if (parameters.ContainsKey("cmd")) {
                     string cmd = parameters["cmd"];
-                    ret = "Command not found: " + cmd;
-                    switch (cmd) {
-                        case "LaunchDebugger":
-                            System.Diagnostics.Debugger.Launch();
-                            ret = "";
-                            break;
-                        case "Break":
-                            System.Diagnostics.Debugger.Break();
-                            ret = "";
-                            break;
-                    }
+                    var acts = new Dictionary<string, Action>();
+                    var funcs = new Dictionary<string, Func<string>>();
+                    acts["LaunchDebugger"] = () => System.Diagnostics.Debugger.Launch();
+                    acts["Break"] = () => System.Diagnostics.Debugger.Break();
                     if (dte is EnvDTE80.DTE2 dte2) {
-                        switch (cmd) {
-                            case "ExecuteCommand":
-                                dte.ExecuteCommand(parameters["command"], parameters["args"]);
-                                ret = "";
-                                break;
-                            case "WriteToOutputWindow":
-                                dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
-                                ret = "";
-                                break;
-                                //case "DumpSolutionInfo":
-                                //    var pj = dte.Solution.Projects.Cast<EnvDTE.Project>();
-                                //    ret = $"{pj.Count()} Projects";
-                                //    foreach (var p in pj) {
-
-                                //    }
-                                //    ret = "";
-                                //    break;
-                        }
-
+                        acts["ExecuteCommand"] = () => dte.ExecuteCommand(parameters["command"], parameters["args"]);
+                        acts["WriteToOutputWindow"] = () => dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
                     }
-                    if (dte?.ActiveDocument is EnvDTE.Document doc) {
-                        switch (cmd) {
-                            case "DocumentProperties":
-                                ret = "";
-                                var x2 = doc.ProjectItem;
-                                foreach (EnvDTE.Property prop in x2.Properties) {
-                                    try {
-                                        var v = prop.Value.ToString().Trim();
-                                        if (string.IsNullOrWhiteSpace(v)) {
-                                            ret += $"{prop.Name}: {prop.Value}\r\n";
-                                        }
-                                    }
-                                    catch {
+                    if (dte?.ActiveDocument is Document doc) {
+                        funcs["DocumentProperties"] = () => {
+                            var retx = "";
+                            var x2 = doc.ProjectItem;
+                            foreach (Property prop in x2.Properties) {
+                                try {
+                                    var v = prop.Value.ToString().Trim();
+                                    if (string.IsNullOrWhiteSpace(v)) {
+                                        retx += $"{prop.Name}: {prop.Value}\r\n";
                                     }
                                 }
-                                break;
-                            case "ISaved":
-                                ret = doc.Saved.ToString();
-                                break;
-                            case "AsyncSave":
-                                doc.Save();
-                                ret = "";
-                                break;
-                            case "Save":
-                                doc.Save();
-                                while (!doc.Saved) {
-                                    System.Threading.Thread.Sleep(10);
-                                }
-                                ret = doc.Saved.ToString();
-                                break;
-                        }
-                    }
-                    if (dte?.ActiveDocument?.Selection is EnvDTE.TextSelection textSelection) {
-                        //object o = null;
-                        object vv(VirtualPoint p)
-                        {
-                            return new {
-                                p.Line
-                                    , p.DisplayColumn
-                                    , p.VirtualDisplayColumn
-                                    , p.AbsoluteCharOffset
-                                    , p.LineCharOffset
-                            };
-                        }
-                        var cmds = new Dictionary<string, Action> {
-                            ["ChangeCase"] = () => {
-                                if (Enum.TryParse(parameters["to"], out EnvDTE.vsCaseOptions x)) {
-                                    textSelection.ChangeCase(x);
+                                catch {
                                 }
                             }
-                            , ["SwapAnchor"] = () => textSelection.SwapAnchor()
-                            , ["GetSelectedText"] = () => ret = textSelection.Text
-                            , ["Position"] = () =>
-                                ret = Newtonsoft.Json.JsonConvert.SerializeObject(new {
+                            return retx;
+                        };
+                        acts["ISaved"] = () => doc.Saved.ToString();
+                        funcs["Save"] = () => {
+                            doc.Save();
+                            while (!doc.Saved) {
+                                System.Threading.Thread.Sleep(10);
+                            }
+                            return doc.Saved.ToString();
+                        };
+                        funcs["AsyncSave"] = () => doc.Save().ToString();
+                    }
+                    if (dte?.ActiveDocument?.Selection is TextSelection textSelection) {
+                        acts["ChangeCase"] = () => {
+                            if (Enum.TryParse(parameters["to"], out EnvDTE.vsCaseOptions x)) {
+                                textSelection.ChangeCase(x);
+                            }
+                        };
+                        acts["SwapAnchor"] = () => textSelection.SwapAnchor();
+                        funcs["GetSelectedText"] = () => textSelection.Text;
+                        funcs["Position"] = () =>
+                                Newtonsoft.Json.JsonConvert.SerializeObject(new {
                                     textSelection.CurrentLine
                                     , textSelection.CurrentColumn
                                     , textSelection.BottomLine
                                     , textSelection.AnchorColumn
                                     , textSelection.Mode
                                     , textSelection.Text
-                                    , ActivePoint = vv(textSelection.ActivePoint)
-                                    , BottomPoint = vv(textSelection.BottomPoint)
-                                    , AnchorPoint = vv(textSelection.AnchorPoint)
-                                    //,textSelection.ActivePoint.DisplayColumn
-                                    //,textSelection.ActivePoint.VirtualDisplayColumn
-                                    //,textSelection.ActivePoint.AbsoluteCharOffset
-                                    //,textSelection.ActivePoint.LineCharOffset
-                                    //,textSelection.AnchorPoint.Line
-                                    //,textSelection.AnchorPoint.DisplayColumn
-                                    //,textSelection.AnchorPoint.VirtualDisplayColumn
-                                    //,textSelection.AnchorPoint.AbsoluteCharOffset
-                                    //,textSelection.AnchorPoint.LineCharOffset
-                                    //,textSelection.BottomPoint
-                                })
-                            //ret = Newtonsoft.Json.JsonConvert.SerializeObject(vv(textSelection.ActivePoint))
-                            //, ["Position"] = () => ret = $"{textSelection.CurrentLine}:{textSelection.CurrentColumn}:{textSelection.ActivePoint.Line"
-                            , ["GetCurrentLine"] = () => {
-                                textSelection.Text = parameters["to"];
-                                ret = "";
-                            }
-                            , ["SetSelectedText"] = () => ret = textSelection.Text
-                            , ["SelectedText"] = () => {
-                                ret = "";
-                                var lines = System.IO.File.ReadAllLines(dte.ActiveDocument.FullName);
-                                ret = lines[textSelection.CurrentLine - 1];
-                            }
-                        };
-                        if (cmds.ContainsKey(cmd)) { cmds[cmd](); }
-
-
+                                    , ActivePoint = expandPoint(textSelection.ActivePoint)
+                                    , BottomPoint = expandPoint(textSelection.BottomPoint)
+                                    , AnchorPoint = expandPoint(textSelection.AnchorPoint)
+                                });
                     }
+                    if (funcs.ContainsKey(cmd)) { ret = funcs[cmd](); }
+                    if (acts.ContainsKey(cmd)) { acts[cmd](); }
                 } else {
                     ret = "Command not provided";
                 }
@@ -178,11 +119,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                 ret = ex.Message;
             }
             writeOutput(ret);
-            //if (dte?.ActiveDocument?.Selection is EnvDTE.TextSelection responseString) {
-            //    writeOutput(responseString.Text);
-            //} else {
-            //    writeOutput("Nope");
-            //}
             _Listen(dte, listener);
         }
         public static bool TryBindListenerOnFreePort(out HttpListener httpListener, out int port)
