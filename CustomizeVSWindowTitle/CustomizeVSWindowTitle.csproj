@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="SettingsSet.cs" />
     <Compile Include="SettingsWatcher.cs" />
+    <Compile Include="VSocket_net.cs" />
     <Compile Include="VSocket.cs" />
     <Compile Include="source.extension.cs">
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
