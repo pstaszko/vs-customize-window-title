@@ -53,6 +53,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                             }
                         };
                         acts["SwapAnchor"] = () => textSelection.SwapAnchor();
+                        //acts["SmartHighlight"] = () => textSelection.SmartHighlight();
                         func["GetSelectedText"] = () => textSelection.Text;
                         func["Position"] = () =>
                                 Newtonsoft.Json.JsonConvert.SerializeObject(new {
