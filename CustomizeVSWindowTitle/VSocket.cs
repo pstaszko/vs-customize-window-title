@@ -47,7 +47,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                         acts["IsSaved"] = () => doc.Saved.ToString();
                     }
                     if (dte?.ActiveDocument?.Selection is TextSelection textSelection) {
-                        
                         acts["ChangeCase"] = () => {
                             if (Enum.TryParse(parameters["to"], out EnvDTE.vsCaseOptions x)) {
                                 textSelection.ChangeCase(x);
@@ -62,7 +61,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                         };
                         acts["SwapAnchor"] = () => textSelection.SwapAnchor();
                         acts["SelectLine"] = () => textSelection.SelectLine();
-                        //acts["SmartHighlight"] = () => textSelection.SmartHighlight();
                         func["GetSelectedText"] = () => textSelection.Text;
                         func["Position"] = () =>
                                 Newtonsoft.Json.JsonConvert.SerializeObject(new {
@@ -72,6 +70,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                                     , textSelection.AnchorColumn
                                     , textSelection.Mode
                                     , textSelection.Text
+                                    , dte.ActiveDocument.Path
+                                    , dte.ActiveDocument.FullName
                                     , ActivePoint = expandPoint(textSelection.ActivePoint)
                                     , BottomPoint = expandPoint(textSelection.BottomPoint)
                                     , AnchorPoint = expandPoint(textSelection.AnchorPoint)
