@@ -46,7 +46,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                 output.Write(buffer, 0, buffer.Length);
             }
             var headerDictionary2 = ctx.Request.Headers.AllKeys.ToDictionary(k => k, v => ctx.Request.Headers[v]);
-            var parameters = ctx.Request.QueryString.AllKeys.ToDictionary(k => k, v => ctx.Request.QueryString[v]);
+            var parameters = ctx.Request.QueryString.AllKeys.Where(x => x != null).ToDictionary(k => k, v => ctx.Request.QueryString[v]);
             foreach (var item in headerDictionary2) {
                 parameters[item.Key] = item.Value;
             }

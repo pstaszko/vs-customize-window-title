@@ -44,15 +44,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                             return doc.Saved.ToString();
                         };
                         func["AsyncSave"] = () => doc.Save().ToString();
-                        acts["ISaved"] = () => doc.Saved.ToString();
+                        acts["IsSaved"] = () => doc.Saved.ToString();
                     }
                     if (dte?.ActiveDocument?.Selection is TextSelection textSelection) {
+                        
                         acts["ChangeCase"] = () => {
                             if (Enum.TryParse(parameters["to"], out EnvDTE.vsCaseOptions x)) {
                                 textSelection.ChangeCase(x);
                             }
                         };
+                        acts["StartOfLine"] = () => textSelection.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText);
+                        acts["MoveToLineAndOffset"] = () => {
+                            var line = int.Parse(parameters["line"]);
+                            var offset = int.Parse(parameters["offset"]);
+                            var extend = bool.Parse(parameters["extend"]);
+                            textSelection.MoveToLineAndOffset(line, offset, extend);
+                        };
                         acts["SwapAnchor"] = () => textSelection.SwapAnchor();
+                        acts["SelectLine"] = () => textSelection.SelectLine();
                         //acts["SmartHighlight"] = () => textSelection.SmartHighlight();
                         func["GetSelectedText"] = () => textSelection.Text;
                         func["Position"] = () =>
