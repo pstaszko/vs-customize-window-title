@@ -18,7 +18,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                     acts["LaunchDebugger"] = () => System.Diagnostics.Debugger.Launch();
                     acts["Break"] = () => System.Diagnostics.Debugger.Break();
                     if (dte is DTE2 dte2) {
-                        acts["ExecuteCommand"] = () => dte.ExecuteCommand(parameters["command"], parameters["args"]);
+                        acts["ExecuteCommand"] = () => {
+                            string commandName = parameters["command"];
+                            string commandArgs = parameters["args"];
+                            dte.ExecuteCommand(commandName, commandArgs);
+                        };
                         acts["WriteToOutputWindow"] = () => dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
                     }
                     if (dte?.ActiveDocument is Document doc) {
