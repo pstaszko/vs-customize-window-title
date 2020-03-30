@@ -7,6 +7,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 {
     public static partial class VSocket
     {
+        public static string GetVersion()
+        {
+            var x = System.Reflection.Assembly.GetExecutingAssembly();
+            return $"{x.FullName} | {x.Location} | {(new System.IO.FileInfo(x.Location)).LastWriteTime}";
+        }
         private static string processParameters(DTE2 dte, Dictionary<string, string> parameters)
         {
             var ret = "No action taken";
@@ -14,10 +19,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                 if (parameters.ContainsKey("cmd")) {
                     string cmd = parameters["cmd"];
                     var acts = new Dictionary<string, Action>();
-                    var func = new Dictionary<string, Func<string>>();
+                    var fns = new Dictionary<string, Func<string>>();
                     acts["LaunchDebugger"] = () => System.Diagnostics.Debugger.Launch();
                     acts["Break"] = () => System.Diagnostics.Debugger.Break();
+                    fns["Version"] = GetVersion;
                     if (dte is DTE2 dte2) {
+                        fns["GetSolution"] = () => dte.Solution.FullName;
                         acts["ExecuteCommand"] = () => {
                             string commandName = parameters["command"];
                             string commandArgs = parameters["args"];
@@ -26,7 +33,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                         acts["WriteToOutputWindow"] = () => dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
                     }
                     if (dte?.ActiveDocument is Document doc) {
-                        func["DocumentProperties"] = () => {
+                        fns["DocumentProperties"] = () => {
                             var retx = "";
                             var x2 = doc.ProjectItem;
                             foreach (Property prop in x2.Properties) {
@@ -40,14 +47,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                             }
                             return retx;
                         };
-                        func["Save"] = () => {
+                        fns["Save"] = () => {
                             doc.Save();
                             while (!doc.Saved) {
                                 System.Threading.Thread.Sleep(10);
                             }
                             return doc.Saved.ToString();
                         };
-                        func["AsyncSave"] = () => doc.Save().ToString();
+                        fns["AsyncSave"] = () => doc.Save().ToString();
                         acts["IsSaved"] = () => doc.Saved.ToString();
                     }
                     if (dte?.ActiveDocument?.Selection is TextSelection textSelection) {
@@ -65,8 +72,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                         };
                         acts["SwapAnchor"] = () => textSelection.SwapAnchor();
                         acts["SelectLine"] = () => textSelection.SelectLine();
-                        func["GetSelectedText"] = () => textSelection.Text;
-                        func["Position"] = () =>
+                        fns["GetSelectedText"] = () => textSelection.Text;
+                        fns["Position"] = () =>
                                 Newtonsoft.Json.JsonConvert.SerializeObject(new {
                                     textSelection.CurrentLine
                                     , textSelection.CurrentColumn
@@ -81,7 +88,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                                     , AnchorPoint = expandPoint(textSelection.AnchorPoint)
                                 });
                     }
-                    if (func.ContainsKey(cmd)) { ret = func[cmd](); }
+                    if (fns.ContainsKey(cmd)) { ret = fns[cmd](); }
                     if (acts.ContainsKey(cmd)) { acts[cmd](); }
                 } else {
                     ret = "Command not provided";

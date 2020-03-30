@@ -22,7 +22,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                 return new ListenerAndPort { listener = listenerz, port = port };
             }
             var listener = TryBindListenerOnFreePortX();
-            var t = new List<string> { $"{System.Diagnostics.Process.GetCurrentProcess().Id}:{listener.port.ToString()}" };
+            var v = VSocket.GetVersion();
+            var t = new List<string> { $"{System.Diagnostics.Process.GetCurrentProcess().Id}:{listener.port.ToString()}:{v}" };
             System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
             _Listen(dte, listener.listener);
         }
