@@ -1,0 +1,2 @@
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\VSIXInstaller.exe" /uninstall:vs-customize-window-title\CustomizeVSWindowTitle\bin\Release\CustomizeVSWindowTitle.vsix
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\VSIXInstaller.exe" /uninstall:"C:\DEV\vs-customize-window-title\CustomizeVSWindowTitle\bin\Release\CustomizeVSWindowTitle.vsix"
