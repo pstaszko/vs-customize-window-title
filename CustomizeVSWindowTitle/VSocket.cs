@@ -10,7 +10,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         public static string GetVersion()
         {
             var x = System.Reflection.Assembly.GetExecutingAssembly();
-            return $"{x.FullName} | {x.Location} | {(new System.IO.FileInfo(x.Location)).LastWriteTime}";
+            return $"{DateTime.Now.Subtract( (new System.IO.FileInfo(x.Location)).LastWriteTime).TotalSeconds} Seconds old | {x.Location} | {x.FullName}";
         }
         private static string processParameters(DTE2 dte, Dictionary<string, string> parameters)
         {
