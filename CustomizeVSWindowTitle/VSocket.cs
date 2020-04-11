@@ -25,6 +25,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                     fns["Version"] = GetVersion;
                     if (dte is DTE2 dte2) {
                         fns["GetSolution"] = () => dte.Solution.FullName;
+                        acts["UnloadProject"] = () => {
+                            foreach (Project project in dte.ActiveSolutionProjects as System.Array) {
+
+                            }
+                            string commandName = parameters["SolutionName"];
+                            string commandArgs = parameters["args"];
+                            dte.ExecuteCommand(commandName, commandArgs);
+                        };
                         acts["ExecuteCommand"] = () => {
                             string commandName = parameters["command"];
                             string commandArgs = parameters["args"];
