@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using EnvDTE;
 using EnvDTE80;
@@ -93,6 +94,27 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             }
 
             return names;
+        }
+    }
+
+    public class AnythingUnsavedResolver : SimpleTagResolver
+    {
+        public AnythingUnsavedResolver() : base(tagName: "anythingUnsaved") { }
+        public override string Resolve(AvailableInfo info)
+        {
+            bool IsDirty()
+            {
+                if (info.Solution.IsOpen && !info.Solution.Saved) return true;
+
+                var hasUnsavedDocument = info.ActiveDocument?.Collection
+                    .OfType<Document>()
+                    .Any(document => !document.Saved)
+                    ?? false;
+
+                return hasUnsavedDocument;
+            }
+
+            return IsDirty() ? "*" : string.Empty;
         }
     }
 }
