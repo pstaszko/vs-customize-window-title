@@ -33,6 +33,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
                 pProcess.Start();
                 var branchName = pProcess.StandardOutput.ReadToEnd().TrimEnd(' ', '\r', '\n');
                 pProcess.WaitForExit();
+                if (pProcess.ExitCode != 0) return "detached HEAD";
                 return branchName;
             }
         }

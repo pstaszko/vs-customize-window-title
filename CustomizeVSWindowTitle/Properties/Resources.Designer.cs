@@ -148,6 +148,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Solution or any document unsaved indicator (&apos;*&apos; if unsaved changes, otherwise empty)..
+        /// </summary>
+        internal static string tag_anythingUnsaved {
+            get {
+                return ResourceManager.GetString("tag_anythingUnsaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current configuration name (e.g. Release)..
         /// </summary>
         internal static string tag_configurationName {
@@ -468,6 +477,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         internal static string tag_vsProcessID {
             get {
                 return ResourceManager.GetString("tag_vsProcessID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active document or tool window name..
+        /// </summary>
+        internal static string tag_windowName {
+            get {
+                return ResourceManager.GetString("tag_windowName", resourceCulture);
             }
         }
         

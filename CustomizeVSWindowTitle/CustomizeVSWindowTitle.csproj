@@ -82,6 +82,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resolvers\AnythingUnsavedResolver.cs" />
     <Compile Include="Resolvers\ConfigurationResolver.cs" />
     <Compile Include="Resolvers\DebuggedProcessesArgsResolver.cs" />
     <Compile Include="Resolvers\DocumentResolver.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Resolvers\PathResolver.cs" />
     <Compile Include="Resolvers\ProjectResolver.cs" />
     <Compile Include="Resolvers\SolutionResolver.cs" />
+    <Compile Include="Resolvers\StartupProjectNamesResolver.cs" />
     <Compile Include="Resolvers\SvnResolver.cs" />
     <Compile Include="Resolvers\TagResolver.cs" />
     <Compile Include="Resolvers\TfsBranchResolver.cs" />

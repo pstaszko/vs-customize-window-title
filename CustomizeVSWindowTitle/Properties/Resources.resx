@@ -241,4 +241,10 @@
   <data name="tag_documentUnsaved" xml:space="preserve">
     <value>Active document unsaved indicator ('*' if unsaved changes, otherwise empty).</value>
   </data>
+  <data name="tag_anythingUnsaved" xml:space="preserve">
+    <value>Solution or any document unsaved indicator ('*' if unsaved changes, otherwise empty).</value>
+  </data>
+  <data name="tag_windowName" xml:space="preserve">
+    <value>Active document or tool window name.</value>
+  </data>
 </root>
