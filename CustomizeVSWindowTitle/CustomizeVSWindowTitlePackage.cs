@@ -49,6 +49,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             this.TagResolvers = new List<ITagResolver> {
                 new DocumentNameResolver(),
+                new WindowNameResolver(),
                 new ProjectNameResolver(),
                 new StartupProjectNamesResolver(),
                 new StartupProjectNamesNonRelativeResolver(),
