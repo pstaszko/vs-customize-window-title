@@ -75,6 +75,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new VsProcessIdResolver(),
                 new EnvResolver(),
                 new DebuggedProcessesArgsResolver(),
+                new AnythingUnsavedResolver(),
                 new TfsBranchNameResolver()
             };
             this.SupportedTags = this.TagResolvers.SelectMany(r => r.TagNames).ToArray();
