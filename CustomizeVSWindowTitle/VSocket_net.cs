@@ -16,16 +16,23 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         }
         public static void Listen(DTE2 dte)
         {
-            ListenerAndPort TryBindListenerOnFreePortX()
+            try
             {
-                TryBindListenerOnFreePort(out var listenerz, out var port);
-                return new ListenerAndPort { listener = listenerz, port = port };
+                ListenerAndPort TryBindListenerOnFreePortX()
+                {
+                    TryBindListenerOnFreePort(out var listenerz, out var port);
+                    return new ListenerAndPort { listener = listenerz, port = port };
+                }
+                var listener = TryBindListenerOnFreePortX();
+                var v = VSocket.GetVersion();
+                var t = new List<string> { $"{System.Diagnostics.Process.GetCurrentProcess().Id}:{listener.port.ToString()}:{v}" };
+                System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
+                _Listen(dte, listener.listener);
             }
-            var listener = TryBindListenerOnFreePortX();
-            var v = VSocket.GetVersion();
-            var t = new List<string> { $"{System.Diagnostics.Process.GetCurrentProcess().Id}:{listener.port.ToString()}:{v}" };
-            System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
-            _Listen(dte, listener.listener);
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
         public static object expandPoint(VirtualPoint p) => new {
             p.Line
