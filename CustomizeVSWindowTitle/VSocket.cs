@@ -27,6 +27,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                     fns["Version"] = GetVersion;
                     if (dte is DTE2 dte2)
                     {
+
+                        fns["ActiveSolutionProjects"] = () =>
+                        {
+                            //System.Diagnostics.Debugger.Launch();
+                            //System.Diagnostics.Debugger.Break();
+
+                            //Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.Automation.OAProject x = null;
+                            var n = new List<string>();
+                            foreach (var item in dte.ActiveSolutionProjects as IEnumerable<object>)
+                            {
+                                var prop = item.GetType().GetProperty("FullName");
+                                if(prop != null)
+                                {
+                                    n.Add(prop.GetValue(item).ToString());
+                                }
+                            }
+                            return string.Join("\r\n",n);
+                        };
                         fns["GetSolution"] = () => dte.Solution.FullName;
                         acts["UnloadProject"] = () =>
                         {
