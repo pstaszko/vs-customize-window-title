@@ -34,12 +34,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
         }
-        public static object expandPoint(VirtualPoint p) => new {
-            p.Line
-            , p.DisplayColumn
-            , p.VirtualDisplayColumn
-            , p.AbsoluteCharOffset
-            , p.LineCharOffset
+        public static object expandPoint(VirtualPoint p) => new
+        {
+            p.Line,
+            p.DisplayColumn,
+            p.VirtualDisplayColumn,
+            p.AbsoluteCharOffset,
+            p.LineCharOffset
         };
         public static void _Listen(DTE2 dte, HttpListener listener)
         {
@@ -55,7 +56,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             }
             var headerDictionary2 = ctx.Request.Headers.AllKeys.ToDictionary(k => k, v => ctx.Request.Headers[v]);
             var parameters = ctx.Request.QueryString.AllKeys.Where(x => x != null).ToDictionary(k => k, v => ctx.Request.QueryString[v]);
-            foreach (var item in headerDictionary2) {
+            foreach (var item in headerDictionary2)
+            {
                 parameters[item.Key] = item.Value;
             }
             writeOutput(processParameters(dte, parameters));
@@ -66,14 +68,17 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             // IANA suggested range for dynamic or private ports
             const int MinPort = 50000;
             const int MaxPort = 65535;
-            for (port = MinPort; port < MaxPort; port++) {
+            for (port = MinPort; port < MaxPort; port++)
+            {
                 httpListener = new HttpListener();
                 httpListener.Prefixes.Add($"http://localhost:{port}/");
-                try {
+                try
+                {
                     httpListener.Start();
                     return true;
                 }
-                catch {
+                catch
+                {
                 }
             }
             port = 0;
