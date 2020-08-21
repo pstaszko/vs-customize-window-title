@@ -1,5 +1,6 @@
 ﻿using EnvDTE;
 using EnvDTE80;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -18,14 +19,18 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         {
             try
             {
+                var pid = System.Diagnostics.Process.GetCurrentProcess().Id;
+                void log(string msg) => System.IO.File.AppendAllText(  $@"c:\dev\temp\vspidlog_{pid}.txt", msg + "\r\n");
+                log("Listen called, getting port");
                 ListenerAndPort TryBindListenerOnFreePortX()
                 {
-                    TryBindListenerOnFreePort(out var listenerz, out var port);
+                    TryBindListenerOnFreePort(log,out var listenerz, out var port);
                     return new ListenerAndPort { listener = listenerz, port = port };
                 }
                 var listener = TryBindListenerOnFreePortX();
+                log(listener.port.ToString() + " assigned");
                 var v = VSocket.GetVersion();
-                var t = new List<string> { $"{System.Diagnostics.Process.GetCurrentProcess().Id}:{listener.port.ToString()}:{v}" };
+                var t = new List<string> { $"{pid}:{listener.port}:{v}" };
                 System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
                 _Listen(dte, listener.listener);
             }
@@ -63,13 +68,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             writeOutput(processParameters(dte, parameters));
             _Listen(dte, listener);
         }
-        public static bool TryBindListenerOnFreePort(out HttpListener httpListener, out int port)
+        public static bool TryBindListenerOnFreePort(Action<string> log, out HttpListener httpListener, out int port)
         {
             // IANA suggested range for dynamic or private ports
             const int MinPort = 50000;
             const int MaxPort = 65535;
             for (port = MinPort; port < MaxPort; port++)
             {
+                log($"Checking {port}");
                 httpListener = new HttpListener();
                 httpListener.Prefixes.Add($"http://localhost:{port}/");
                 try
