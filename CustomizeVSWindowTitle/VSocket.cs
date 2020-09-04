@@ -45,6 +45,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                             }
                             return string.Join("\r\n",n);
                         };
+                        var x = dte.ActiveSolutionProjects;
+                        fns["GetActiveProjects"] = () =>
+                        {
+                            var l = new List<string>();
+                            foreach (Project project in dte.ActiveSolutionProjects as System.Array)
+                            {
+                                l.Add(project.FullName);
+                            }
+                            return string.Join("\r\n", l);
+                        };
                         fns["GetSolution"] = () => dte.Solution.FullName;
                         acts["UnloadProject"] = () =>
                         {
