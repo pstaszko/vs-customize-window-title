@@ -78,7 +78,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Git binaries directory")]
         [Description("Default: Empty. Search windows PATH for git if empty.")]
         [Editor(typeof(FilePickerEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [FilePicker(true, GitBranchNameResolver.GitExecFn, "Git executable(git.exe)|git.exe|All files(*.*)|*.*", 1)]
+        [FilePicker(true, GitInfo.GitExecFn, "Git executable(git.exe)|git.exe|All files(*.*)|*.*", 1)]
         [DefaultValue("")]
         public string GitDirectory { get; set; } = "";
 
