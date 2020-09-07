@@ -54,10 +54,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             return GitInfo.IsGitRepository(workingDirectory) ? GetGitRepoName(workingDirectory) ?? string.Empty : string.Empty;
         }
 
-        public static string GetGitRepoName(string workingDirectory)
-        {
-            using (var pProcess = new System.Diagnostics.Process
-            {
+        public static string GetGitRepoName(string workingDirectory) {
+            using (var pProcess = new System.Diagnostics.Process {
                 StartInfo = {
                     FileName = GitInfo.GetGitExecFp(),
                     Arguments = "rev-parse --show-toplevel", //As per: https://stackoverflow.com/questions/15715825/how-do-you-get-the-git-repositorys-name-in-some-git-repository

@@ -247,4 +247,7 @@
   <data name="tag_windowName" xml:space="preserve">
     <value>Active document or tool window name.</value>
   </data>
+  <data name="tag_gitRepositoryName" xml:space="preserve">
+    <value>Current Git repository name (local). Make sure Git's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
+  </data>
 </root>

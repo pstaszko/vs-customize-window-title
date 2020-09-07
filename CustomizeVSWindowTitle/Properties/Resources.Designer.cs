@@ -283,6 +283,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Git repository name (local). Make sure Git&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
+        /// </summary>
+        internal static string tag_gitRepositoryName {
+            get {
+                return ResourceManager.GetString("tag_gitRepositoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Mercurial branch name. Make sure Mercurial&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
         internal static string tag_hgBranchName {
