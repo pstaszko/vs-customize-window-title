@@ -70,6 +70,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new PlatformNameResolver(),
                 new ConfigurationNameResolver(),
                 new GitBranchNameResolver(),
+                new GitRepoNameResolver(),
                 new HgBranchNameResolver(),
                 new SvnResolver(),
                 new WorkspaceNameResolver(),
