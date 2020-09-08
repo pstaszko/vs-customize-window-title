@@ -20,29 +20,29 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [Category("General")]
         [DisplayName("Farthest parent folder depth")]
         [Description("Default: 1. Distance of the farthest parent folder to be shown. 1 will only show the folder of the opened project/solution file, before the project/folder name")]
-        [DefaultValue(CustomizeVSWindowTitle.DefaultFarthestParentDepth)]
+        [DefaultValue(PSCustomizeVSWindowTitle.DefaultFarthestParentDepth)]
         public int FarthestParentDepth { get; set; } = 1;
 
         [Category("General")]
         [DisplayName("Closest parent folder depth")]
         [Description("Default: 1. Distance of the closest parent folder to be shown. 1 will only show the folder of the opened project/solution file, before the project/folder name.")]
-        [DefaultValue(CustomizeVSWindowTitle.DefaultClosestParentDepth)]
+        [DefaultValue(PSCustomizeVSWindowTitle.DefaultClosestParentDepth)]
         public int ClosestParentDepth { get; set; } = 1;
 
         [Category("Patterns")]
         [DisplayName("No document or solution open")]
         [Description("Default: [ideName]. See 'Supported Tags' section on the left for more guidance.")]
-        [DefaultValue(CustomizeVSWindowTitle.DefaultPatternIfNothingOpen)]
+        [DefaultValue(PSCustomizeVSWindowTitle.DefaultPatternIfNothingOpen)]
         [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public string PatternIfNothingOpen { get; set; } = CustomizeVSWindowTitle.DefaultPatternIfNothingOpen;
+        public string PatternIfNothingOpen { get; set; } = PSCustomizeVSWindowTitle.DefaultPatternIfNothingOpen;
 
         [Category("Patterns")]
         [DisplayName("Document (no solution) open")]
         [Description("Default: [documentName] - [ideName]. See 'Supported tags' section on the left for more guidance.")]
-        [DefaultValue(CustomizeVSWindowTitle.DefaultPatternIfDocumentButNoSolutionOpen)]
+        [DefaultValue(PSCustomizeVSWindowTitle.DefaultPatternIfDocumentButNoSolutionOpen)]
         [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Document)]
-        public string PatternIfDocumentButNoSolutionOpen { get; set; } = CustomizeVSWindowTitle.DefaultPatternIfDocumentButNoSolutionOpen;
+        public string PatternIfDocumentButNoSolutionOpen { get; set; } = PSCustomizeVSWindowTitle.DefaultPatternIfDocumentButNoSolutionOpen;
 
         [Category("Patterns")]
         [DisplayName("Solution in design mode")]
@@ -71,8 +71,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [Category("Patterns")]
         [DisplayName("Appended string")]
         [Description("Default: '\t' (tab). String to be added at the end of the title to identify that it has been rewritten. If not default or '*', and \"Always rewrite titles\" is false, the detection of concurrent instances with the same title may not work.")]
-        [DefaultValue(CustomizeVSWindowTitle.DefaultAppendedString)]
-        public string AppendedString { get; set; } = CustomizeVSWindowTitle.DefaultAppendedString;
+        [DefaultValue(PSCustomizeVSWindowTitle.DefaultAppendedString)]
+        public string AppendedString { get; set; } = PSCustomizeVSWindowTitle.DefaultAppendedString;
 
         [Category("Source control")]
         [DisplayName("Git binaries directory")]

@@ -101,8 +101,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             }
             catch (Exception ex) {
                 try {
-                    if (CustomizeVSWindowTitle.CurrentPackage.UiSettings.EnableDebugMode) {
-                        CustomizeVSWindowTitle.WriteOutput("SvnResolver.GetSvnDirectory() exception: " + ex);
+                    if (PSCustomizeVSWindowTitle.CurrentPackage.UiSettings.EnableDebugMode) {
+                        PSCustomizeVSWindowTitle.WriteOutput("SvnResolver.GetSvnDirectory() exception: " + ex);
                     }
                 }
                 catch {

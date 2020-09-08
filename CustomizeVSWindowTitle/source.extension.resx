@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="110" xml:space="preserve">
-    <value>Customize Visual Studio Window Title</value>
+    <value>PSCustomize Visual Studio Window Title</value>
   </data>
   <data name="112" xml:space="preserve">
     <value>This lightweight extension allows changing the window title of Visual Studio to include a folder tree with a configurable min depth and max depth distance from the solution/project file, and the use of special tags to help with many other possible scenarios (Git, Hg, TFS, SVN...). 

@@ -91,7 +91,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 
         private void btGlobalConfig_Click(object sender, EventArgs e)
         {
-            CustomizeVSWindowTitle.CurrentPackage.UiSettingsOverridesOptions.GlobalSolutionSettingsOverridesFp = this._GlobalSettingsFp;
+            PSCustomizeVSWindowTitle.CurrentPackage.UiSettingsOverridesOptions.GlobalSolutionSettingsOverridesFp = this._GlobalSettingsFp;
 
             if (this._GlobalSettingsFp != null)
             {
@@ -136,7 +136,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 
         private void OpenText(string path, bool bGlobal)
         {
-            var settings = CustomizeVSWindowTitle.CurrentPackage?.GetSettings(this._SolutionFp);
+            var settings = PSCustomizeVSWindowTitle.CurrentPackage?.GetSettings(this._SolutionFp);
             if (settings == null) return;
             var sampleSln = Globals.GetExampleSolution(this._SolutionFp);
             var bIsNewFile = !File.Exists(path);
@@ -144,7 +144,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             {
                 var doc = new XmlDocument();
                 doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", string.Empty));
-                var rootNode = doc.CreateElement("CustomizeVSWindowTitle");
+                var rootNode = doc.CreateElement("PSCustomizeVSWindowTitle");
                 doc.AppendChild(rootNode);
                 XmlElement s;
                 if (!string.IsNullOrEmpty(this._SolutionFp))
@@ -157,12 +157,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                         addAttr(doc, s, Globals.PathTag, sampleSln, false);
                     }
                     addAttr(doc, s, Globals.SolutionNameTag, settings.SolutionName, sn.Equals(settings.SolutionName));
-                    addAttr(doc, s, Globals.ClosestParentDepthTag, settings.ClosestParentDepth?.ToString(), settings.ClosestParentDepth == CustomizeVSWindowTitle.DefaultClosestParentDepth);
-                    addAttr(doc, s, Globals.FarthestParentDepthTag, settings.FarthestParentDepth?.ToString(), settings.FarthestParentDepth == CustomizeVSWindowTitle.DefaultFarthestParentDepth);
-                    addAttr(doc, s, Globals.AppendedStringTag, settings.AppendedString, settings.AppendedString == CustomizeVSWindowTitle.DefaultAppendedString);
-                    addAttr(doc, s, Globals.PatternIfRunningModeTag, settings.PatternIfRunningMode, settings.PatternIfRunningMode == CustomizeVSWindowTitle.DefaultPatternIfRunningMode);
-                    addAttr(doc, s, Globals.PatternIfBreakModeTag, settings.PatternIfBreakMode, settings.PatternIfBreakMode == CustomizeVSWindowTitle.DefaultPatternIfBreakMode);
-                    addAttr(doc, s, Globals.PatternIfDesignModeTag, settings.PatternIfDesignMode, settings.PatternIfDesignMode == CustomizeVSWindowTitle.DefaultPatternIfDesignMode);
+                    addAttr(doc, s, Globals.ClosestParentDepthTag, settings.ClosestParentDepth?.ToString(), settings.ClosestParentDepth == PSCustomizeVSWindowTitle.DefaultClosestParentDepth);
+                    addAttr(doc, s, Globals.FarthestParentDepthTag, settings.FarthestParentDepth?.ToString(), settings.FarthestParentDepth == PSCustomizeVSWindowTitle.DefaultFarthestParentDepth);
+                    addAttr(doc, s, Globals.AppendedStringTag, settings.AppendedString, settings.AppendedString == PSCustomizeVSWindowTitle.DefaultAppendedString);
+                    addAttr(doc, s, Globals.PatternIfRunningModeTag, settings.PatternIfRunningMode, settings.PatternIfRunningMode == PSCustomizeVSWindowTitle.DefaultPatternIfRunningMode);
+                    addAttr(doc, s, Globals.PatternIfBreakModeTag, settings.PatternIfBreakMode, settings.PatternIfBreakMode == PSCustomizeVSWindowTitle.DefaultPatternIfBreakMode);
+                    addAttr(doc, s, Globals.PatternIfDesignModeTag, settings.PatternIfDesignMode, settings.PatternIfDesignMode == PSCustomizeVSWindowTitle.DefaultPatternIfDesignMode);
                     rootNode.AppendChild(s);
                 }
                 //rootNode.AppendChild(doc.CreateComment("See following sample SettingsSet (remove -Example-Children from the tag name to use as is). All overrides are specified as attributes."));
@@ -188,12 +188,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                     addAttr(doc, s, Globals.PathTag, sampleSln, false);
                 }
                 addAttr(doc, s, Globals.SolutionNameTag, settings.SolutionName, false);
-                addAttr(doc, s, Globals.ClosestParentDepthTag, CustomizeVSWindowTitle.DefaultClosestParentDepth.ToString(), false);
-                addAttr(doc, s, Globals.FarthestParentDepthTag, CustomizeVSWindowTitle.DefaultFarthestParentDepth.ToString(), false);
-                addAttr(doc, s, Globals.AppendedStringTag, CustomizeVSWindowTitle.DefaultAppendedString, false);
-                addAttr(doc, s, Globals.PatternIfRunningModeTag, CustomizeVSWindowTitle.DefaultPatternIfRunningMode, false);
-                addAttr(doc, s, Globals.PatternIfBreakModeTag, CustomizeVSWindowTitle.DefaultPatternIfBreakMode, false);
-                addAttr(doc, s, Globals.PatternIfDesignModeTag, CustomizeVSWindowTitle.DefaultPatternIfDesignMode, false);
+                addAttr(doc, s, Globals.ClosestParentDepthTag, PSCustomizeVSWindowTitle.DefaultClosestParentDepth.ToString(), false);
+                addAttr(doc, s, Globals.FarthestParentDepthTag, PSCustomizeVSWindowTitle.DefaultFarthestParentDepth.ToString(), false);
+                addAttr(doc, s, Globals.AppendedStringTag, PSCustomizeVSWindowTitle.DefaultAppendedString, false);
+                addAttr(doc, s, Globals.PatternIfRunningModeTag, PSCustomizeVSWindowTitle.DefaultPatternIfRunningMode, false);
+                addAttr(doc, s, Globals.PatternIfBreakModeTag, PSCustomizeVSWindowTitle.DefaultPatternIfBreakMode, false);
+                addAttr(doc, s, Globals.PatternIfDesignModeTag, PSCustomizeVSWindowTitle.DefaultPatternIfDesignMode, false);
                 rootNode.AppendChild(s);
 
                 var tmp = Path.GetTempFileName();

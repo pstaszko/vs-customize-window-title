@@ -28,7 +28,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 Solution = solution,
                 GlobalSettings = globalSettings,
                 Cfg = cfg,
-                ElevationSuffix = CustomizeVSWindowTitle.CurrentPackage.ElevationSuffix
+                ElevationSuffix = PSCustomizeVSWindowTitle.CurrentPackage.ElevationSuffix
             };
             try {
                 info.ActiveDocument = Globals.DTE.ActiveDocument;

@@ -40,12 +40,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
     [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasMultipleProjects_string, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasSingleProject_string, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideOptionPage(typeof(GlobalSettingsPageGrid), "Customize VS Window Title", "Global rules", 0, 0, true)]
-    [ProvideOptionPage(typeof(SettingsOverridesPageGrid), "Customize VS Window Title", "Solution-specific overrides", 51, 500, true)]
-    [ProvideOptionPage(typeof(SupportedTagsGrid), "Customize VS Window Title", "Supported tags", 101, 1000, true)]
+    [ProvideOptionPage(typeof(GlobalSettingsPageGrid), "PSCustomize VS Window Title", "Global rules", 0, 0, true)]
+    [ProvideOptionPage(typeof(SettingsOverridesPageGrid), "PSCustomize VS Window Title", "Solution-specific overrides", 51, 500, true)]
+    [ProvideOptionPage(typeof(SupportedTagsGrid), "PSCustomize VS Window Title", "Supported tags", 101, 1000, true)]
     [Guid(GuidList.guidCustomizeVSWindowTitlePkgString)]
-    public sealed class CustomizeVSWindowTitle : AsyncPackage {
-        public CustomizeVSWindowTitle() {
+    public sealed class PSCustomizeVSWindowTitle : AsyncPackage {
+        public PSCustomizeVSWindowTitle() {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             this.TagResolvers = new List<ITagResolver> {
                 new DocumentNameResolver(),
@@ -69,14 +69,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new PlatformNameResolver(),
                 new ConfigurationNameResolver(),
                 new GitBranchNameResolver(),
-                new HgBranchNameResolver(),
-                new SvnResolver(),
-                new WorkspaceNameResolver(),
-                new WorkspaceOwnerNameResolver(),
+                //new HgBranchNameResolver(),
+                //new SvnResolver(),
+                //new WorkspaceNameResolver(),
+                //new WorkspaceOwnerNameResolver(),
                 new VsProcessIdResolver(),
                 new EnvResolver(),
                 new DebuggedProcessesArgsResolver(),
-                new TfsBranchNameResolver()
+                //new TfsBranchNameResolver()
             };
             this.SupportedTags = this.TagResolvers.SelectMany(r => r.TagNames).ToArray();
             this.SimpleTagResolvers = this.TagResolvers.OfType<ISimpleTagResolver>().ToDictionary(t => t.TagName, t => t);
@@ -154,7 +154,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public string IDEName { get; private set; }
         public string ElevationSuffix { get; private set; }
 
-        public static CustomizeVSWindowTitle CurrentPackage;
+        public static PSCustomizeVSWindowTitle CurrentPackage;
 
         private System.Windows.Forms.Timer ResetTitleTimer;
         private readonly List<ITagResolver> TagResolvers;
@@ -581,7 +581,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     // P.S. There's also the VSConstants.GUID_OutWindowDebugPane available.
                     if (GetGlobalService(typeof(SVsOutputWindow)) is IVsOutputWindow outWindow) {
                         outWindow.GetPane(ref generalPaneGuid, out IVsOutputWindowPane generalPane);
-                        generalPane.OutputString("CustomizeVSWindowTitle: " + string.Format(str, args) + "\r\n");
+                        generalPane.OutputString("PSCustomizeVSWindowTitle: " + string.Format(str, args) + "\r\n");
                         generalPane.Activate();
                     }
                 });

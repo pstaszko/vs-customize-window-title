@@ -84,8 +84,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     }
                     catch (Exception ex) {
                         try {
-                            if (CustomizeVSWindowTitle.CurrentPackage.UiSettings.EnableDebugMode) {
-                                CustomizeVSWindowTitle.WriteOutput("settings.Merge(settingsSet) exception: " + ex);
+                            if (PSCustomizeVSWindowTitle.CurrentPackage.UiSettings.EnableDebugMode) {
+                                PSCustomizeVSWindowTitle.WriteOutput("settings.Merge(settingsSet) exception: " + ex);
                             }
                         }
                         catch {
@@ -156,7 +156,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private static readonly string[] NodePaths = { "CustomizeVSWindowTitle/SettingsSet", "RenameVSWindowTitle/SettingsSet" };
+        private static readonly string[] NodePaths = { "PSCustomizeVSWindowTitle/SettingsSet", "RenameVSWindowTitle/SettingsSet" };
         private void LoadSettings() {
             this.SettingsSets = new List<SettingsSet>();
 
