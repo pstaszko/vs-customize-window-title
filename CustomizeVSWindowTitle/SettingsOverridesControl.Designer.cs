@@ -33,6 +33,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             this.btSolutionConfig = new System.Windows.Forms.Button();
             this.btGlobalConfig = new System.Windows.Forms.Button();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.btRegister = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -55,22 +56,24 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.btRegister, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.btSolutionConfig, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.btGlobalConfig, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.propertyGrid1, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(406, 220);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // btSolutionConfig
             // 
             this.btSolutionConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btSolutionConfig.Location = new System.Drawing.Point(3, 190);
+            this.btSolutionConfig.Location = new System.Drawing.Point(206, 161);
             this.btSolutionConfig.Name = "btSolutionConfig";
             this.btSolutionConfig.Size = new System.Drawing.Size(197, 23);
             this.btSolutionConfig.TabIndex = 9;
@@ -81,7 +84,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             // btGlobalConfig
             // 
             this.btGlobalConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btGlobalConfig.Location = new System.Drawing.Point(206, 190);
+            this.btGlobalConfig.Location = new System.Drawing.Point(3, 161);
             this.btGlobalConfig.Name = "btGlobalConfig";
             this.btGlobalConfig.Size = new System.Drawing.Size(197, 23);
             this.btGlobalConfig.TabIndex = 8;
@@ -95,9 +98,20 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             this.propertyGrid1.Location = new System.Drawing.Point(3, 3);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.propertyGrid1.Size = new System.Drawing.Size(400, 181);
+            this.propertyGrid1.Size = new System.Drawing.Size(400, 152);
             this.propertyGrid1.TabIndex = 7;
             this.propertyGrid1.ToolbarVisible = false;
+            // 
+            // btRegister
+            // 
+            this.btRegister.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btRegister.Location = new System.Drawing.Point(3, 190);
+            this.btRegister.Name = "btRegister";
+            this.btRegister.Size = new System.Drawing.Size(197, 23);
+            this.btRegister.TabIndex = 10;
+            this.btRegister.Text = "Register";
+            this.btRegister.UseVisualStyleBackColor = true;
+            this.btRegister.Click += new System.EventHandler(this.btRegister_Click);
             // 
             // SettingsOverridesControl
             // 
@@ -118,6 +132,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         private System.Windows.Forms.Button btSolutionConfig;
         private System.Windows.Forms.Button btGlobalConfig;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.Button btRegister;
     }
 	
 }

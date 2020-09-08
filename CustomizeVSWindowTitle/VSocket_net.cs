@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle
 {
@@ -15,27 +16,39 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             public HttpListener listener { get; set; }
             public int port { get; set; }
         }
+        public static void StartListen()
+        {
+            var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
+            var tt = new System.Threading.Thread(pts);
+            tt.Start();
+        }
         public static void Listen(DTE2 dte)
         {
+            int pid = 0;
+            void log(string msg) => System.IO.File.AppendAllText($@"c:\dev\temp\vspidlog_{pid}.txt", msg + "\r\n");
             try
             {
-                var pid = System.Diagnostics.Process.GetCurrentProcess().Id;
-                void log(string msg) => System.IO.File.AppendAllText(  $@"c:\dev\temp\vspidlog_{pid}.txt", msg + "\r\n");
+                pid = System.Diagnostics.Process.GetCurrentProcess().Id;
                 log("Listen called, getting port");
                 ListenerAndPort TryBindListenerOnFreePortX()
                 {
-                    TryBindListenerOnFreePort(log,out var listenerz, out var port);
+                    TryBindListenerOnFreePort(log, out var listenerz, out var port);
                     return new ListenerAndPort { listener = listenerz, port = port };
                 }
                 var listener = TryBindListenerOnFreePortX();
                 log(listener.port.ToString() + " assigned");
                 var v = VSocket.GetVersion();
                 var t = new List<string> { $"{pid}:{listener.port}:{v}" };
+                if (System.IO.Directory.Exists(@"c:\DEV")) { System.IO.Directory.CreateDirectory(@"c:\DEV"); }
+                if (System.IO.Directory.Exists(@"c:\DEV\temp")) { System.IO.Directory.CreateDirectory(@"c:\DEV\temp"); }
                 System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
+                log("Wrote to file");
                 _Listen(dte, listener.listener);
+                log("Finishing listen method to file");
             }
             catch (System.Exception ex)
             {
+                log("Exception in Listen: " + ex.Message);
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
         }

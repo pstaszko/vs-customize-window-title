@@ -5,29 +5,37 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle {
-    public partial class SettingsOverridesControl {
-        public SettingsOverridesControl(SettingsOverridesPageGrid optionsPage) {
+namespace ErwinMayerLabs.RenameVSWindowTitle
+{
+    public partial class SettingsOverridesControl
+    {
+        public SettingsOverridesControl(SettingsOverridesPageGrid optionsPage)
+        {
             this.InitializeComponent();
             this.OptionsPage = optionsPage;
             this.propertyGrid1.SelectedObject = this.OptionsPage;
         }
 
-        private void SettingsOverridesControl_Paint(object sender, PaintEventArgs e) {
+        private void SettingsOverridesControl_Paint(object sender, PaintEventArgs e)
+        {
             this.ResizeDescriptionArea(this.propertyGrid1, lines: 7);
         }
 
         private readonly SettingsOverridesPageGrid OptionsPage;
 
-        private void ResizeDescriptionArea(PropertyGrid grid, int lines) {
-            try {
+        private void ResizeDescriptionArea(PropertyGrid grid, int lines)
+        {
+            try
+            {
                 var info = grid.GetType().GetProperty("Controls");
                 var collection = (ControlCollection)info.GetValue(grid, null);
 
-                foreach (var control in collection) {
+                foreach (var control in collection)
+                {
                     var type = control.GetType();
 
-                    if ("DocComment" == type.Name) {
+                    if ("DocComment" == type.Name)
+                    {
                         const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
                         var field = type.BaseType.GetField("userSized", Flags);
                         field.SetValue(control, true);
@@ -41,18 +49,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 }
             }
 
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Trace.WriteLine(ex);
             }
         }
 
         string _SolutionFp;
 
-        public string SolutionFp {
-            get {
+        public string SolutionFp
+        {
+            get
+            {
                 return this._SolutionFp;
             }
-            set {
+            set
+            {
                 this._SolutionFp = value;
                 this.btSolutionConfig.Enabled = !string.IsNullOrEmpty(value);
                 this.btSolutionConfig.Tag = this.btSolutionConfig.Enabled ? value + Globals.SolutionSettingsOverrideExtension : null;
@@ -61,11 +73,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         string _GlobalSettingsFp;
 
-        public string GlobalSettingsFp {
-            get {
+        public string GlobalSettingsFp
+        {
+            get
+            {
                 return this._GlobalSettingsFp;
             }
-            set {
+            set
+            {
                 this._GlobalSettingsFp = value;
 
                 this.btGlobalConfig.Tag = value;
@@ -74,57 +89,71 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
 
-        private void btGlobalConfig_Click(object sender, EventArgs e) {
+        private void btGlobalConfig_Click(object sender, EventArgs e)
+        {
             CustomizeVSWindowTitle.CurrentPackage.UiSettingsOverridesOptions.GlobalSolutionSettingsOverridesFp = this._GlobalSettingsFp;
 
-            if (this._GlobalSettingsFp != null) {
-                try {
+            if (this._GlobalSettingsFp != null)
+            {
+                try
+                {
                     this.OpenText(this._GlobalSettingsFp, true);
                 }
-                catch {
+                catch
+                {
                     MessageBox.Show("A problem occurred while trying to open/create the file. Please check that the path is well formed and retry.", "Rename Visual Studio Window Title",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("Please enter a file path and retry (if the file does not exist, a sample one will be created)", "Rename Visual Studio Window Title",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
-        private void btSolutionConfig_Click(object sender, EventArgs e) {
-            if (this.btSolutionConfig.Tag != null) {
-                if (Globals.DTE.Solution == null) {
+        private void btSolutionConfig_Click(object sender, EventArgs e)
+        {
+            if (this.btSolutionConfig.Tag != null)
+            {
+                if (Globals.DTE.Solution == null)
+                {
                     MessageBox.Show("Please open a solution first.", "Rename Visual Studio Window Title",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                try {
+                try
+                {
                     this.OpenText(this.btSolutionConfig.Tag.ToString(), false);
                 }
-                catch {
+                catch
+                {
                     MessageBox.Show("A problem occurred while trying to open/create the file. Please check that the path is well formed and retry.", "Rename Visual Studio Window Title",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
 
-        private void OpenText(string path, bool bGlobal) {
+        private void OpenText(string path, bool bGlobal)
+        {
             var settings = CustomizeVSWindowTitle.CurrentPackage?.GetSettings(this._SolutionFp);
             if (settings == null) return;
             var sampleSln = Globals.GetExampleSolution(this._SolutionFp);
             var bIsNewFile = !File.Exists(path);
-            if (bIsNewFile) {
+            if (bIsNewFile)
+            {
                 var doc = new XmlDocument();
                 doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", string.Empty));
                 var rootNode = doc.CreateElement("CustomizeVSWindowTitle");
                 doc.AppendChild(rootNode);
                 XmlElement s;
-                if (!string.IsNullOrEmpty(this._SolutionFp)) {
+                if (!string.IsNullOrEmpty(this._SolutionFp))
+                {
                     var sn = string.IsNullOrEmpty(settings.SolutionFilePath) ? string.Empty : Path.GetFileNameWithoutExtension(settings.SolutionFilePath);
 
                     s = doc.CreateElement("SettingsSet");
-                    if (bGlobal) {
+                    if (bGlobal)
+                    {
                         addAttr(doc, s, Globals.PathTag, sampleSln, false);
                     }
                     addAttr(doc, s, Globals.SolutionNameTag, settings.SolutionName, sn.Equals(settings.SolutionName));
@@ -154,7 +183,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
                 rootNode.AppendChild(doc.CreateComment("See following sample SettingsSet (remove -Example from the tag name to use as is). All overrides are specified as attributes."));
                 s = doc.CreateElement("SettingsSet-Example");
-                if (bGlobal) {
+                if (bGlobal)
+                {
                     addAttr(doc, s, Globals.PathTag, sampleSln, false);
                 }
                 addAttr(doc, s, Globals.SolutionNameTag, settings.SolutionName, false);
@@ -167,7 +197,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 rootNode.AppendChild(s);
 
                 var tmp = Path.GetTempFileName();
-                var xws = new XmlWriterSettings {
+                var xws = new XmlWriterSettings
+                {
                     NewLineOnAttributes = true,
                     CloseOutput = true,
                     ConformanceLevel = ConformanceLevel.Document,
@@ -183,31 +214,41 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 File.Move(tmp, path);
             }
             var dd = Globals.DTE.Application.Documents.Open(path);
-            if (bIsNewFile) {
+            if (bIsNewFile)
+            {
                 dd.Saved = false;
                 File.Delete(path);
             }
         }
 
-        private static void addVal(XmlDocument doc, XmlElement S, string n, string val, bool asComment = false) {
+        private static void addVal(XmlDocument doc, XmlElement S, string n, string val, bool asComment = false)
+        {
             if (val == null)
                 return;
             var E = doc.CreateElement(n);
             E.InnerText = val ?? string.Empty;
 
-            if (asComment) {
+            if (asComment)
+            {
                 return;
                 //S.AppendChild(doc.CreateComment(E.OuterXml));
             }
-            else {
+            else
+            {
                 S.AppendChild(E);
             }
 
         }
-        private static void addAttr(XmlDocument doc, XmlElement S, string n, string val, bool asComment = false) {
+        private static void addAttr(XmlDocument doc, XmlElement S, string n, string val, bool asComment = false)
+        {
             if (val == null)
                 return;
             S.SetAttribute(asComment ? "__" + n : n, val);
+        }
+
+        private void btRegister_Click(object sender, EventArgs e)
+        {
+            VSocket.StartListen();
         }
     }
 }
