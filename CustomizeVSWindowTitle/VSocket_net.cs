@@ -25,7 +25,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         public static void Listen(DTE2 dte)
         {
             int pid = 0;
-            void log(string msg) => System.IO.File.AppendAllText($@"c:\dev\temp\vspidlog_{pid}.txt", msg + "\r\n");
+            void log(string msg) => System.IO.File.AppendAllText($@"c:\dev\temp\vspidlog_{pid}.txt", (DateTime.Now.ToLongTimeString()) + " | " + msg + "\r\n");
             try
             {
                 pid = System.Diagnostics.Process.GetCurrentProcess().Id;
