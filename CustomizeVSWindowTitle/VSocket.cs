@@ -38,12 +38,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                             foreach (var item in dte.ActiveSolutionProjects as IEnumerable<object>)
                             {
                                 var prop = item.GetType().GetProperty("FullName");
-                                if(prop != null)
+                                if (prop != null)
                                 {
                                     n.Add(prop.GetValue(item).ToString());
                                 }
                             }
-                            return string.Join("\r\n",n);
+                            return string.Join("\r\n", n);
                         };
                         var x = dte.ActiveSolutionProjects;
                         fns["GetActiveProjects"] = () =>
@@ -74,79 +74,85 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                         };
                         acts["WriteToOutputWindow"] = () => dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
                     }
-                    if (dte?.ActiveDocument is Document doc)
+                    try
                     {
-                        fns["DocumentProperties"] = () =>
+                        if (dte?.ActiveDocument is Document doc)
                         {
-                            var retx = "";
-                            var x2 = doc.ProjectItem;
-                            foreach (Property prop in x2.Properties)
+                            fns["DocumentProperties"] = () =>
                             {
-                                try
+                                var retx = "";
+                                var x2 = doc.ProjectItem;
+                                foreach (Property prop in x2.Properties)
                                 {
-                                    var v = prop.Value.ToString().Trim();
-                                    if (!string.IsNullOrWhiteSpace(v))
+                                    try
                                     {
-                                        retx += $"{prop.Name}: {v}\r\n";
+                                        var v = prop.Value.ToString().Trim();
+                                        if (!string.IsNullOrWhiteSpace(v))
+                                        {
+                                            retx += $"{prop.Name}: {v}\r\n";
+                                        }
                                     }
+                                    catch { }
                                 }
-                                catch { }
-                            }
-                            return retx;
-                        };
-                        fns["Save"] = () =>
-                        {
-                            doc.Save();
-                            while (!doc.Saved)
+                                return retx;
+                            };
+                            fns["Save"] = () =>
                             {
-                                System.Threading.Thread.Sleep(10);
-                            }
-                            return doc.Saved.ToString();
-                        };
-                        fns["AsyncSave"] = () => doc.Save().ToString();
-                        acts["IsSaved"] = () => doc.Saved.ToString();
-                    }
-                    if (dte?.ActiveDocument?.Selection is TextSelection textSelection)
-                    {
-                        acts["InsertLineAbove"] = () =>
-                        {
-                            var i = textSelection.CurrentColumn;
-                            dte.ExecuteCommand("Edit.LineOpenAbove");
-                        };
-                        acts["InsertLineBelow"] = () => { };
-                        acts["ChangeCase"] = () =>
-                        {
-                            if (Enum.TryParse(parameters["to"], out EnvDTE.vsCaseOptions x))
-                            {
-                                textSelection.ChangeCase(x);
-                            }
-                        };
-                        acts["StartOfLine"] = () => textSelection.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText);
-                        acts["MoveToLineAndOffset"] = () =>
-                        {
-                            var line = int.Parse(parameters["line"]);
-                            var offset = int.Parse(parameters["offset"]);
-                            var extend = bool.Parse(parameters["extend"]);
-                            textSelection.MoveToLineAndOffset(line, offset, extend);
-                        };
-                        acts["SwapAnchor"] = () => textSelection.SwapAnchor();
-                        acts["SelectLine"] = () => textSelection.SelectLine();
-                        fns["GetSelectedText"] = () => textSelection.Text;
-                        fns["Position"] = () =>
-                                Newtonsoft.Json.JsonConvert.SerializeObject(new
+                                doc.Save();
+                                while (!doc.Saved)
                                 {
-                                    textSelection.CurrentLine,
-                                    textSelection.CurrentColumn,
-                                    textSelection.BottomLine,
-                                    textSelection.AnchorColumn,
-                                    textSelection.Mode,
-                                    textSelection.Text,
-                                    dte.ActiveDocument.Path,
-                                    dte.ActiveDocument.FullName,
-                                    ActivePoint = expandPoint(textSelection.ActivePoint),
-                                    BottomPoint = expandPoint(textSelection.BottomPoint),
-                                    AnchorPoint = expandPoint(textSelection.AnchorPoint)
-                                });
+                                    System.Threading.Thread.Sleep(10);
+                                }
+                                return doc.Saved.ToString();
+                            };
+                            fns["AsyncSave"] = () => doc.Save().ToString();
+                            acts["IsSaved"] = () => doc.Saved.ToString();
+                        }
+                        if (dte?.ActiveDocument?.Selection is TextSelection textSelection)
+                        {
+                            acts["InsertLineAbove"] = () =>
+                            {
+                                var i = textSelection.CurrentColumn;
+                                dte.ExecuteCommand("Edit.LineOpenAbove");
+                            };
+                            acts["InsertLineBelow"] = () => { };
+                            acts["ChangeCase"] = () =>
+                            {
+                                if (Enum.TryParse(parameters["to"], out EnvDTE.vsCaseOptions x))
+                                {
+                                    textSelection.ChangeCase(x);
+                                }
+                            };
+                            acts["StartOfLine"] = () => textSelection.StartOfLine(vsStartOfLineOptions.vsStartOfLineOptionsFirstText);
+                            acts["MoveToLineAndOffset"] = () =>
+                            {
+                                var line = int.Parse(parameters["line"]);
+                                var offset = int.Parse(parameters["offset"]);
+                                var extend = bool.Parse(parameters["extend"]);
+                                textSelection.MoveToLineAndOffset(line, offset, extend);
+                            };
+                            acts["SwapAnchor"] = () => textSelection.SwapAnchor();
+                            acts["SelectLine"] = () => textSelection.SelectLine();
+                            fns["GetSelectedText"] = () => textSelection.Text;
+                            fns["Position"] = () =>
+                                    Newtonsoft.Json.JsonConvert.SerializeObject(new
+                                    {
+                                        textSelection.CurrentLine,
+                                        textSelection.CurrentColumn,
+                                        textSelection.BottomLine,
+                                        textSelection.AnchorColumn,
+                                        textSelection.Mode,
+                                        textSelection.Text,
+                                        dte.ActiveDocument.Path,
+                                        dte.ActiveDocument.FullName,
+                                        ActivePoint = expandPoint(textSelection.ActivePoint),
+                                        BottomPoint = expandPoint(textSelection.BottomPoint),
+                                        AnchorPoint = expandPoint(textSelection.AnchorPoint)
+                                    });
+                        }
+                    }
+                    catch 
+                    {
                     }
                     if (fns.ContainsKey(cmd)) { ret = fns[cmd](); }
                     if (acts.ContainsKey(cmd)) { acts[cmd](); }
