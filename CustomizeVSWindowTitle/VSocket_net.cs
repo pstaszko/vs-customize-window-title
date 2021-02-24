@@ -43,7 +43,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 				System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
 				log("Wrote to file");
 				var c = new Connect(dte);
-				c.SE();
+				//c.SE();
 				_Listen(c, dte, listener.listener);
 				log("Finishing listen method to file");
 			} catch (System.Exception ex) {
@@ -124,8 +124,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 					var getNode = getNodeByName("Servers", hierarchy.UIHierarchyItems);
 					if (getNode != null) {
 						getNode.Select(vsUISelectionType.vsUISelectionTypeSelect);
-						getNode.Select(vsUISelectionType.vsUISelectionTypeExtend);
-						getNode.Collection.Expanded = true;
+						//getNode.Collection.Expanded = true;
+						var c = getNode.Collection.Count;
+						foreach (UIHierarchyItem item in getNode.Collection) {	
+							if(item.Name == "BMO") {
+								item.Select(vsUISelectionType.vsUISelectionTypeSelect);
+								item.Collection.Expanded = true;
+							}
+								
+						}
+						//getNode.Collection.Item(0).Select(vsUISelectionType.vsUISelectionTypeExtend);
 					}
 				}
 			} catch (Exception ex) {
