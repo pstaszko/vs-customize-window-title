@@ -12,7 +12,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             var x = System.Reflection.Assembly.GetExecutingAssembly();
             return $"{DateTime.Now.Subtract((new System.IO.FileInfo(x.Location)).LastWriteTime).TotalSeconds} Seconds old | {x.Location} | {x.FullName}";
         }
-        private static string processParameters(DTE2 dte, Dictionary<string, string> parameters)
+        private static string processParameters(Connect c, DTE2 dte, Dictionary<string, string> parameters)
         {
             var ret = "No action taken";
             try
@@ -71,6 +71,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                             string commandName = parameters["command"];
                             string commandArgs = parameters["args"];
                             dte.ExecuteCommand(commandName, commandArgs);
+                        };
+
+                        acts["SE"] = () => {
+                            c.SE();
                         };
                         acts["WriteToOutputWindow"] = () => dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
                     }
