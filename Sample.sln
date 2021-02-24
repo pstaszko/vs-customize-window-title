@@ -1,0 +1,127 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28809.33
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3AB93496-CDD5-4E03-8425-87C668790532}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\.editorconfig = ..\WesternCap\.editorconfig
+		..\WesternCap\Cricket.Intranet.sln.rn.xml = ..\WesternCap\Cricket.Intranet.sln.rn.xml
+		..\WesternCap\OnCheckout.ps1 = ..\WesternCap\OnCheckout.ps1
+		..\WesternCap\Cricket.Intranet\startup.txt = ..\WesternCap\Cricket.Intranet\startup.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accessories", "Accessories", "{96E72B04-DDBE-460A-9ABC-B1BC31E62456}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\Accessories\Accessories.ts = ..\WesternCap\Cricket.Intranet\Views\Accessories\Accessories.ts
+		..\WesternCap\Cricket.Intranet\Views\Accessories\ManageAccessories.ts = ..\WesternCap\Cricket.Intranet\Views\Accessories\ManageAccessories.ts
+		..\WesternCap\Cricket.Intranet\Views\Accessories\OrderAccessories.ts = ..\WesternCap\Cricket.Intranet\Views\Accessories\OrderAccessories.ts
+		..\WesternCap\Cricket.Intranet\Views\Accessories\TestOrderAccessories.ts = ..\WesternCap\Cricket.Intranet\Views\Accessories\TestOrderAccessories.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PettyCash", "PettyCash", "{106BA256-6FD6-46FB-B09B-076B92D03DC1}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\PettyCash\PettyCash.ts = ..\WesternCap\Cricket.Intranet\Views\PettyCash\PettyCash.ts
+		..\WesternCap\Cricket.Intranet\Views\PettyCash\TestPettyCash.ts = ..\WesternCap\Cricket.Intranet\Views\PettyCash\TestPettyCash.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Goals", "Goals", "{E2996920-0584-4DDB-ABA6-40FC0195D82F}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\Goals\Goals.ts = ..\WesternCap\Cricket.Intranet\Views\Goals\Goals.ts
+		..\WesternCap\Cricket.Intranet\Views\Goals\TestGoals.ts = ..\WesternCap\Cricket.Intranet\Views\Goals\TestGoals.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TrailingCreditAudit", "TrailingCreditAudit", "{F7D915B7-D728-4E85-8B9E-221EA9E33491}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\TrailingCreditAudit\TrailingCreditAudit.ts = ..\WesternCap\Cricket.Intranet\Views\TrailingCreditAudit\TrailingCreditAudit.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TimeClock", "TimeClock", "{8ADDB9C3-734F-4E02-BBFA-4EB76335DBC3}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\TimeClock\Adjustment.cshtml = ..\WesternCap\Cricket.Intranet\Views\TimeClock\Adjustment.cshtml
+		..\WesternCap\Cricket.Intranet\Views\TimeClock\Adjustment.ts = ..\WesternCap\Cricket.Intranet\Views\TimeClock\Adjustment.ts
+		..\WesternCap\Cricket.Intranet\Views\TimeClock\Timecard.cshtml = ..\WesternCap\Cricket.Intranet\Views\TimeClock\Timecard.cshtml
+		..\WesternCap\Cricket.Intranet\Views\TimeClock\Timecard.ts = ..\WesternCap\Cricket.Intranet\Views\TimeClock\Timecard.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Import", "Import", "{038D0B4F-EC0A-428A-9E19-BB70F62AB987}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\Import\Import.ts = ..\WesternCap\Cricket.Intranet\Views\Import\Import.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payroll", "Payroll", "{A7F4B358-49EB-44F5-A254-910F71B38A2C}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\TimeClock\Payroll.ts = ..\WesternCap\Cricket.Intranet\Views\TimeClock\Payroll.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{578DA579-17C6-409F-8F39-316772FC1363}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\Payment\TransactionAdmin.ts = ..\WesternCap\Cricket.Intranet\Views\Payment\TransactionAdmin.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{BDC29A2A-F3BF-4A60-8D63-A7399DBE8ACF}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Template\CreateNewController.psm1 = ..\WesternCap\Template\CreateNewController.psm1
+		..\WesternCap\Template\CreateTemplate.ps1 = ..\WesternCap\Template\CreateTemplate.ps1
+		..\WesternCap\Template\Search.cshtml = ..\WesternCap\Template\Search.cshtml
+		..\WesternCap\Template\Search.ts = ..\WesternCap\Template\Search.ts
+		..\WesternCap\Template\Template_Search.fs = ..\WesternCap\Template\Template_Search.fs
+		..\WesternCap\Template\Template_Search_Data.sql = ..\WesternCap\Template\Template_Search_Data.sql
+		..\WesternCap\Template\TemplateController.cs = ..\WesternCap\Template\TemplateController.cs
+		..\WesternCap\Template\TemplateController_Search.cs = ..\WesternCap\Template\TemplateController_Search.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExpenseReports", "ExpenseReports", "{009C7352-3638-4C16-B66E-DE54D1FE1255}"
+	ProjectSection(SolutionItems) = preProject
+		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\ExpenseReports.ts = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\ExpenseReports.ts
+		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\ExpenseReportsTests.ts = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\ExpenseReportsTests.ts
+		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Mileage.cshtml = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Mileage.cshtml
+		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Mileage.ts = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Mileage.ts
+		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Receipt.cshtml = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Receipt.cshtml
+		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Receipt.ts = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Receipt.ts
+		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Search.cshtml = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Search.cshtml
+		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Search.ts = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\Search.ts
+	EndProjectSection
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Templater", "..\WesternCap\Templater\Templater.fsproj", "{E29A006B-9274-4FFB-8E24-54C75942D546}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		ActiveDirectoryTesting|Any CPU = ActiveDirectoryTesting|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		IncludeSlowTests|Any CPU = IncludeSlowTests|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Test|Any CPU = Test|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.ActiveDirectoryTesting|Any CPU.ActiveCfg = Release|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.ActiveDirectoryTesting|Any CPU.Build.0 = Release|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.IncludeSlowTests|Any CPU.ActiveCfg = Release|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.IncludeSlowTests|Any CPU.Build.0 = Release|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{E29A006B-9274-4FFB-8E24-54C75942D546}.Test|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{96E72B04-DDBE-460A-9ABC-B1BC31E62456} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{106BA256-6FD6-46FB-B09B-076B92D03DC1} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{E2996920-0584-4DDB-ABA6-40FC0195D82F} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{F7D915B7-D728-4E85-8B9E-221EA9E33491} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{8ADDB9C3-734F-4E02-BBFA-4EB76335DBC3} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{038D0B4F-EC0A-428A-9E19-BB70F62AB987} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{A7F4B358-49EB-44F5-A254-910F71B38A2C} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{578DA579-17C6-409F-8F39-316772FC1363} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{BDC29A2A-F3BF-4A60-8D63-A7399DBE8ACF} = {3AB93496-CDD5-4E03-8425-87C668790532}
+		{009C7352-3638-4C16-B66E-DE54D1FE1255} = {3AB93496-CDD5-4E03-8425-87C668790532}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F83A532-9528-4348-AB02-CA422B96DA87}
+		LessCompiler = 4139c61e-b545-45f4-82ae-04a952b97bec
+	EndGlobalSection
+EndGlobal
