@@ -116,7 +116,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 
 			try {
 				serverExplorerToolwindow = GetToolwindow(EnvDTE.Constants.vsWindowKindServerExplorer);
-
+				
 				if (serverExplorerToolwindow != null) {
 					hierarchy = (EnvDTE.UIHierarchy)serverExplorerToolwindow.Object;
 
@@ -125,13 +125,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 					if (getNode != null) {
 						getNode.Select(vsUISelectionType.vsUISelectionTypeSelect);
 						//getNode.Collection.Expanded = true;
-						var c = getNode.Collection.Count;
-						foreach (UIHierarchyItem item in getNode.Collection) {	
-							if(item.Name == "BMO") {
-								item.Select(vsUISelectionType.vsUISelectionTypeSelect);
-								item.Collection.Expanded = true;
+						//var c = getNode.Collection.Count;
+						foreach (UIHierarchyItem item in getNode.Collection) {
+							if (item.Name == "Data Connections") {
+								//item.Select(vsUISelectionType.vsUISelectionTypeSelect);
+								//item.Collection.Expanded = true;
+								if (item.Collection.Expanded) {
+									//getNodeByName
+								}
 							}
-								
+
 						}
 						//getNode.Collection.Item(0).Select(vsUISelectionType.vsUISelectionTypeExtend);
 					}
