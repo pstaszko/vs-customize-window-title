@@ -116,7 +116,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 
 			try {
 				serverExplorerToolwindow = GetToolwindow(EnvDTE.Constants.vsWindowKindServerExplorer);
-				
+				var x = new FSSClass.myProgsGen.progsSingleton();
+				x.AutoHotkey.SendInput("{right}");
 				if (serverExplorerToolwindow != null) {
 					hierarchy = (EnvDTE.UIHierarchy)serverExplorerToolwindow.Object;
 
