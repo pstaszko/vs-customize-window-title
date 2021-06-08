@@ -2,6 +2,7 @@
 using EnvDTE80;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle
 {
@@ -12,6 +13,48 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             var x = System.Reflection.Assembly.GetExecutingAssembly();
             return $"{DateTime.Now.Subtract((new System.IO.FileInfo(x.Location)).LastWriteTime).TotalSeconds} Seconds old | {x.Location} | {x.FullName}";
         }
+        //public static Lazy<Document> ActiveDocument = new Lazy<Document>(GetActiveDocument)
+
+        //public static void NewCollapse(StringBuilder sb)
+        //{
+        //    System.IO.FileInfo fi = new System.IO.FileInfo(ActiveDocument.Value.FullName);
+        //    ActiveDocument.Value.Selection.GotoLine(1, true);
+        //    // Dim objCursorTextPoint As EnvDTE.TextPoint = GetCursorTextPoint()
+        //    int line;
+        //    try
+        //    {
+        //        DTE.ExecuteCommand("Edit.CollapseAllOutlining");
+        //    }
+        //    // _DTE.ExecuteCommand("Edit.ToggleOutliningExpansion")
+        //    catch
+        //    {
+        //    }
+
+        //    var expandClass = true;
+        //    if (expandClass)
+        //    {
+        //        if (fi.Extension.psEqualsAny(
+        //        {
+        //            ".cshtml"
+        //        }))
+        //{
+        //        }
+        //else
+        //        {
+        //            DTE.ExecuteCommand(@"Edit.find ""^\s*(public|private|protected)?\s*\b(class|module)"" /regex");
+        //            line = DTE.GetCurrentLine();
+        //            log.Debug($"NewCollapse line: {line}");
+        //            DTE.ExecuteCommand("Edit.Goto " + (line + 1));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        line = DTE.GetCurrentLine();
+        //        DTE.ExecuteCommand("Edit.Goto " + line);
+        //    }
+        //    sb.Append("done");
+        //}
+
         private static string processParameters(Connect c, DTE2 dte, Dictionary<string, string> parameters)
         {
             var ret = "No action taken";
@@ -23,6 +66,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                     var acts = new Dictionary<string, Action>();
                     var fns = new Dictionary<string, Func<string>>();
                     acts["LaunchDebugger"] = () => System.Diagnostics.Debugger.Launch();
+                    acts["NewCollapse_JumpBack"] = () =>
+                    {
+                        var dtex = VSCMD.VSCMD.DTEWrapper.Init(dte);
+                        VSCMD.VSCMD.Commands.DTE = dtex;
+                        VSCMD.VSCMD.Commands.NewCollapse_JumpBack(new StringBuilder());
+                    };
                     acts["Break"] = () => System.Diagnostics.Debugger.Break();
                     fns["Version"] = GetVersion;
                     if (dte is DTE2 dte2)

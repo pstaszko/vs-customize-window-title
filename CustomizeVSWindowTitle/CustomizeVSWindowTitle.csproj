@@ -25,7 +25,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ErwinMayerLabs.RenameVSWindowTitle</RootNamespace>
     <AssemblyName>PSCustomizeVSWindowTitle</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
@@ -227,6 +227,10 @@
     <ProjectReference Include="..\..\UIauto\FSS\FSSClass\FSSClass.fsproj">
       <Project>{040e6526-25ed-4450-a3af-6a29c545e65f}</Project>
       <Name>FSSClass</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UIauto\VSCMD\VSCMD.vbproj">
+      <Project>{1c13fccf-0756-41ca-abca-c0d338ef4d8a}</Project>
+      <Name>VSCMD</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
