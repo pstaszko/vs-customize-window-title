@@ -113,7 +113,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             CurrentPackage = this;
-            Globals.DTE = (DTE2)await this.GetServiceAsync(typeof(DTE)); //.ConfigureAwait(false) not recommended as we need to remain on the UI thread.
+            Globals.DTE = (DTE2)(await this.GetServiceAsync(typeof(DTE))); //.ConfigureAwait(false) not recommended as we need to remain on the UI thread.
             //Globals.DTE = (DTE2)GetGlobalService(typeof(DTE));
 
             Globals.DTE.Events.DebuggerEvents.OnEnterBreakMode += this.OnIdeEvent;
