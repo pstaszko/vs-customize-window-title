@@ -25,11 +25,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                     var acts = new Dictionary<string, Action>();
                     var fns = new Dictionary<string, Func<string>>();
                     acts["LaunchDebugger"] = () => System.Diagnostics.Debugger.Launch();
-                    acts["NewCollapse_JumpBack"] = () =>
+                    fns["NewCollapse_JumpBack"] = () =>
                     {
                         var dtex = VSCMD.VSCMD.DTEWrapper.Init(dte);
                         VSCMD.VSCMD.Commands.DTE = dtex;
-                        VSCMD.VSCMD.Commands.NewCollapse_JumpBack(new StringBuilder());
+                        var sb = new StringBuilder();
+                        VSCMD.VSCMD.Commands.NewCollapse_JumpBack(sb);
+                        return sb.ToString();
                     };
                     acts["Break"] = () => System.Diagnostics.Debugger.Break();
                     fns["Version"] = GetVersion;
