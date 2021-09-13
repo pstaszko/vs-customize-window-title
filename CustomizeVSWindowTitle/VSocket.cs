@@ -81,6 +81,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                             string commandName = parameters["command"];
                             string commandArgs = parameters["args"];
                             dte.ExecuteCommand(commandName, commandArgs);
+                            ret = "";
                         };
 
                         acts["SE"] = () => {
