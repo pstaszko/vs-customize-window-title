@@ -134,8 +134,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.GlobalSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
             this.SolutionSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
 
-            //Every 5 seconds, we check the window titles in case we missed an event.
-            this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = 5000 };
+            this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = this.UiSettings.ResetTitleTimerMsPeriod };
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
         }
@@ -209,7 +208,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 if (this._UiSettings == null) {
                     Globals.InvokeOnUIThread(() => {
                         this._UiSettings = this.GetDialogPage(typeof(GlobalSettingsPageGrid)) as GlobalSettingsPageGrid;  // as is faster than cast
-                        this._UiSettings.SettingsChanged += (s, e) => this.OnIdeSolutionEvent();
+                        this._UiSettings.SettingsChanged += (s, e) => {
+                            if (this.ResetTitleTimer.Interval != this._UiSettings.ResetTitleTimerMsPeriod) {
+                                this.ResetTitleTimer.Interval = this._UiSettings.ResetTitleTimerMsPeriod;
+                            }
+                            this.OnIdeSolutionEvent();
+                        };
                     });
                 }
                 return this._UiSettings;
@@ -323,6 +327,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
         private void UpdateWindowTitleAsync(object state, EventArgs e) {
+            //WriteOutput($"UpdateWindowTitleAsync... {DateTime.Now.ToString("HH:mm:ss.fff")}");
             try {
                 if (this.IDEName == null && Globals.DTE.MainWindow != null) {
                     this.IDEName = this.GetIDEName(Globals.DTE.MainWindow.Caption);
@@ -477,6 +482,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public const string DefaultAppendedString = "\t";
         public const int DefaultClosestParentDepth = 1;
         public const int DefaultFarthestParentDepth = 1;
+        public const int DefaultResetTitleTimerMsPeriod = 5000;
 
         private string GetPattern(string solutionFp, bool useDefault, SettingsSet settingsOverride) {
             var settings = this.UiSettings;
