@@ -1,5 +1,5 @@
 # Customize Visual Studio Window Title - VS Extension
-![Screenshot](/CustomizeVSWindowTitle/Screenshot.png?raw=true "Screenshot")
+![Screenshot](/CustomizeVSWindowTitleSharedFolder/Screenshot.png?raw=true "Screenshot")
 
 This is the official repository for:  
 https://marketplace.visualstudio.com/items?itemName=mayerwin.RenameVisualStudioWindowTitle
