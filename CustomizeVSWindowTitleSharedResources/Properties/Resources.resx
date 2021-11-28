@@ -119,13 +119,16 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="normalize" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\normalize.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\normalize.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="script" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\script.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\script.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="style" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\style.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\style.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="tag_anythingUnsaved" xml:space="preserve">
+    <value>Solution or any document unsaved indicator ('*' if unsaved changes, otherwise empty).</value>
   </data>
   <data name="tag_configurationName" xml:space="preserve">
     <value>Current configuration name (e.g. Release).</value>
@@ -157,6 +160,9 @@
   <data name="tag_documentProjectName" xml:space="preserve">
     <value>Active document project name (if the document is part of a loaded project)</value>
   </data>
+  <data name="tag_documentUnsaved" xml:space="preserve">
+    <value>Active document unsaved indicator ('*' if unsaved changes, otherwise empty).</value>
+  </data>
   <data name="tag_elevationSuffix" xml:space="preserve">
     <value>Elevation suffix if applicable (e.g. " (Administrator)"), otherwise empty.</value>
   </data>
@@ -165,6 +171,9 @@
   </data>
   <data name="tag_gitBranchName" xml:space="preserve">
     <value>Current Git branch name. Make sure Git's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
+  </data>
+  <data name="tag_gitRepositoryName" xml:space="preserve">
+    <value>Current Git repository name (local). Make sure Git's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
   </data>
   <data name="tag_hgBranchName" xml:space="preserve">
     <value>Current Mercurial branch name. Make sure Mercurial's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
@@ -202,14 +211,14 @@
   <data name="tag_startupProjectsNames" xml:space="preserve">
     <value>Startup project(s) name(s), separated with ' &amp; ' if multiple.</value>
   </data>
-  <data name="tag_startupProjectsNamesX" xml:space="preserve">
-    <value>Startup project(s) name(s), separated with X if multiple. Do not use '[', ']', '-', or ':' for X to avoid parsing conflicts. Recommended values: ' &amp; ', ', ' or ' | ' (without quotes).</value>
-  </data>
   <data name="tag_startupProjectsNamesNonRelative" xml:space="preserve">
     <value>Startup project(s) name(s), separated with ' &amp; ' if multiple, with the relative path stripped out.</value>
   </data>
   <data name="tag_startupProjectsNamesNonRelativeX" xml:space="preserve">
     <value>Startup project(s) name(s), separated with X if multiple, with the relative path stripped out. Do not use '[', ']', '-', or ':' for X to avoid parsing conflicts. Recommended values: ' &amp; ', ', ' or ' | ' (without quotes).</value>
+  </data>
+  <data name="tag_startupProjectsNamesX" xml:space="preserve">
+    <value>Startup project(s) name(s), separated with X if multiple. Do not use '[', ']', '-', or ':' for X to avoid parsing conflicts. Recommended values: ' &amp; ', ', ' or ' | ' (without quotes).</value>
   </data>
   <data name="tag_svnDirectoryName" xml:space="preserve">
     <value>Current SVN directory name. Make sure SVN's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
@@ -232,22 +241,13 @@
   <data name="tag_vsProcessID" xml:space="preserve">
     <value>Process ID of Visual Studio</value>
   </data>
+  <data name="tag_windowName" xml:space="preserve">
+    <value>Active document or tool window name.</value>
+  </data>
   <data name="tag_workspaceName" xml:space="preserve">
     <value>Team Foundation Server (TFS) workspace name of the currently loaded solution.</value>
   </data>
   <data name="tag_workspaceOwnerName" xml:space="preserve">
     <value>Team Foundation Server (TFS) workspace owner name of the currently loaded solution.</value>
-  </data>
-  <data name="tag_documentUnsaved" xml:space="preserve">
-    <value>Active document unsaved indicator ('*' if unsaved changes, otherwise empty).</value>
-  </data>
-  <data name="tag_anythingUnsaved" xml:space="preserve">
-    <value>Solution or any document unsaved indicator ('*' if unsaved changes, otherwise empty).</value>
-  </data>
-  <data name="tag_windowName" xml:space="preserve">
-    <value>Active document or tool window name.</value>
-  </data>
-  <data name="tag_gitRepositoryName" xml:space="preserve">
-    <value>Current Git repository name (local). Make sure Git's executable directory is added to the Windows PATH variable or specify its location in settings.</value>
   </data>
 </root>

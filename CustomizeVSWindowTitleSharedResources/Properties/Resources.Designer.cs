@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
+namespace ErwinMayerLabs.CustomizeVSWindowTitleSharedResources.Properties {
     using System;
     
     
@@ -19,10 +19,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ErwinMayerLabs.RenameVSWindowTitle.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ErwinMayerLabs.CustomizeVSWindowTitleSharedResources.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -85,7 +85,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         ////* HTML5 display definitions
         ///   ============== [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string normalize {
+        public static string normalize {
             get {
                 return ResourceManager.GetString("normalize", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         ///    var range;
         ///    if (document [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string script {
+        public static string script {
             get {
                 return ResourceManager.GetString("script", resourceCulture);
             }
@@ -141,7 +141,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         ///    text-align: left;
         /// [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string style {
+        public static string style {
             get {
                 return ResourceManager.GetString("style", resourceCulture);
             }
@@ -150,7 +150,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Solution or any document unsaved indicator (&apos;*&apos; if unsaved changes, otherwise empty)..
         /// </summary>
-        internal static string tag_anythingUnsaved {
+        public static string tag_anythingUnsaved {
             get {
                 return ResourceManager.GetString("tag_anythingUnsaved", resourceCulture);
             }
@@ -159,7 +159,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Current configuration name (e.g. Release)..
         /// </summary>
-        internal static string tag_configurationName {
+        public static string tag_configurationName {
             get {
                 return ResourceManager.GetString("tag_configurationName", resourceCulture);
             }
@@ -168,7 +168,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Arguments of the processes currently debugged (including the executable file name before each set of arguments if more than 1 process)..
         /// </summary>
-        internal static string tag_debuggedProcessesArgs {
+        public static string tag_debuggedProcessesArgs {
             get {
                 return ResourceManager.GetString("tag_debuggedProcessesArgs", resourceCulture);
             }
@@ -177,7 +177,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document or, if no active document, window name..
         /// </summary>
-        internal static string tag_documentName {
+        public static string tag_documentName {
             get {
                 return ResourceManager.GetString("tag_documentName", resourceCulture);
             }
@@ -186,7 +186,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document path parent element at the specified index (e.g. for C:\F1\Foo.cs, [parent:0] = Foo.cs [parent:1] = F1).
         /// </summary>
-        internal static string tag_documentParentPathX {
+        public static string tag_documentParentPathX {
             get {
                 return ResourceManager.GetString("tag_documentParentPathX", resourceCulture);
             }
@@ -195,7 +195,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document path parent segment over the specified range (e.g. for C:\F1\Foo.cs, [parent:1:0] =F1\Foo.cs, [parent:0:1] = Foo.cs\F1).
         /// </summary>
-        internal static string tag_documentParentPathXY {
+        public static string tag_documentParentPathXY {
             get {
                 return ResourceManager.GetString("tag_documentParentPathXY", resourceCulture);
             }
@@ -204,7 +204,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document full path or, if no active document, window name..
         /// </summary>
-        internal static string tag_documentPath {
+        public static string tag_documentPath {
             get {
                 return ResourceManager.GetString("tag_documentPath", resourceCulture);
             }
@@ -213,7 +213,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document path element at the specified index (e.g. for C:\F1\Foo.cs, [documentPath:0] = C:\, [documentPath:1] = C:\F1)..
         /// </summary>
-        internal static string tag_documentPathX {
+        public static string tag_documentPathX {
             get {
                 return ResourceManager.GetString("tag_documentPathX", resourceCulture);
             }
@@ -222,7 +222,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document path segment over the specified range (e.g. for C:\F1\Foo.cs, [path:0:2] = C:\F1\Foo.cs, [path:2:0] = Foo.cs\F1\C:).
         /// </summary>
-        internal static string tag_documentPathXY {
+        public static string tag_documentPathXY {
             get {
                 return ResourceManager.GetString("tag_documentPathXY", resourceCulture);
             }
@@ -231,7 +231,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document project file name (if the document is part of a loaded project).
         /// </summary>
-        internal static string tag_documentProjectFileName {
+        public static string tag_documentProjectFileName {
             get {
                 return ResourceManager.GetString("tag_documentProjectFileName", resourceCulture);
             }
@@ -240,7 +240,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document project name (if the document is part of a loaded project).
         /// </summary>
-        internal static string tag_documentProjectName {
+        public static string tag_documentProjectName {
             get {
                 return ResourceManager.GetString("tag_documentProjectName", resourceCulture);
             }
@@ -249,7 +249,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document unsaved indicator (&apos;*&apos; if unsaved changes, otherwise empty)..
         /// </summary>
-        internal static string tag_documentUnsaved {
+        public static string tag_documentUnsaved {
             get {
                 return ResourceManager.GetString("tag_documentUnsaved", resourceCulture);
             }
@@ -258,7 +258,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Elevation suffix if applicable (e.g. &quot; (Administrator)&quot;), otherwise empty..
         /// </summary>
-        internal static string tag_elevationSuffix {
+        public static string tag_elevationSuffix {
             get {
                 return ResourceManager.GetString("tag_elevationSuffix", resourceCulture);
             }
@@ -267,7 +267,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Environment variable X for current Visual Studio process..
         /// </summary>
-        internal static string tag_envX {
+        public static string tag_envX {
             get {
                 return ResourceManager.GetString("tag_envX", resourceCulture);
             }
@@ -276,7 +276,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Current Git branch name. Make sure Git&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
-        internal static string tag_gitBranchName {
+        public static string tag_gitBranchName {
             get {
                 return ResourceManager.GetString("tag_gitBranchName", resourceCulture);
             }
@@ -285,7 +285,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Current Git repository name (local). Make sure Git&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
-        internal static string tag_gitRepositoryName {
+        public static string tag_gitRepositoryName {
             get {
                 return ResourceManager.GetString("tag_gitRepositoryName", resourceCulture);
             }
@@ -294,7 +294,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Current Mercurial branch name. Make sure Mercurial&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
-        internal static string tag_hgBranchName {
+        public static string tag_hgBranchName {
             get {
                 return ResourceManager.GetString("tag_hgBranchName", resourceCulture);
             }
@@ -303,7 +303,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Name of the IDE (e.g. Microsoft Visual Studio), including elevation suffix if applicable (e.g. &quot; (Administrator)&quot;)..
         /// </summary>
-        internal static string tag_ideName {
+        public static string tag_ideName {
             get {
                 return ResourceManager.GetString("tag_ideName", resourceCulture);
             }
@@ -312,7 +312,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Current solution path or, if no solution open, document path, with depth determined by &quot;Farthest parent folder depth&quot; and &quot;Closest parent folder depth&quot; settings..
         /// </summary>
-        internal static string tag_parentPath {
+        public static string tag_parentPath {
             get {
                 return ResourceManager.GetString("tag_parentPath", resourceCulture);
             }
@@ -321,7 +321,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Path parent element at the specified index (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [parent:0] = MySolution.sln [parent:1] = MySolutionFolder).
         /// </summary>
-        internal static string tag_parentX {
+        public static string tag_parentX {
             get {
                 return ResourceManager.GetString("tag_parentX", resourceCulture);
             }
@@ -330,7 +330,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Path parent segment over the specified range (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [parent:2:1] =F1\MySolutionFolder, [parent:1:2] = MySolutionFolder\F1).
         /// </summary>
-        internal static string tag_parentXY {
+        public static string tag_parentXY {
             get {
                 return ResourceManager.GetString("tag_parentXY", resourceCulture);
             }
@@ -339,7 +339,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Current solution full path or, if no solution open, document full path or, if no active document, window name..
         /// </summary>
-        internal static string tag_path {
+        public static string tag_path {
             get {
                 return ResourceManager.GetString("tag_path", resourceCulture);
             }
@@ -348,7 +348,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Path element at the specified index (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [path:0] = C:\, [path:1] = C:\F1).
         /// </summary>
-        internal static string tag_pathX {
+        public static string tag_pathX {
             get {
                 return ResourceManager.GetString("tag_pathX", resourceCulture);
             }
@@ -357,7 +357,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Path segment over the specified range (e.g. for C:\F1\MySolutionFolder\MySolution.sln, [path:0:2] = C:\F1\MySolutionFolder, [path:2:0] = MySolutionFolder\F1\C:).
         /// </summary>
-        internal static string tag_pathXY {
+        public static string tag_pathXY {
             get {
                 return ResourceManager.GetString("tag_pathXY", resourceCulture);
             }
@@ -366,7 +366,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Current platform name (e.g. x86)..
         /// </summary>
-        internal static string tag_platformName {
+        public static string tag_platformName {
             get {
                 return ResourceManager.GetString("tag_platformName", resourceCulture);
             }
@@ -375,7 +375,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active project name..
         /// </summary>
-        internal static string tag_projectName {
+        public static string tag_projectName {
             get {
                 return ResourceManager.GetString("tag_projectName", resourceCulture);
             }
@@ -384,7 +384,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active solution name..
         /// </summary>
-        internal static string tag_solutionName {
+        public static string tag_solutionName {
             get {
                 return ResourceManager.GetString("tag_solutionName", resourceCulture);
             }
@@ -393,7 +393,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Startup project(s) name(s), separated with &apos; &amp; &apos; if multiple..
         /// </summary>
-        internal static string tag_startupProjectsNames {
+        public static string tag_startupProjectsNames {
             get {
                 return ResourceManager.GetString("tag_startupProjectsNames", resourceCulture);
             }
@@ -402,7 +402,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Startup project(s) name(s), separated with &apos; &amp; &apos; if multiple, with the relative path stripped out..
         /// </summary>
-        internal static string tag_startupProjectsNamesNonRelative {
+        public static string tag_startupProjectsNamesNonRelative {
             get {
                 return ResourceManager.GetString("tag_startupProjectsNamesNonRelative", resourceCulture);
             }
@@ -411,7 +411,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Startup project(s) name(s), separated with X if multiple, with the relative path stripped out. Do not use &apos;[&apos;, &apos;]&apos;, &apos;-&apos;, or &apos;:&apos; for X to avoid parsing conflicts. Recommended values: &apos; &amp; &apos;, &apos;, &apos; or &apos; | &apos; (without quotes)..
         /// </summary>
-        internal static string tag_startupProjectsNamesNonRelativeX {
+        public static string tag_startupProjectsNamesNonRelativeX {
             get {
                 return ResourceManager.GetString("tag_startupProjectsNamesNonRelativeX", resourceCulture);
             }
@@ -420,7 +420,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Startup project(s) name(s), separated with X if multiple. Do not use &apos;[&apos;, &apos;]&apos;, &apos;-&apos;, or &apos;:&apos; for X to avoid parsing conflicts. Recommended values: &apos; &amp; &apos;, &apos;, &apos; or &apos; | &apos; (without quotes)..
         /// </summary>
-        internal static string tag_startupProjectsNamesX {
+        public static string tag_startupProjectsNamesX {
             get {
                 return ResourceManager.GetString("tag_startupProjectsNamesX", resourceCulture);
             }
@@ -429,7 +429,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Current SVN directory name. Make sure SVN&apos;s executable directory is added to the Windows PATH variable or specify its location in settings..
         /// </summary>
-        internal static string tag_svnDirectoryName {
+        public static string tag_svnDirectoryName {
             get {
                 return ResourceManager.GetString("tag_svnDirectoryName", resourceCulture);
             }
@@ -438,7 +438,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to SVN directory element at the specified index (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [svnDirectoryName:0] = /, [svnDirectoryName:1] = Branches).
         /// </summary>
-        internal static string tag_svnDirectoryNameX {
+        public static string tag_svnDirectoryNameX {
             get {
                 return ResourceManager.GetString("tag_svnDirectoryNameX", resourceCulture);
             }
@@ -447,7 +447,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to SVN directory segment over the specified range (e.g. for /Branches/Developer/UserName/MySolutionFolder/MySolution.sln, [svnDirectoryName:0:2] = /Branches/Developer, [svnDirectoryName:2:0] = Developer/Branches//).
         /// </summary>
-        internal static string tag_svnDirectoryNameXY {
+        public static string tag_svnDirectoryNameXY {
             get {
                 return ResourceManager.GetString("tag_svnDirectoryNameXY", resourceCulture);
             }
@@ -456,7 +456,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Team Foundation Server (TFS) branch name of the currently loaded solution..
         /// </summary>
-        internal static string tag_tfsBranchName {
+        public static string tag_tfsBranchName {
             get {
                 return ResourceManager.GetString("tag_tfsBranchName", resourceCulture);
             }
@@ -465,7 +465,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Major version of Visual Studio (e.g. 14, 15, 16...)..
         /// </summary>
-        internal static string tag_vsMajorVersion {
+        public static string tag_vsMajorVersion {
             get {
                 return ResourceManager.GetString("tag_vsMajorVersion", resourceCulture);
             }
@@ -474,7 +474,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Major version of Visual Studio, in year form (e.g. 2015, 2017, 2019...)..
         /// </summary>
-        internal static string tag_vsMajorVersionYear {
+        public static string tag_vsMajorVersionYear {
             get {
                 return ResourceManager.GetString("tag_vsMajorVersionYear", resourceCulture);
             }
@@ -483,7 +483,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Process ID of Visual Studio.
         /// </summary>
-        internal static string tag_vsProcessID {
+        public static string tag_vsProcessID {
             get {
                 return ResourceManager.GetString("tag_vsProcessID", resourceCulture);
             }
@@ -492,7 +492,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Active document or tool window name..
         /// </summary>
-        internal static string tag_windowName {
+        public static string tag_windowName {
             get {
                 return ResourceManager.GetString("tag_windowName", resourceCulture);
             }
@@ -501,7 +501,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Team Foundation Server (TFS) workspace name of the currently loaded solution..
         /// </summary>
-        internal static string tag_workspaceName {
+        public static string tag_workspaceName {
             get {
                 return ResourceManager.GetString("tag_workspaceName", resourceCulture);
             }
@@ -510,7 +510,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Team Foundation Server (TFS) workspace owner name of the currently loaded solution..
         /// </summary>
-        internal static string tag_workspaceOwnerName {
+        public static string tag_workspaceOwnerName {
             get {
                 return ResourceManager.GetString("tag_workspaceOwnerName", resourceCulture);
             }

@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.IO;
 using EnvDTE;
-using ErwinMayerLabs.RenameVSWindowTitle.Properties;
 using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {
@@ -73,7 +72,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             var z = this.ctxMenu.Items.IndexOf(this.insertTag);
 
             foreach (var tag in CustomizeVSWindowTitle.CurrentPackage.SupportedTags) {
-                var LocalizedDescription = Resources.ResourceManager.GetString("tag_" + tag.Replace(":", ""));
+                var LocalizedDescription = CustomizeVSWindowTitleSharedResources.Properties.Resources.ResourceManager.GetString("tag_" + tag.Replace(":", ""));
                 var m = new ToolStripMenuItem(string.Format(this.insertTag.Text, tag)) {
                     ToolTipText = LocalizedDescription,
                     Tag = tag
