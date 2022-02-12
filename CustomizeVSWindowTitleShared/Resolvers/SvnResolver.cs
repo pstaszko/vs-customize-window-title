@@ -31,7 +31,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
             var directorySeparator = info.GlobalSettings.SvnDirectorySeparator;
             var svnPathParts = new List<string>();
             if (Path.IsPathRooted(svnPath)) svnPathParts.Add(directorySeparator);
-            svnPathParts.AddRange(svnPath.Split(new[] { directorySeparator }, StringSplitOptions.RemoveEmptyEntries));
+            svnPathParts.AddRange(svnPath.Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries));
             var m = Globals.RangeRegex.Match(tag.Substring(tagName.Length));
             if (m.Success) {
                 if (!svnPathParts.Any()) {

@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.IO;
 using EnvDTE;
-using ErwinMayerLabs.RenameVSWindowTitle.Properties;
 using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle {

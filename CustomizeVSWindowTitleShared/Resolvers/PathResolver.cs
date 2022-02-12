@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ErwinMayerLabs.Lib;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
     public class PathResolver : TagResolver, ISimpleTagResolver {

@@ -45,6 +45,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
         }
     }
 
+    public class WindowNameResolver : SimpleTagResolver {
+        public WindowNameResolver() : base(tagName: "windowName") { }
+
+        public override string Resolve(AvailableInfo info) {
+            return info.WindowName;
+        }
+    }
+
     public class DocumentPathResolver : TagResolver, ISimpleTagResolver {
         public string TagName { get; } = "documentPath";
 

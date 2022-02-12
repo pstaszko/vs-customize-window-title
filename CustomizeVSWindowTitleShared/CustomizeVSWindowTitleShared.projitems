@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>bbb5b91b-e909-4f08-b623-9f27377ee7dc</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CustomizeVSWindowTitleShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AvailableInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomizeVSWindowTitlePackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EditablePattern.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EditablePatternControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)EditablePatternControl.Designer.cs">
+      <DependentUpon>EditablePatternControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FilePickerEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Globals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSettingsPageGrid.cs">
+      <SubType>component</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Guids.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lib\TfsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lib\UtilsExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lib\Wildcard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lib\WorkspaceInfoGetter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\AnythingUnsavedResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\ConfigurationResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\DebuggedProcessesArgsResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\DocumentResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\ElevationSuffixResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\GitResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\HgResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\IdeResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\PathResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\ProjectResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\SolutionResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\StartupProjectNamesResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\SvnResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\TagResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\TfsBranchResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resolvers\TfsWorkspaceResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SettingsOverridesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)SettingsOverridesControl.Designer.cs">
+      <DependentUpon>SettingsOverridesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)SettingsOverridesPageGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)SettingsSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SettingsWatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SupportedTagsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)SupportedTagsControl.Designer.cs">
+      <DependentUpon>SupportedTagsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)SupportedTagsGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EditablePatternControl.resx">
+      <DependentUpon>EditablePatternControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)SettingsOverridesControl.resx">
+      <DependentUpon>SettingsOverridesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)SupportedTagsControl.resx">
+      <DependentUpon>SupportedTagsControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Lib\TeamFoundationHelper.cs" />
+  </ItemGroup>
+</Project>
