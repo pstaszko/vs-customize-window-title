@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Lib\TeamFoundationHelper.cs" />
+    <None Include="$(MSBuildThisFileDirectory)paket.references" />
   </ItemGroup>
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@EntityFramework) != 1">
@@ -1592,8 +1593,6 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@VSocket) != 1">
       <ItemGroup>
         <Reference Include="VSocket">
           <HintPath>..\..\packages\local\VSocket\lib\net472\VSocket.dll</HintPath>
@@ -1601,8 +1600,6 @@
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
-    </When>
-  </Choose>
   <Import Project="..\..\packages\local\EntityFramework\build\EntityFramework.targets" Condition="Exists('..\..\packages\local\EntityFramework\build\EntityFramework.targets')" Label="Paket" />
   <Import Project="..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_targets).targets" Condition="Exists('..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_targets).targets')" Label="Paket" />
   <Import Project="..\..\packages\local\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets" Condition="Exists('..\..\packages\local\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets')" Label="Paket" />
