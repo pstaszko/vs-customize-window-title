@@ -82,6 +82,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)SupportedTagsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)VSocket.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VSocket_net.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)EditablePatternControl.resx">
@@ -1593,13 +1595,13 @@
       </ItemGroup>
     </When>
   </Choose>
-      <ItemGroup>
-        <Reference Include="VSocket">
-          <HintPath>..\..\packages\local\VSocket\lib\net472\VSocket.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
+  <ItemGroup>
+    <Reference Include="VSocket">
+      <HintPath>..\..\packages\local\VSocket\lib\net472\VSocket.dll</HintPath>
+      <Private>True</Private>
+      <Paket>True</Paket>
+    </Reference>
+  </ItemGroup>
   <Import Project="..\..\packages\local\EntityFramework\build\EntityFramework.targets" Condition="Exists('..\..\packages\local\EntityFramework\build\EntityFramework.targets')" Label="Paket" />
   <Import Project="..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_targets).targets" Condition="Exists('..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_targets).targets')" Label="Paket" />
   <Import Project="..\..\packages\local\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets" Condition="Exists('..\..\packages\local\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets')" Label="Paket" />
