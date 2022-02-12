@@ -135,15 +135,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
             this.GlobalSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
             this.SolutionSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
-
+            
             //Every 5 seconds, we check the window titles in case we missed an event.
             this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = this.UiSettings.ResetTitleTimerMsPeriod };
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
 
-            //var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
-            //var tt = new System.Threading.Thread(pts);
-            //tt.Start();
+            var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
+            var tt = new System.Threading.Thread(pts);
+            tt.Start();
         }
 
         protected override void Dispose(bool disposing) {

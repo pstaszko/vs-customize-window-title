@@ -248,7 +248,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 
         private void btRegister_Click(object sender, EventArgs e)
         {
-            //VSocket.StartListen();
+            VSocket.StartListen();
         }
     }
 }
