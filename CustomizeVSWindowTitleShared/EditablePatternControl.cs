@@ -72,7 +72,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             var z = this.ctxMenu.Items.IndexOf(this.insertTag);
 
             foreach (var tag in PSCustomizeVSWindowTitle.CurrentPackage.SupportedTags) {
-                var LocalizedDescription = Resources.ResourceManager.GetString("tag_" + tag.Replace(":", ""));
+                var LocalizedDescription = CustomizeVSWindowTitleSharedResources.Properties.Resources.ResourceManager.GetString("tag_" + tag.Replace(":", ""));
                 var m = new ToolStripMenuItem(string.Format(this.insertTag.Text, tag)) {
                     ToolTipText = LocalizedDescription,
                     Tag = tag

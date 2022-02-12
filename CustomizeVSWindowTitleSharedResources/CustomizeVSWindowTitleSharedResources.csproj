@@ -4,7 +4,7 @@
     <TargetFramework>net46</TargetFramework>
     <RootNamespace>ErwinMayerLabs.CustomizeVSWindowTitleSharedResources</RootNamespace>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>C:\DEV\vs-customize-window-title\CustomizeVSWindowTitleSharedResources\MyKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>C:\DEV\vs-customize-window-title\CustomizeVSWindowTitleSharedResources\Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
