@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\local\EntityFramework\build\EntityFramework.props" Condition="Exists('..\..\packages\local\EntityFramework\build\EntityFramework.props')" Label="Paket" />
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
@@ -8,6 +9,22 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>CustomizeVSWindowTitleShared</Import_RootNamespace>
   </PropertyGroup>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))">
+      <PropertyGroup>
+        <__paket__NETStandard_Library_targets>netstandard2.0\NETStandard.Library</__paket__NETStandard_Library_targets>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')">
+      <PropertyGroup>
+        <__paket__EntityFramework_props>netcoreapp3.0\EntityFramework</__paket__EntityFramework_props>
+        <__paket__EntityFramework_targets>netcoreapp3.0\EntityFramework</__paket__EntityFramework_targets>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <Import Project="..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_props).props" Condition="Exists('..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_props).props')" Label="Paket" />
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AvailableInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CustomizeVSWindowTitlePackage.cs" />
@@ -80,4 +97,1513 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Lib\TeamFoundationHelper.cs" />
   </ItemGroup>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@EntityFramework) != 1">
+      <ItemGroup>
+        <Reference Include="EntityFramework">
+          <HintPath>..\..\packages\local\EntityFramework\lib\net45\EntityFramework.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="EntityFramework.SqlServer">
+          <HintPath>..\..\packages\local\EntityFramework\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@EntityFramework) != 1">
+      <ItemGroup>
+        <Reference Include="EntityFramework">
+          <HintPath>..\..\packages\local\EntityFramework\lib\netstandard2.1\EntityFramework.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="EntityFramework.SqlServer">
+          <HintPath>..\..\packages\local\EntityFramework\lib\netstandard2.1\EntityFramework.SqlServer.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@ExceptionalCode) != 1">
+      <ItemGroup>
+        <Reference Include="ExceptionalCode">
+          <HintPath>..\..\packages\local\ExceptionalCode\lib\net472\ExceptionalCode.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@FSharp.Core) != 1">
+      <ItemGroup>
+        <Reference Include="FSharp.Core">
+          <HintPath>..\..\packages\local\FSharp.Core\lib\netstandard2.0\FSharp.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@FSharp.Data) != 1">
+      <ItemGroup>
+        <Reference Include="FSharp.Data">
+          <HintPath>..\..\packages\local\FSharp.Data\lib\netstandard2.0\FSharp.Data.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@FsPickler) != 1">
+      <ItemGroup>
+        <Reference Include="FsPickler">
+          <HintPath>..\..\packages\local\FsPickler\lib\net45\FsPickler.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@FsPickler) != 1">
+      <ItemGroup>
+        <Reference Include="FsPickler">
+          <HintPath>..\..\packages\local\FsPickler\lib\netstandard2.0\FsPickler.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@FsPickler.Json) != 1">
+      <ItemGroup>
+        <Reference Include="FsPickler.Json">
+          <HintPath>..\..\packages\local\FsPickler.Json\lib\net45\FsPickler.Json.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@FsPickler.Json) != 1">
+      <ItemGroup>
+        <Reference Include="FsPickler.Json">
+          <HintPath>..\..\packages\local\FsPickler.Json\lib\netstandard2.0\FsPickler.Json.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Configuration) != 1">
+      <ItemGroup>
+        <Reference Include="System.Configuration">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Web">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="log4net">
+          <HintPath>..\..\packages\local\log4net\lib\net45\log4net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@log4net) != 1">
+      <ItemGroup>
+        <Reference Include="log4net">
+          <HintPath>..\..\packages\local\log4net\lib\netstandard2.0\log4net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@MailKit) != 1">
+      <ItemGroup>
+        <Reference Include="MailKit">
+          <HintPath>..\..\packages\local\MailKit\lib\net50\MailKit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System) != 1">
+      <ItemGroup>
+        <Reference Include="System">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Core">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Data">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Net.Http">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="MailKit">
+          <HintPath>..\..\packages\local\MailKit\lib\netstandard2.0\MailKit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@MailKit) != 1">
+      <ItemGroup>
+        <Reference Include="MailKit">
+          <HintPath>..\..\packages\local\MailKit\lib\netstandard2.1\MailKit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Microsoft.CSharp) != 1">
+      <ItemGroup>
+        <Reference Include="Microsoft.CSharp">
+          <HintPath>..\..\packages\local\Microsoft.CSharp\lib\netstandard2.0\Microsoft.CSharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Microsoft.CSharp) != 1">
+      <ItemGroup>
+        <Reference Include="Microsoft.CSharp">
+          <HintPath>..\..\packages\local\Microsoft.CSharp\ref\netstandard2.0\Microsoft.CSharp.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Microsoft.Win32.Registry) != 1">
+      <ItemGroup>
+        <Reference Include="Microsoft.Win32.Registry">
+          <HintPath>..\..\packages\local\Microsoft.Win32.Registry\lib\netstandard2.0\Microsoft.Win32.Registry.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Microsoft.Win32.Registry) != 1">
+      <ItemGroup>
+        <Reference Include="Microsoft.Win32.Registry">
+          <HintPath>..\..\packages\local\Microsoft.Win32.Registry\ref\netstandard2.0\Microsoft.Win32.Registry.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Microsoft.Win32.SystemEvents) != 1">
+      <ItemGroup>
+        <Reference Include="Microsoft.Win32.SystemEvents">
+          <HintPath>..\..\packages\local\Microsoft.Win32.SystemEvents\lib\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@MimeKit) != 1">
+      <ItemGroup>
+        <Reference Include="MimeKit">
+          <HintPath>..\..\packages\local\MimeKit\lib\net50\MimeKit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@MimeKit) != 1">
+      <ItemGroup>
+        <Reference Include="MimeKit">
+          <HintPath>..\..\packages\local\MimeKit\lib\netstandard2.0\MimeKit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@MimeKit) != 1">
+      <ItemGroup>
+        <Reference Include="MimeKit">
+          <HintPath>..\..\packages\local\MimeKit\lib\netstandard2.1\MimeKit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Newtonsoft.Json) != 1">
+      <ItemGroup>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>..\..\packages\local\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Newtonsoft.Json) != 1">
+      <ItemGroup>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>..\..\packages\local\Newtonsoft.Json\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@PerFSharp) != 1">
+      <ItemGroup>
+        <Reference Include="PerFSharp">
+          <HintPath>..\..\packages\local\PerFSharp\lib\net472\PerFSharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@BouncyCastle.Crypto) != 1">
+      <ItemGroup>
+        <Reference Include="BouncyCastle.Crypto">
+          <HintPath>..\..\packages\local\Portable.BouncyCastle\lib\netstandard2.0\BouncyCastle.Crypto.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@RestSharp) != 1">
+      <ItemGroup>
+        <Reference Include="RestSharp">
+          <HintPath>..\..\packages\local\RestSharp\lib\net452\RestSharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@RestSharp) != 1">
+      <ItemGroup>
+        <Reference Include="RestSharp">
+          <HintPath>..\..\packages\local\RestSharp\lib\netstandard2.0\RestSharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Microsoft.CSharp) != 1">
+      <ItemGroup>
+        <Reference Include="Microsoft.CSharp">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Core">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Serilog">
+          <HintPath>..\..\packages\local\Serilog\lib\net46\Serilog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog">
+          <HintPath>..\..\packages\local\Serilog\lib\netstandard2.0\Serilog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog">
+          <HintPath>..\..\packages\local\Serilog\lib\netstandard2.1\Serilog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Formatting.Compact) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Formatting.Compact">
+          <HintPath>..\..\packages\local\Serilog.Formatting.Compact\lib\net452\Serilog.Formatting.Compact.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Formatting.Compact) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Formatting.Compact">
+          <HintPath>..\..\packages\local\Serilog.Formatting.Compact\lib\netstandard2.0\Serilog.Formatting.Compact.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.Console) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.Console">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Console\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.Console) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.Console">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Console\lib\net5.0\Serilog.Sinks.Console.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.Console) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.Console">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Console\lib\netstandard2.0\Serilog.Sinks.Console.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Net) != 1">
+      <ItemGroup>
+        <Reference Include="System.Net">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Serilog.Sinks.Email">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Email\lib\net47\Serilog.Sinks.Email.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.Email) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.Email">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Email\lib\netstandard2.0\Serilog.Sinks.Email.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.Email) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.Email">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Email\lib\netstandard2.1\Serilog.Sinks.Email.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.File) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.File">
+          <HintPath>..\..\packages\local\Serilog.Sinks.File\lib\net45\Serilog.Sinks.File.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.File) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.File">
+          <HintPath>..\..\packages\local\Serilog.Sinks.File\lib\net5.0\Serilog.Sinks.File.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.File) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.File">
+          <HintPath>..\..\packages\local\Serilog.Sinks.File\lib\netstandard2.0\Serilog.Sinks.File.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.File) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.File">
+          <HintPath>..\..\packages\local\Serilog.Sinks.File\lib\netstandard2.1\Serilog.Sinks.File.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.Map) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.Map">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Map\lib\net5.0\Serilog.Sinks.Map.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.Map) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.Map">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Map\lib\netstandard1.0\Serilog.Sinks.Map.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.Map) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.Map">
+          <HintPath>..\..\packages\local\Serilog.Sinks.Map\lib\netstandard2.0\Serilog.Sinks.Map.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.PeriodicBatching) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.PeriodicBatching">
+          <HintPath>..\..\packages\local\Serilog.Sinks.PeriodicBatching\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Serilog.Sinks.PeriodicBatching) != 1">
+      <ItemGroup>
+        <Reference Include="Serilog.Sinks.PeriodicBatching">
+          <HintPath>..\..\packages\local\Serilog.Sinks.PeriodicBatching\lib\netstandard2.0\Serilog.Sinks.PeriodicBatching.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@SharedFramework) != 1">
+      <ItemGroup>
+        <Reference Include="SharedFramework">
+          <HintPath>..\..\packages\local\SharedFramework\lib\net472\SharedFramework.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@SharedFrameworkInterfaces) != 1">
+      <ItemGroup>
+        <Reference Include="SharedFrameworkInterfaces">
+          <HintPath>..\..\packages\local\SharedFrameworkInterfaces\lib\net472\SharedFrameworkInterfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@SharedFrameworkLogging) != 1">
+      <ItemGroup>
+        <Reference Include="SharedFrameworkLogging">
+          <HintPath>..\..\packages\local\SharedFrameworkLogging\lib\net472\SharedFrameworkLogging.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@SharedFrameworkROP) != 1">
+      <ItemGroup>
+        <Reference Include="SharedFrameworkROP">
+          <HintPath>..\..\packages\local\SharedFrameworkROP\lib\net472\SharedFrameworkROP.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@SharedFSharpVanilla) != 1">
+      <ItemGroup>
+        <Reference Include="SharedFSharpVanilla">
+          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\SharedFSharpVanilla.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@mscorlib) != 1">
+      <ItemGroup>
+        <Reference Include="mscorlib">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Buffers">
+          <HintPath>..\..\packages\local\System.Buffers\lib\net461\System.Buffers.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Buffers) != 1">
+      <ItemGroup>
+        <Reference Include="System.Buffers">
+          <HintPath>..\..\packages\local\System.Buffers\lib\netstandard2.0\System.Buffers.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Buffers) != 1">
+      <ItemGroup>
+        <Reference Include="System.Buffers">
+          <HintPath>..\..\packages\local\System.Buffers\ref\netstandard2.0\System.Buffers.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.CodeDom) != 1">
+      <ItemGroup>
+        <Reference Include="System.CodeDom">
+          <HintPath>..\..\packages\local\System.CodeDom\lib\netstandard2.0\System.CodeDom.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.CodeDom) != 1">
+      <ItemGroup>
+        <Reference Include="System.CodeDom">
+          <HintPath>..\..\packages\local\System.CodeDom\ref\netstandard2.0\System.CodeDom.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Collections) != 1">
+      <ItemGroup>
+        <Reference Include="System.Collections">
+          <HintPath>..\..\packages\local\System.Collections\ref\netstandard1.3\System.Collections.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Collections.Concurrent) != 1">
+      <ItemGroup>
+        <Reference Include="System.Collections.Concurrent">
+          <HintPath>..\..\packages\local\System.Collections.Concurrent\lib\netstandard1.3\System.Collections.Concurrent.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Collections.Concurrent) != 1">
+      <ItemGroup>
+        <Reference Include="System.Collections.Concurrent">
+          <HintPath>..\..\packages\local\System.Collections.Concurrent\ref\netstandard1.3\System.Collections.Concurrent.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.ComponentModel.Annotations) != 1">
+      <ItemGroup>
+        <Reference Include="System.ComponentModel.Annotations">
+          <HintPath>..\..\packages\local\System.ComponentModel.Annotations\lib\netstandard2.1\System.ComponentModel.Annotations.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.ComponentModel.Annotations) != 1">
+      <ItemGroup>
+        <Reference Include="System.ComponentModel.Annotations">
+          <HintPath>..\..\packages\local\System.ComponentModel.Annotations\ref\netstandard2.1\System.ComponentModel.Annotations.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Configuration.ConfigurationManager) != 1">
+      <ItemGroup>
+        <Reference Include="System.Configuration.ConfigurationManager">
+          <HintPath>..\..\packages\local\System.Configuration.ConfigurationManager\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Configuration.ConfigurationManager) != 1">
+      <ItemGroup>
+        <Reference Include="System.Configuration.ConfigurationManager">
+          <HintPath>..\..\packages\local\System.Configuration.ConfigurationManager\lib\netstandard2.0\System.Configuration.ConfigurationManager.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Data.DataSetExtensions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Data.DataSetExtensions">
+          <HintPath>..\..\packages\local\System.Data.DataSetExtensions\lib\netstandard2.0\System.Data.DataSetExtensions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Data.DataSetExtensions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Data.DataSetExtensions">
+          <HintPath>..\..\packages\local\System.Data.DataSetExtensions\ref\netstandard2.0\System.Data.DataSetExtensions.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Data.SqlClient) != 1">
+      <ItemGroup>
+        <Reference Include="System.Data.SqlClient">
+          <HintPath>..\..\packages\local\System.Data.SqlClient\lib\netcoreapp2.1\System.Data.SqlClient.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Data.SqlClient) != 1">
+      <ItemGroup>
+        <Reference Include="System.Data.SqlClient">
+          <HintPath>..\..\packages\local\System.Data.SqlClient\ref\netcoreapp2.1\System.Data.SqlClient.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Data.SqlClient) != 1">
+      <ItemGroup>
+        <Reference Include="System.Data.SqlClient">
+          <HintPath>..\..\packages\local\System.Data.SqlClient\lib\netstandard2.0\System.Data.SqlClient.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Data.SqlClient) != 1">
+      <ItemGroup>
+        <Reference Include="System.Data.SqlClient">
+          <HintPath>..\..\packages\local\System.Data.SqlClient\ref\netstandard2.0\System.Data.SqlClient.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Diagnostics.Debug) != 1">
+      <ItemGroup>
+        <Reference Include="System.Diagnostics.Debug">
+          <HintPath>..\..\packages\local\System.Diagnostics.Debug\ref\netstandard1.3\System.Diagnostics.Debug.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Diagnostics.DiagnosticSource) != 1">
+      <ItemGroup>
+        <Reference Include="System.Diagnostics.DiagnosticSource">
+          <HintPath>..\..\packages\local\System.Diagnostics.DiagnosticSource\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Diagnostics.DiagnosticSource) != 1">
+      <ItemGroup>
+        <Reference Include="System.Diagnostics.DiagnosticSource">
+          <HintPath>..\..\packages\local\System.Diagnostics.DiagnosticSource\lib\net5.0\System.Diagnostics.DiagnosticSource.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Diagnostics.DiagnosticSource) != 1">
+      <ItemGroup>
+        <Reference Include="System.Diagnostics.DiagnosticSource">
+          <HintPath>..\..\packages\local\System.Diagnostics.DiagnosticSource\lib\netstandard2.0\System.Diagnostics.DiagnosticSource.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Diagnostics.Tracing) != 1">
+      <ItemGroup>
+        <Reference Include="System.Diagnostics.Tracing">
+          <HintPath>..\..\packages\local\System.Diagnostics.Tracing\ref\netstandard1.5\System.Diagnostics.Tracing.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Drawing.Common) != 1">
+      <ItemGroup>
+        <Reference Include="System.Drawing.Common">
+          <HintPath>..\..\packages\local\System.Drawing.Common\lib\netcoreapp3.1\System.Drawing.Common.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Formats.Asn1) != 1">
+      <ItemGroup>
+        <Reference Include="System.Formats.Asn1">
+          <HintPath>..\..\packages\local\System.Formats.Asn1\lib\netstandard2.0\System.Formats.Asn1.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Globalization) != 1">
+      <ItemGroup>
+        <Reference Include="System.Globalization">
+          <HintPath>..\..\packages\local\System.Globalization\ref\netstandard1.3\System.Globalization.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.IO) != 1">
+      <ItemGroup>
+        <Reference Include="System.IO">
+          <HintPath>..\..\packages\local\System.IO\lib\net462\System.IO.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.IO) != 1">
+      <ItemGroup>
+        <Reference Include="System.IO">
+          <HintPath>..\..\packages\local\System.IO\ref\netstandard1.5\System.IO.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Linq) != 1">
+      <ItemGroup>
+        <Reference Include="System.Linq">
+          <HintPath>..\..\packages\local\System.Linq\lib\netstandard1.6\System.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Linq) != 1">
+      <ItemGroup>
+        <Reference Include="System.Linq">
+          <HintPath>..\..\packages\local\System.Linq\ref\netstandard1.6\System.Linq.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Memory) != 1">
+      <ItemGroup>
+        <Reference Include="System.Memory">
+          <HintPath>..\..\packages\local\System.Memory\lib\net461\System.Memory.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Memory) != 1">
+      <ItemGroup>
+        <Reference Include="System.Memory">
+          <HintPath>..\..\packages\local\System.Memory\lib\netstandard2.0\System.Memory.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Numerics) != 1">
+      <ItemGroup>
+        <Reference Include="System.Numerics">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Numerics.Vectors">
+          <HintPath>..\..\packages\local\System.Numerics.Vectors\lib\net46\System.Numerics.Vectors.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Numerics.Vectors) != 1">
+      <ItemGroup>
+        <Reference Include="System.Numerics.Vectors">
+          <HintPath>..\..\packages\local\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Numerics.Vectors) != 1">
+      <ItemGroup>
+        <Reference Include="System.Numerics.Vectors">
+          <HintPath>..\..\packages\local\System.Numerics.Vectors\ref\netstandard2.0\System.Numerics.Vectors.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection">
+          <HintPath>..\..\packages\local\System.Reflection\ref\netstandard1.5\System.Reflection.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.Emit) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.Emit">
+          <HintPath>..\..\packages\local\System.Reflection.Emit\lib\netstandard2.0\System.Reflection.Emit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.Emit) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.Emit">
+          <HintPath>..\..\packages\local\System.Reflection.Emit\ref\netstandard2.0\System.Reflection.Emit.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.Emit.ILGeneration) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.Emit.ILGeneration">
+          <HintPath>..\..\packages\local\System.Reflection.Emit.ILGeneration\lib\netstandard2.0\System.Reflection.Emit.ILGeneration.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.Emit.ILGeneration) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.Emit.ILGeneration">
+          <HintPath>..\..\packages\local\System.Reflection.Emit.ILGeneration\ref\netstandard2.0\System.Reflection.Emit.ILGeneration.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.Emit.Lightweight) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.Emit.Lightweight">
+          <HintPath>..\..\packages\local\System.Reflection.Emit.Lightweight\lib\netstandard2.0\System.Reflection.Emit.Lightweight.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.Emit.Lightweight) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.Emit.Lightweight">
+          <HintPath>..\..\packages\local\System.Reflection.Emit.Lightweight\ref\netstandard2.0\System.Reflection.Emit.Lightweight.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.Primitives) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.Primitives">
+          <HintPath>..\..\packages\local\System.Reflection.Primitives\ref\netstandard1.0\System.Reflection.Primitives.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.TypeExtensions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.TypeExtensions">
+          <HintPath>..\..\packages\local\System.Reflection.TypeExtensions\lib\netstandard2.0\System.Reflection.TypeExtensions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Reflection.TypeExtensions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Reflection.TypeExtensions">
+          <HintPath>..\..\packages\local\System.Reflection.TypeExtensions\ref\netstandard2.0\System.Reflection.TypeExtensions.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Resources.ResourceManager) != 1">
+      <ItemGroup>
+        <Reference Include="System.Resources.ResourceManager">
+          <HintPath>..\..\packages\local\System.Resources.ResourceManager\ref\netstandard1.0\System.Resources.ResourceManager.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.ComponentModel.Composition) != 1">
+      <ItemGroup>
+        <Reference Include="System.ComponentModel.Composition">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Runtime">
+          <HintPath>..\..\packages\local\System.Runtime\lib\net462\System.Runtime.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Runtime) != 1">
+      <ItemGroup>
+        <Reference Include="System.Runtime">
+          <HintPath>..\..\packages\local\System.Runtime\ref\netstandard1.5\System.Runtime.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Runtime.CompilerServices.Unsafe) != 1">
+      <ItemGroup>
+        <Reference Include="System.Runtime.CompilerServices.Unsafe">
+          <HintPath>..\..\packages\local\System.Runtime.CompilerServices.Unsafe\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Runtime.CompilerServices.Unsafe) != 1">
+      <ItemGroup>
+        <Reference Include="System.Runtime.CompilerServices.Unsafe">
+          <HintPath>..\..\packages\local\System.Runtime.CompilerServices.Unsafe\lib\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Runtime.CompilerServices.Unsafe) != 1">
+      <ItemGroup>
+        <Reference Include="System.Runtime.CompilerServices.Unsafe">
+          <HintPath>..\..\packages\local\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Runtime.Extensions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Runtime.Extensions">
+          <HintPath>..\..\packages\local\System.Runtime.Extensions\ref\netstandard1.5\System.Runtime.Extensions.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.AccessControl) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.AccessControl">
+          <HintPath>..\..\packages\local\System.Security.AccessControl\lib\net461\System.Security.AccessControl.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.AccessControl) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.AccessControl">
+          <HintPath>..\..\packages\local\System.Security.AccessControl\lib\netstandard2.0\System.Security.AccessControl.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Cng) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Cng">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Cng\lib\netcoreapp3.0\System.Security.Cryptography.Cng.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Cng) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Cng">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Cng\ref\netcoreapp3.0\System.Security.Cryptography.Cng.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Cng) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Cng">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Cng\lib\netstandard2.0\System.Security.Cryptography.Cng.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Cng) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Cng">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Cng\ref\netstandard2.0\System.Security.Cryptography.Cng.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Cng) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Cng">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Cng\lib\netstandard2.1\System.Security.Cryptography.Cng.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Cng) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Cng">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Cng\ref\netstandard2.1\System.Security.Cryptography.Cng.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Pkcs) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Pkcs">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Pkcs\lib\netcoreapp3.0\System.Security.Cryptography.Pkcs.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Pkcs) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Pkcs">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Pkcs\ref\netcoreapp3.0\System.Security.Cryptography.Pkcs.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Pkcs) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Pkcs">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Pkcs\lib\netstandard2.0\System.Security.Cryptography.Pkcs.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Pkcs) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Pkcs">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Pkcs\ref\netstandard2.0\System.Security.Cryptography.Pkcs.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Pkcs) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Pkcs">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Pkcs\lib\netstandard2.1\System.Security.Cryptography.Pkcs.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And $(TargetFrameworkVersion) == 'v2.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.Pkcs) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.Pkcs">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.Pkcs\ref\netstandard2.1\System.Security.Cryptography.Pkcs.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Security.Cryptography.ProtectedData">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.ProtectedData\lib\net461\System.Security.Cryptography.ProtectedData.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Cryptography.ProtectedData) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Cryptography.ProtectedData">
+          <HintPath>..\..\packages\local\System.Security.Cryptography.ProtectedData\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Data.OracleClient) != 1">
+      <ItemGroup>
+        <Reference Include="System.Data.OracleClient">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.ServiceProcess">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Transactions">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="WindowsBase">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Security.Permissions">
+          <HintPath>..\..\packages\local\System.Security.Permissions\lib\net461\System.Security.Permissions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Permissions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Permissions">
+          <HintPath>..\..\packages\local\System.Security.Permissions\lib\net5.0\System.Security.Permissions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Permissions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Permissions">
+          <HintPath>..\..\packages\local\System.Security.Permissions\lib\netcoreapp3.1\System.Security.Permissions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Permissions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Permissions">
+          <HintPath>..\..\packages\local\System.Security.Permissions\lib\netstandard2.0\System.Security.Permissions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Principal.Windows) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Principal.Windows">
+          <HintPath>..\..\packages\local\System.Security.Principal.Windows\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Principal.Windows) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Principal.Windows">
+          <HintPath>..\..\packages\local\System.Security.Principal.Windows\ref\netcoreapp3.0\System.Security.Principal.Windows.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Principal.Windows) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Principal.Windows">
+          <HintPath>..\..\packages\local\System.Security.Principal.Windows\lib\netstandard2.0\System.Security.Principal.Windows.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Security.Principal.Windows) != 1">
+      <ItemGroup>
+        <Reference Include="System.Security.Principal.Windows">
+          <HintPath>..\..\packages\local\System.Security.Principal.Windows\ref\netstandard2.0\System.Security.Principal.Windows.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Text.Encoding) != 1">
+      <ItemGroup>
+        <Reference Include="System.Text.Encoding">
+          <HintPath>..\..\packages\local\System.Text.Encoding\ref\netstandard1.3\System.Text.Encoding.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Text.Encoding.CodePages) != 1">
+      <ItemGroup>
+        <Reference Include="System.Text.Encoding.CodePages">
+          <HintPath>..\..\packages\local\System.Text.Encoding.CodePages\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Text.Encoding.CodePages) != 1">
+      <ItemGroup>
+        <Reference Include="System.Text.Encoding.CodePages">
+          <HintPath>..\..\packages\local\System.Text.Encoding.CodePages\lib\netstandard2.0\System.Text.Encoding.CodePages.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Threading) != 1">
+      <ItemGroup>
+        <Reference Include="System.Threading">
+          <HintPath>..\..\packages\local\System.Threading\lib\netstandard1.3\System.Threading.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Threading) != 1">
+      <ItemGroup>
+        <Reference Include="System.Threading">
+          <HintPath>..\..\packages\local\System.Threading\ref\netstandard1.3\System.Threading.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Threading.Tasks) != 1">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks">
+          <HintPath>..\..\packages\local\System.Threading.Tasks\ref\netstandard1.3\System.Threading.Tasks.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Threading.Tasks.Extensions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Extensions">
+          <HintPath>..\..\packages\local\System.Threading.Tasks.Extensions\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Threading.Tasks.Extensions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Extensions">
+          <HintPath>..\..\packages\local\System.Threading.Tasks.Extensions\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Threading.Timer) != 1">
+      <ItemGroup>
+        <Reference Include="System.Threading.Timer">
+          <HintPath>..\..\packages\local\System.Threading.Timer\ref\netstandard1.2\System.Threading.Timer.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.ValueTuple) != 1">
+      <ItemGroup>
+        <Reference Include="System.ValueTuple">
+          <HintPath>..\..\packages\local\System.ValueTuple\lib\net47\System.ValueTuple.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@System.Windows.Extensions) != 1">
+      <ItemGroup>
+        <Reference Include="System.Windows.Extensions">
+          <HintPath>..\..\packages\local\System.Windows.Extensions\lib\netcoreapp3.1\System.Windows.Extensions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@UniversalExtensions) != 1">
+      <ItemGroup>
+        <Reference Include="UniversalExtensions">
+          <HintPath>..\..\packages\local\UniversalExtensions\lib\net472\UniversalExtensions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Utf8Json) != 1">
+      <ItemGroup>
+        <Reference Include="Utf8Json">
+          <HintPath>..\..\packages\local\Utf8Json\lib\net47\Utf8Json.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Utf8Json) != 1">
+      <ItemGroup>
+        <Reference Include="Utf8Json">
+          <HintPath>..\..\packages\local\Utf8Json\lib\netstandard2.0\Utf8Json.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@VSocket) != 1">
+      <ItemGroup>
+        <Reference Include="VSocket">
+          <HintPath>..\..\packages\local\VSocket\lib\net472\VSocket.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="..\..\packages\local\EntityFramework\build\EntityFramework.targets" Condition="Exists('..\..\packages\local\EntityFramework\build\EntityFramework.targets')" Label="Paket" />
+  <Import Project="..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_targets).targets" Condition="Exists('..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_targets).targets')" Label="Paket" />
+  <Import Project="..\..\packages\local\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets" Condition="Exists('..\..\packages\local\NETStandard.Library\build\$(__paket__NETStandard_Library_targets).targets')" Label="Paket" />
 </Project>

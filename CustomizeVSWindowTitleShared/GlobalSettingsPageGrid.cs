@@ -21,19 +21,19 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         [DisplayName("Farthest parent folder depth")]
         [Description("Default: 1. Distance of the farthest parent folder to be shown. 1 will only show the folder of the opened project/solution file, before the project/folder name")]
         [DefaultValue(PSCustomizeVSWindowTitle.DefaultFarthestParentDepth)]
-        public int FarthestParentDepth { get; set; } = CustomizeVSWindowTitle.DefaultFarthestParentDepth;
+        public int FarthestParentDepth { get; set; } = PSCustomizeVSWindowTitle.DefaultFarthestParentDepth;
 
         [Category("General")]
         [DisplayName("Closest parent folder depth")]
         [Description("Default: 1. Distance of the closest parent folder to be shown. 1 will only show the folder of the opened project/solution file, before the project/folder name.")]
         [DefaultValue(PSCustomizeVSWindowTitle.DefaultClosestParentDepth)]
-        public int ClosestParentDepth { get; set; } = CustomizeVSWindowTitle.DefaultClosestParentDepth;
+        public int ClosestParentDepth { get; set; } = PSCustomizeVSWindowTitle.DefaultClosestParentDepth;
 
         [Category("General")]
         [DisplayName("Rewrite timer")]
         [Description("Default: 5000ms. Period to recheck if title may need to be rewritten, in case a relevant event wasn't detected.")]
-        [DefaultValue(CustomizeVSWindowTitle.DefaultResetTitleTimerMsPeriod)]
-        public int ResetTitleTimerMsPeriod { get; set; } = CustomizeVSWindowTitle.DefaultResetTitleTimerMsPeriod;
+        [DefaultValue(PSCustomizeVSWindowTitle.DefaultResetTitleTimerMsPeriod)]
+        public int ResetTitleTimerMsPeriod { get; set; } = PSCustomizeVSWindowTitle.DefaultResetTitleTimerMsPeriod;
 
         [Category("Patterns")]
         [DisplayName("No document or solution open")]

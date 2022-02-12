@@ -56,11 +56,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new DocumentProjectNameResolver(),
                 new DocumentProjectFileNameResolver(),
                 new DocumentUnsavedResolver(),
-<<<<<<< HEAD:CustomizeVSWindowTitle/PSCustomizeVSWindowTitlePackage.cs
                 new DocumentLineResolver(),
-=======
                 new AnythingUnsavedResolver(),
->>>>>>> Branch_5.0.1:CustomizeVSWindowTitleShared/CustomizeVSWindowTitlePackage.cs
                 new SolutionNameResolver(),
                 new DocumentPathResolver(),
                 new DocumentParentPathResolver(),
@@ -74,18 +71,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new PlatformNameResolver(),
                 new ConfigurationNameResolver(),
                 new GitBranchNameResolver(),
-<<<<<<< HEAD:CustomizeVSWindowTitle/PSCustomizeVSWindowTitlePackage.cs
+
+                //new GitRepoNameResolver(),
                 //new HgBranchNameResolver(),
                 //new SvnResolver(),
                 //new WorkspaceNameResolver(),
                 //new WorkspaceOwnerNameResolver(),
-=======
-                new GitRepoNameResolver(),
-                new HgBranchNameResolver(),
-                new SvnResolver(),
-                new WorkspaceNameResolver(),
-                new WorkspaceOwnerNameResolver(),
->>>>>>> Branch_5.0.1:CustomizeVSWindowTitleShared/CustomizeVSWindowTitlePackage.cs
                 new VsProcessIdResolver(),
                 new EnvResolver(),
                 new DebuggedProcessesArgsResolver(),
@@ -145,12 +136,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.GlobalSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
             this.SolutionSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
 
-<<<<<<< HEAD:CustomizeVSWindowTitle/PSCustomizeVSWindowTitlePackage.cs
             //Every 5 seconds, we check the window titles in case we missed an event.
-            this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = 2000 };
-=======
             this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = this.UiSettings.ResetTitleTimerMsPeriod };
->>>>>>> Branch_5.0.1:CustomizeVSWindowTitleShared/CustomizeVSWindowTitlePackage.cs
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
 
