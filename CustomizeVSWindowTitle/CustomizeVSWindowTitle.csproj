@@ -433,17 +433,6 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@PerFSharp) != 1">
-      <ItemGroup>
-        <Reference Include="PerFSharp">
-          <HintPath>..\..\packages\local\PerFSharp\lib\net472\PerFSharp.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
     <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@BouncyCastle.Crypto) != 1">
       <ItemGroup>
         <Reference Include="BouncyCastle.Crypto">
@@ -716,10 +705,30 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@SharedFSharpVanilla) != 1">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@ExceptionalCode) != 1">
       <ItemGroup>
+        <Reference Include="ExceptionalCode">
+          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\ExceptionalCode.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="PerFSharp">
+          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\PerFSharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="SharedFSharpVanilla">
           <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\SharedFSharpVanilla.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="SharedFrameworkInterfaces">
+          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\SharedFrameworkInterfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="UniversalExtensions">
+          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\UniversalExtensions.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
