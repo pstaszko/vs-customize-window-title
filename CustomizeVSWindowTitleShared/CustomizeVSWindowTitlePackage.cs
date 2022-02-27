@@ -405,7 +405,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 var pattern = this.GetPattern(solutionFp, useDefaultPattern, settings);
                 var newTitle = this.GetNewTitle(solution, pattern, settings);
                 this.ChangeWindowTitle(newTitle);
-                this.ChangeXamlTitle(newTitle);
+                if (this.UiSettings.RewriteCompactTitle) this.ChangeXamlTitle(!string.IsNullOrWhiteSpace(this.IDEName) ? newTitle.Replace(" - " + this.IDEName, "") : newTitle);
             }
             catch (Exception ex) {
                 try {
@@ -558,7 +558,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             try {
                 Globals.BeginInvokeOnUIThread(() => {
                     try {
-                        var mw = System.Windows.Application.Current.MainWindow;
+                        var mw = Application.Current.MainWindow;
                         mw.Title = Globals.DTE.MainWindow.Caption;
                         if (mw.Title != title) {
                             mw.Title = title;
@@ -586,20 +586,35 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private void ChangeXamlTitle(string title)
-        {
-            var mw = System.Windows.Application.Current.MainWindow;
-            // This part was found by looking at the Document tree. Could possibly change in future releases
-            // but this is the name for 2019 and 2022.
-            var statusBartTextBlock = FindChild<DependencyObject>(mw, "PART_SolutionNameTextBlock");
+        private TextBlock TitleTextBlock;
+        private void ChangeXamlTitle(string title) {
+            try {
+                Globals.BeginInvokeOnUIThread(() => {
+                    try {
+                        if (this.TitleTextBlock == null) {
+                            var mw = Application.Current.MainWindow;
+                            // This part was found by looking at the Document tree. Could possibly change in future releases
+                            // but this is the name for 2019 and 2022.
+                            var statusBartTextBlock = FindChild<DependencyObject>(mw, "PART_SolutionNameTextBlock");
 
-            if (statusBartTextBlock is null)
-            {
-                return;
+                            if (statusBartTextBlock is null) {
+                                return;
+                            }
+
+                            this.TitleTextBlock = FindChild<TextBlock>(statusBartTextBlock);
+                        }
+                        this.TitleTextBlock.Text = title;
+                    }
+                    catch (Exception) {
+                        // ignored
+                    }
+                });
             }
-
-            var textBlock = FindChild<TextBlock>(statusBartTextBlock);
-            textBlock.Text = title;
+            catch (Exception ex) {
+                if (this.UiSettings.EnableDebugMode) {
+                    WriteOutput("ChangeWindowTitle failed: " + ex);
+                }
+            }
         }
 
         public static void WriteOutput(string str, params object[] args) {
@@ -620,7 +635,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-
         /// <summary>
         /// Finds a Child of a given item in the visual tree. 
         /// </summary>
@@ -635,36 +649,29 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         /// If not matching item can be found, 
         /// a <see langword="null"/> is returned.</returns>
         private static T FindChild<T>(DependencyObject parent, string childName = null)
-           where T : DependencyObject
-        {
+           where T : DependencyObject {
             // Confirm parent and childName are valid. 
             if (parent == null) return null;
 
             T foundChild = null;
 
             int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < childrenCount; i++)
-            {
+            for (int i = 0; i < childrenCount; i++) {
                 var child = VisualTreeHelper.GetChild(parent, i);
-                if (!string.IsNullOrEmpty(childName))
-                {
+                if (!string.IsNullOrEmpty(childName)) {
                     // If the child is not of the request child type child
                     var frameworkElement = child as FrameworkElement;
                     // If the child's name is set for search
-                    if (frameworkElement != null)
-                    {
-                        if (frameworkElement.Name == childName)
-                        {
+                    if (frameworkElement != null) {
+                        if (frameworkElement.Name == childName) {
                             // if the child's name is of the request name
                             foundChild = (T)child;
                             break;
                         }
                     }
                 }
-                else
-                {
-                    if (child is T typedChild)
-                    {
+                else {
+                    if (child is T typedChild) {
                         foundChild = typedChild;
                         break;
                     }

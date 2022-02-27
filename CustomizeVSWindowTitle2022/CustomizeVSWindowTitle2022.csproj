@@ -20,7 +20,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ErwinMayerLabs.RenameVSWindowTitle</RootNamespace>
-    <AssemblyName>CustomizeVSWindowTitle17</AssemblyName>
+    <AssemblyName>CustomizeVSWindowTitle2022</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
@@ -130,7 +130,7 @@ if not exist  "$(SolutionDir)Releases\" (
     if errorlevel 1 goto Error
 )
 
-copy /Y "$(TargetDir)$(TargetName).vsix" "$(SolutionDir)Releases\$(TargetName) (new22).vsix"
+copy /Y "$(TargetDir)$(TargetName).vsix" "$(SolutionDir)Releases\$(TargetName) (new).vsix"
 if errorlevel 1 goto Error
 
 exit /b 0
