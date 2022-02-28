@@ -595,13 +595,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             var mw = Application.Current.MainWindow;
                             // This part was found by looking at the Document tree. Could possibly change in future releases
                             // but this is the name for 2019 and 2022.
-                            var statusBartTextBlock = FindChild<DependencyObject>(mw, "PART_SolutionNameTextBlock");
+                            var statusBarTextBlock = FindChild<DependencyObject>(mw, "PART_SolutionNameTextBlock");
 
-                            if (statusBartTextBlock is null) {
+                            if (statusBarTextBlock is null) {
                                 return;
                             }
 
-                            this.TitleTextBlock = FindChild<TextBlock>(statusBartTextBlock);
+                            this.TitleTextBlock = FindChild<TextBlock>(statusBarTextBlock);
                         }
                         this.TitleTextBlock.Text = title;
                     }
