@@ -18,6 +18,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public bool AlwaysRewriteTitles { get; set; } = true;
 
         [Category("General")]
+        [DisplayName("Support for compact mode")]
+        [Description("Default: true. If true, will also rewrite the compact window title when compact mode is enabled (without \"- [ideName]\" if present).")]
+        [DefaultValue(true)]
+        public bool RewriteCompactTitle { get; set; } = true;
+
+        [Category("General")]
         [DisplayName("Farthest parent folder depth")]
         [Description("Default: 1. Distance of the farthest parent folder to be shown. 1 will only show the folder of the opened project/solution file, before the project/folder name")]
         [DefaultValue(PSCustomizeVSWindowTitle.DefaultFarthestParentDepth)]

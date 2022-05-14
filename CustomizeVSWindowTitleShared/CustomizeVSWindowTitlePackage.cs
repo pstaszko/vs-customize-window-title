@@ -11,8 +11,13 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Microsoft.VisualStudio.PlatformUI;
 using SolutionEvents = Microsoft.VisualStudio.Shell.Events.SolutionEvents;
 using Task = System.Threading.Tasks.Task;
+using Window = EnvDTE.Window;
 
 //If refactoring, do not change namespace as it'd cause existing settings to be lost.
 namespace ErwinMayerLabs.RenameVSWindowTitle {
@@ -405,7 +410,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 var settings = this.GetSettings(solutionFp);
 
                 var pattern = this.GetPattern(solutionFp, useDefaultPattern, settings);
-                this.ChangeWindowTitle(this.GetNewTitle(solution, pattern, settings));
+                var newTitle = this.GetNewTitle(solution, pattern, settings);
+                this.ChangeWindowTitle(newTitle);
+                if (this.UiSettings.RewriteCompactTitle) this.ChangeXamlTitle(!string.IsNullOrWhiteSpace(this.IDEName) ? newTitle.Replace(" - " + this.IDEName, "") : newTitle);
             }
             catch (Exception ex) {
                 try {
@@ -558,10 +565,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             try {
                 Globals.BeginInvokeOnUIThread(() => {
                     try {
-                        System.Windows.Application.Current.MainWindow.Title = Globals.DTE.MainWindow.Caption;
-                        if (System.Windows.Application.Current.MainWindow.Title != title) {
-                            System.Windows.Application.Current.MainWindow.Title = title;
+                        var mw = Application.Current.MainWindow;
+                        mw.Title = Globals.DTE.MainWindow.Caption;
+                        if (mw.Title != title) {
+                            mw.Title = title;
                         }
+
                         //foreach (var windowObj in System.Windows.Application.Current.Windows) {
                         //    var window = windowObj as Microsoft.VisualStudio.PlatformUI.Shell.Controls.FloatingWindow;
                         //    if (window != null) {
@@ -571,6 +580,37 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                         //        }
                         //    }
                         //}
+                    }
+                    catch (Exception) {
+                        // ignored
+                    }
+                });
+            }
+            catch (Exception ex) {
+                if (this.UiSettings.EnableDebugMode) {
+                    WriteOutput("ChangeWindowTitle failed: " + ex);
+                }
+            }
+        }
+
+        private TextBlock TitleTextBlock;
+        private void ChangeXamlTitle(string title) {
+            try {
+                Globals.BeginInvokeOnUIThread(() => {
+                    try {
+                        if (this.TitleTextBlock == null) {
+                            var mw = Application.Current.MainWindow;
+                            // This part was found by looking at the Document tree. Could possibly change in future releases
+                            // but this is the name for 2019 and 2022.
+                            var statusBarTextBlock = FindChild<DependencyObject>(mw, "PART_SolutionNameTextBlock");
+
+                            if (statusBarTextBlock is null) {
+                                return;
+                            }
+
+                            this.TitleTextBlock = FindChild<TextBlock>(statusBarTextBlock);
+                        }
+                        this.TitleTextBlock.Text = title;
                     }
                     catch (Exception) {
                         // ignored
@@ -600,6 +640,58 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             catch {
                 // ignored
             }
+        }
+
+        /// <summary>
+        /// Finds a Child of a given item in the visual tree. 
+        /// </summary>
+        /// <param name="parent">A direct parent of the queried item.</param>
+        /// <typeparam name="T">The type of the queried item.</typeparam>
+        /// <param name="childName">x:Name or Name of child.</param>
+        /// <returns>
+        /// IF <paramref name="childName"/> is not <see langword="null"/> or empty
+        /// the first element to have that name is returned.
+        /// If <paramref name="childName"/> is <see langword="null"/> the
+        /// first element to match <typeparamref name="T"/> is returned.
+        /// If not matching item can be found, 
+        /// a <see langword="null"/> is returned.</returns>
+        private static T FindChild<T>(DependencyObject parent, string childName = null)
+           where T : DependencyObject {
+            // Confirm parent and childName are valid. 
+            if (parent == null) return null;
+
+            T foundChild = null;
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++) {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (!string.IsNullOrEmpty(childName)) {
+                    // If the child is not of the request child type child
+                    var frameworkElement = child as FrameworkElement;
+                    // If the child's name is set for search
+                    if (frameworkElement != null) {
+                        if (frameworkElement.Name == childName) {
+                            // if the child's name is of the request name
+                            foundChild = (T)child;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    if (child is T typedChild) {
+                        foundChild = typedChild;
+                        break;
+                    }
+                }
+
+                // recursively drill down the tree
+                foundChild = FindChild<T>(child, childName);
+
+                // If the child is found, break so we do not overwrite the found child. 
+                if (foundChild != null) break;
+            }
+
+            return foundChild;
         }
     }
 }

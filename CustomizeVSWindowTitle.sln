@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomizeVSWindowTitle", "C
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CustomizeVSWindowTitleShared", "CustomizeVSWindowTitleShared\CustomizeVSWindowTitleShared.shproj", "{BBB5B91B-E909-4F08-B623-9F27377EE7DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomizeVSWindowTitle17", "CustomizeVSWindowTitle17\CustomizeVSWindowTitle17.csproj", "{BF533FE9-559F-4AC7-8506-81F7883F1AA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomizeVSWindowTitle2022", "CustomizeVSWindowTitle2022\CustomizeVSWindowTitle2022.csproj", "{BF533FE9-559F-4AC7-8506-81F7883F1AA9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomizeVSWindowTitleSharedResources", "CustomizeVSWindowTitleSharedResources\CustomizeVSWindowTitleSharedResources.csproj", "{A923831E-ED5C-4DBA-85C6-DEF2DB9D23C0}"
 EndProject

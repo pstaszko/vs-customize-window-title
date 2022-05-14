@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="CustomizeVSWindowTitle17.8f96ef44-09b8-47c5-ae51-2d83310a23a1" Version="5.0.1" Language="en-US" Publisher="Erwin Mayer" />
+        <Identity Id="CustomizeVSWindowTitle17.8f96ef44-09b8-47c5-ae51-2d83310a23a1" Version="5.1.0" Language="en-US" Publisher="Erwin Mayer" />
         <DisplayName>Customize Visual Studio Window Title</DisplayName>
         <Description xml:space="preserve">This lightweight extension allows changing the window title of Visual Studio to include a folder tree with a configurable min depth and max depth distance from the solution/project file, and the use of special tags to help with many other possible scenarios (Git, Hg, TFS, SVN...). 
 Solution-specific overriding rules are available as well to cover virtually any possible renaming needs. It can also be configured so that the rules apply only when at least two instances of Visual Studio are running with the same window title.
@@ -13,13 +13,13 @@ This is particularly useful when branching a solution/project: it becomes possib
         <Tags>Git, Hg, TFS, Team Foundation Server, SVN, Window title, solution path, path, explicit title, multiple instances, rename title, change title, replace title, branch name</Tags>
     </Metadata>
     <Installation>
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,)">
             <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
-        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[17.0, 18.0)">
+        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[17.0,)">
             <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
-        <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.0, 18.0)">
+        <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.0,)">
             <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
     </Installation>
@@ -27,7 +27,7 @@ This is particularly useful when branching a solution/project: it becomes possib
         <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
     </Dependencies>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,18.0)" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
