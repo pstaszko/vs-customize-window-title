@@ -26,9 +26,7 @@
   </Choose>
   <Import Project="..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_props).props" Condition="Exists('..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_props).props')" Label="Paket" />
   <ItemGroup>
-    <PackageReference Include="VSCMD">
-      <Version>1.0.214</Version>
-    </PackageReference>
+    
     <PackageReference Include="UniversalExtensions">
     </PackageReference>
   </ItemGroup>
@@ -107,6 +105,12 @@
     <None Include="$(MSBuildThisFileDirectory)Lib\TeamFoundationHelper.cs" />
     <None Include="$(MSBuildThisFileDirectory)paket.references" />
   </ItemGroup>
+  <ItemGroup>
+      <ProjectReference Include="..\..\UIauto\VSCMD\VSCMD.vbproj">
+      <Project>{1c13fccf-0756-41ca-abca-c0d338ef4d8a}</Project>
+      <Name>VSCMD</Name>
+    </ProjectReference>
+	</ItemGroup>
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@ClipMaster_Plugin) != 1">
       <ItemGroup>
