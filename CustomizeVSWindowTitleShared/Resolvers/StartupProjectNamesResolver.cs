@@ -1,28 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using EnvDTE;
 using EnvDTE80;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
-    public class SolutionNameResolver : SimpleTagResolver {
-        public SolutionNameResolver() : base(tagName: "solutionName") { }
-
-        public override string Resolve(AvailableInfo info) {
-            return info.Cfg.SolutionName ?? string.Empty;
-        }
-
-        public static string GetSolutionNameOrEmpty(Solution solution) {
-            var sn = solution?.FullName;
-            return string.IsNullOrEmpty(sn) ? "" : Path.GetFileNameWithoutExtension(sn);
-        }
-    }
-
     public class StartupProjectNamesResolver : TagResolver, ISimpleTagResolver {
         public StartupProjectNamesResolver() : this(tagNames: new[] { "startupProjectsNames", "startupProjectsNames:X" }) { }
         public StartupProjectNamesResolver(IEnumerable<string> tagNames) : base(tagNames: tagNames) { }
-
 
         public virtual string TagName { get; } = "startupProjectsNames";
         static readonly Regex StartupProjectsXRegex = new Regex(@"^startupProjectsNames:(.+)$", RegexOptions.Compiled);
@@ -60,16 +45,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
         public override string TagName { get; } = "startupProjectsNamesNonRelative";
         static readonly Regex StartupProjectsXRegex = new Regex(@"^startupProjectsNamesNonRelative:(.+)$", RegexOptions.Compiled);
 
-        public override string Resolve(AvailableInfo info)
-        {
+        public override string Resolve(AvailableInfo info) {
             return string.Join(" & ", GetStartupProjectNamesNonRelative());
         }
 
-        public override bool TryResolve(string tag, AvailableInfo availableInfo, out string s)
-        {
+        public override bool TryResolve(string tag, AvailableInfo availableInfo, out string s) {
             var m = StartupProjectsXRegex.Match(tag);
-            if (!m.Success)
-            {
+            if (!m.Success) {
                 s = null;
                 return false;
             }

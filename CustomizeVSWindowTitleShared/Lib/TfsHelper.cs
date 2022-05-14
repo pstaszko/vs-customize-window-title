@@ -9,10 +9,11 @@
  * For each of these references, set "Specific version" and "Local copy" to false, because you want to use whatever comes with Visual Studio at runtime
  */
 
+using System;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.VersionControl.Client;
 using Microsoft.TeamFoundation.VersionControl.Common;
-using System;
+using Microsoft.VisualStudio.Services.Client;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle.Lib {
     internal static class TfsHelper {
@@ -52,21 +53,19 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Lib {
         }
 
         public static TfsTeamProjectCollection CreateTfsCollection(string tfsName) {
-            //Works for VS 2017+, with assemblies from VS 15. Does not work with VS 2015 (will cause an exception saying the assembly could not be found).
+            //This function may be a bit slow and runs on the UI thread, so would deserve optimization if many people are using it.
+            //Works for VS 2017+, with assemblies from VS 15. Does not work when compiling the VSIX from VS 2015 (will cause an exception saying the assembly could not be found).
             Uri fullyQualifiedUriForName = TfsTeamProjectCollection.GetFullyQualifiedUriForName(tfsName);
-            var vssCredentials = Microsoft.VisualStudio.Services.Client.VssClientCredentials.LoadCachedCredentials(fullyQualifiedUriForName, false, Microsoft.VisualStudio.Services.Common.CredentialPromptType.DoNotPrompt);
-            var tfsTeamProjectCollection = new TfsTeamProjectCollection(fullyQualifiedUriForName, vssCredentials);
-            return tfsTeamProjectCollection;
-
-            //Works for VS 2015, with assemblies from VS 14, but to be compatible with VS 2017+, we'd need to:
-            //1. Add the following in AssemblyInfo.cs to redirect the assembly with newer versions:
-            //  [assembly: ProvideBindingRedirection(AssemblyName = "Microsoft.TeamFoundation.Client", NewVersion = "15.0.0.0", OldVersionLowerBound = "14.0.0.0", OldVersionUpperBound = "15.0.0.0")]
-            //2. Mark the assembly as CopyLocal = true, otherwise it won't compile, saying the file could not be found. This would cause the whole extension to gain around 1 MB.
-            //I have not tested if it would actually work for VS 2017+ (it would still require the newer assembly is retro-compatible with the one from V14).
-            /*Uri fullyQualifiedUriForName = TfsTeamProjectCollection.GetFullyQualifiedUriForName(tfsName);
-            var vssCredentials = TfsClientCredentials.LoadCachedCredentials(fullyQualifiedUriForName, false, allowInteractive: false);
-            var tfsTeamProjectCollection = new TfsTeamProjectCollection(fullyQualifiedUriForName, vssCredentials);
-            return tfsTeamProjectCollection;*/
+            if (Resolvers.IdeHelper.VsMajorVersion < 17) { 
+                var vssCredentials = VssClientCredentials.LoadCachedCredentials(fullyQualifiedUriForName, false, Microsoft.VisualStudio.Services.Common.CredentialPromptType.DoNotPrompt);
+                var tfsTeamProjectCollection = new TfsTeamProjectCollection(fullyQualifiedUriForName, vssCredentials);
+                return tfsTeamProjectCollection;
+            }
+            //Only works with VS2022+
+            var vssCredentials2 = new VssClientCredentials(useDefaultCredentials: true);
+            var tfsTeamProjectCollection2 = new TfsTeamProjectCollection(fullyQualifiedUriForName, vssCredentials2);
+            tfsTeamProjectCollection2.Authenticate(); //Will only prompt user to authenticate once normally.
+            return tfsTeamProjectCollection2;
         }
 
         public static string GetRepositoryUrl(string path) {

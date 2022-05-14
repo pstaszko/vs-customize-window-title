@@ -14,7 +14,7 @@ namespace SquaredInfinity.VSCommands.Integration.TeamFoundation {
     //          but it would need hard reference to Microsoft.TeamFoundation.dll which I have a feeling is not the best way
     //          This class will try to avoid using it and utilise officially available nuget packages instead
 
-    public class TeamFoundationHelper {
+    public class TeamFoundationHel {
         readonly IServiceProvider ServiceProvider;
 
         [ImportingConstructor]

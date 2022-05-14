@@ -28,35 +28,35 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             FilePickerAttribute fpa = null;
             {
                 var attr = fi.GetCustomAttributes(typeof(FilePickerAttribute), false);
-                if (attr!=null && attr.Length>0)
+                if (attr != null && attr.Length > 0)
                 {
-                    fpa= ((FilePickerAttribute)attr[0]);
+                    fpa = ((FilePickerAttribute)attr[0]);
                 }
             }
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.CheckPathExists=true;
-            ofd.CheckFileExists=false;
-            ofd.Filter=fpa?.Filter;
-            ofd.FilterIndex=fpa?.FilterIndex ?? 1;
+            ofd.CheckPathExists = true;
+            ofd.CheckFileExists = false;
+            ofd.Filter = fpa?.Filter;
+            ofd.FilterIndex = fpa?.FilterIndex ?? 1;
             if (string.IsNullOrEmpty(path))
             {
-                ofd.FileName=fpa?.DefaultFileName ?? string.Empty;
+                ofd.FileName = fpa?.DefaultFileName ?? string.Empty;
             }
             else
             {
                 if (fpa?.StoreFolder == true)
                 {
-                    ofd.InitialDirectory=path;
-                    ofd.FileName=fpa?.DefaultFileName ?? string.Empty;
-                    ofd.CheckFileExists=false;
+                    ofd.InitialDirectory = path;
+                    ofd.FileName = fpa?.DefaultFileName ?? string.Empty;
+                    ofd.CheckFileExists = false;
                 }
                 else
                 {
-                    ofd.FileName=Path.GetFileName(path);
-                    ofd.InitialDirectory=Path.GetDirectoryName(path);
+                    ofd.FileName = Path.GetFileName(path);
+                    ofd.InitialDirectory = Path.GetDirectoryName(path);
                 }
             }
-            if (ofd.ShowDialog()== DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
                 if (fpa?.StoreFolder == true)
                     return Path.GetDirectoryName(ofd.FileName);
@@ -73,12 +73,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         public readonly string Filter;
         public readonly int FilterIndex;
 
-        public FilePickerAttribute(bool StoreFolder=false, string DefaultFileName=null, string Filter=null, int FilterIndex=1) 
+        public FilePickerAttribute(bool StoreFolder = false, string DefaultFileName = null, string Filter = null, int FilterIndex = 1)
         {
-            this.StoreFolder=StoreFolder;
-            this.DefaultFileName=DefaultFileName;
-            this.Filter=Filter;
-            this.FilterIndex=FilterIndex;
+            this.StoreFolder = StoreFolder;
+            this.DefaultFileName = DefaultFileName;
+            this.Filter = Filter;
+            this.FilterIndex = FilterIndex;
         }
     }
 
