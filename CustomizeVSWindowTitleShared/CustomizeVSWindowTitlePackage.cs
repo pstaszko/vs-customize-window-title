@@ -146,10 +146,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
 
-            //var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
-            //var tt = new System.Threading.Thread(pts);
-            //tt.Start();
-        }
+			var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
+			var tt = new System.Threading.Thread(pts);
+			tt.Start();
+		}
 
         protected override void Dispose(bool disposing) {
             this.ResetTitleTimer.Dispose();
@@ -666,17 +666,18 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             for (int i = 0; i < childrenCount; i++) {
                 var child = VisualTreeHelper.GetChild(parent, i);
                 if (!string.IsNullOrEmpty(childName)) {
-                    // If the child is not of the request child type child
-                    var frameworkElement = child as FrameworkElement;
-                    // If the child's name is set for search
-                    if (frameworkElement != null) {
-                        if (frameworkElement.Name == childName) {
-                            // if the child's name is of the request name
-                            foundChild = (T)child;
-                            break;
-                        }
-                    }
-                }
+					// If the child is not of the request child type child
+					// If the child's name is set for search
+					if (child is FrameworkElement frameworkElement)
+					{
+						if (frameworkElement.Name == childName)
+						{
+							// if the child's name is of the request name
+							foundChild = (T)child;
+							break;
+						}
+					}
+				}
                 else {
                     if (child is T typedChild) {
                         foundChild = typedChild;

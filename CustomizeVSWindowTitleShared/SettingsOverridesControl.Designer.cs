@@ -82,6 +82,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             this.btRegister.TabIndex = 13;
             this.btRegister.Text = "Register";
             this.btRegister.UseVisualStyleBackColor = true;
+            this.btRegister.Click += btRegister_Click;
             // 
             // btSolutionConfig
             // 
