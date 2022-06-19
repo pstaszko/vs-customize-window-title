@@ -169,6 +169,26 @@ exit /b 1
   </Target>
   -->
   <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@Chessie) != 1">
+      <ItemGroup>
+        <Reference Include="Chessie">
+          <HintPath>..\..\packages\local\Chessie\lib\net40\Chessie.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@Chessie) != 1">
+      <ItemGroup>
+        <Reference Include="Chessie">
+          <HintPath>..\..\packages\local\Chessie\lib\netstandard1.6\Chessie.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@ClipMaster_Plugin) != 1">
       <ItemGroup>
         <Reference Include="ClipMaster_Plugin">
@@ -195,6 +215,29 @@ exit /b 1
       <ItemGroup>
         <Reference Include="CSFramework">
           <HintPath>..\..\packages\local\CSFramework_PS\lib\net472\CSFramework.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@Microsoft.CSharp) != 1">
+      <ItemGroup>
+        <Reference Include="Microsoft.CSharp">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Dynamitey">
+          <HintPath>..\..\packages\local\Dynamitey\lib\net40\Dynamitey.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@Dynamitey) != 1">
+      <ItemGroup>
+        <Reference Include="Dynamitey">
+          <HintPath>..\..\packages\local\Dynamitey\lib\netstandard2.0\Dynamitey.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -243,6 +286,17 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@Flatinum) != 1">
+      <ItemGroup>
+        <Reference Include="Flatinum">
+          <HintPath>..\..\packages\local\Flatinum\lib\net472\Flatinum.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
     <When Condition="(($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@FSharp.Core) != 1">
       <ItemGroup>
         <Reference Include="FSharp.Core">
@@ -258,6 +312,26 @@ exit /b 1
       <ItemGroup>
         <Reference Include="FSharp.Data">
           <HintPath>..\..\packages\local\FSharp.Data\lib\netstandard2.0\FSharp.Data.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@FSharp.Interop.Dynamic) != 1">
+      <ItemGroup>
+        <Reference Include="FSharp.Interop.Dynamic">
+          <HintPath>..\..\packages\local\FSharp.Interop.Dynamic\lib\net45\FSharp.Interop.Dynamic.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@FSharp.Interop.Dynamic) != 1">
+      <ItemGroup>
+        <Reference Include="FSharp.Interop.Dynamic">
+          <HintPath>..\..\packages\local\FSharp.Interop.Dynamic\lib\netstandard2.0\FSharp.Interop.Dynamic.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -400,13 +474,6 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@Microsoft.CSharp) != 1">
-      <ItemGroup>
-        <Reference Include="Microsoft.CSharp">
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
     <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@Microsoft.CSharp) != 1">
       <ItemGroup>
         <Reference Include="Microsoft.CSharp">
@@ -825,6 +892,17 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@SharedFrameworkEntity) != 1">
+      <ItemGroup>
+        <Reference Include="SharedFrameworkEntity">
+          <HintPath>..\..\packages\local\SharedFrameworkEntity\lib\net472\SharedFrameworkEntity.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@SharedFrameworkForms) != 1">
       <ItemGroup>
         <Reference Include="SharedFrameworkForms">
@@ -891,30 +969,10 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@ExceptionalCode) != 1">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@SharedFSharpVanilla) != 1">
       <ItemGroup>
-        <Reference Include="ExceptionalCode">
-          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\ExceptionalCode.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="PerFSharp">
-          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\PerFSharp.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
         <Reference Include="SharedFSharpVanilla">
           <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\SharedFSharpVanilla.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="SharedFrameworkInterfaces">
-          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\SharedFrameworkInterfaces.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="UniversalExtensions">
-          <HintPath>..\..\packages\local\SharedFSharpVanilla\lib\net472\UniversalExtensions.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -1059,6 +1117,26 @@ exit /b 1
         <Reference Include="System.Collections.NonGeneric">
           <HintPath>..\..\packages\local\System.Collections.NonGeneric\ref\netstandard1.3\System.Collections.NonGeneric.dll</HintPath>
           <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v3.1') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@System.ComponentModel) != 1">
+      <ItemGroup>
+        <Reference Include="System.ComponentModel">
+          <HintPath>..\..\packages\local\System.ComponentModel\ref\netstandard1.0\System.ComponentModel.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle2022@System.ComponentModel) != 1">
+      <ItemGroup>
+        <Reference Include="System.ComponentModel">
+          <HintPath>..\..\packages\local\System.ComponentModel\lib\netstandard1.3\System.ComponentModel.dll</HintPath>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
