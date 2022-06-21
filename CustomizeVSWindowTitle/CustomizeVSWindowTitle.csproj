@@ -612,18 +612,6 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Core) != 1">
-      <ItemGroup>
-        <Reference Include="System.Core">
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.Text.Encoding.CodePages">
-          <HintPath>..\..\packages\System.Text.Encoding.CodePages\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
     <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Text.Encoding.CodePages) != 1">
       <ItemGroup>
         <Reference Include="System.Text.Encoding.CodePages">
