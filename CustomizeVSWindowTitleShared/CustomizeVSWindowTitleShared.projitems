@@ -9,6 +9,21 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>CustomizeVSWindowTitleShared</Import_RootNamespace>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\UIauto\FSS\FSSClass\FSSClass.fsproj">
+      <Project>{040e6526-25ed-4450-a3af-6a29c545e65f}</Project>
+      <Name>FSSClass</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UIauto\VSCMD\VSCMD.vbproj">
+      <Project>{1c13fccf-0756-41ca-abca-c0d338ef4d8a}</Project>
+      <Name>VSCMD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomizeVSWindowTitleSharedResources\CustomizeVSWindowTitleSharedResources.csproj">
+      <Project>{a923831e-ed5c-4dba-85c6-def2db9d23c0}</Project>
+      <Name>CustomizeVSWindowTitleSharedResources</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') Or ($(TargetFrameworkIdentifier) == '.NETCoreApp' And ($(TargetFrameworkVersion) == 'v3.1' Or $(TargetFrameworkVersion) == 'v5.0')) Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))">
       <PropertyGroup>
@@ -25,10 +40,6 @@
     </When>
   </Choose>
   <Import Project="..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_props).props" Condition="Exists('..\..\packages\local\EntityFramework\build\$(__paket__EntityFramework_props).props')" Label="Paket" />
-  <ItemGroup>
-    <PackageReference Include="UniversalExtensions">
-    </PackageReference>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AvailableInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CustomizeVSWindowTitlePackage.cs" />
@@ -102,13 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Lib\TeamFoundationHelper.cs" />
-    <None Include="$(MSBuildThisFileDirectory)paket.references" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\UIauto\VSCMD\VSCMD.vbproj">
-      <Project>{1c13fccf-0756-41ca-abca-c0d338ef4d8a}</Project>
-      <Name>VSCMD</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Chessie) != 1">
@@ -334,17 +338,6 @@
       <ItemGroup>
         <Reference Include="FsPickler.Json">
           <HintPath>..\..\packages\local\FsPickler.Json\lib\netstandard2.0\FsPickler.Json.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@FSSClass) != 1">
-      <ItemGroup>
-        <Reference Include="FSSClass">
-          <HintPath>..\..\packages\local\FSSClass\lib\net472\FSSClass.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -2226,17 +2219,7 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@UniversalExtensions) != 1">
-      <ItemGroup>
-        <Reference Include="UniversalExtensions">
-          <HintPath>..\..\packages\local\UniversalExtensions\lib\net472\UniversalExtensions.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
+ 
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Utf8Json) != 1">
       <ItemGroup>
