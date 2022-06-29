@@ -1,7 +1,0 @@
-#Newtonsoft.Json
-#System.ValueTuple
-#System.Linq
-group Local
-VSocket
-#VSCMD
-FSSClass
