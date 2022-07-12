@@ -9,7 +9,6 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>CustomizeVSWindowTitleShared</Import_RootNamespace>
   </PropertyGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\..\UIauto\FSS\FSSClass\FSSClass.fsproj">
       <Project>{040e6526-25ed-4450-a3af-6a29c545e65f}</Project>
@@ -97,6 +96,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)SupportedTagsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VSocket.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VSocket_net.cs" />
   </ItemGroup>
@@ -2219,7 +2219,6 @@
       </ItemGroup>
     </When>
   </Choose>
- 
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitleShared@Utf8Json) != 1">
       <ItemGroup>

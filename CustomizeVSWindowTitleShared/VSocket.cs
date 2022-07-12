@@ -7,6 +7,7 @@ using System.Text;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle
 {
+	
 	public static partial class VSocket
 	{
 		public static string GetVersion()
@@ -38,7 +39,6 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 					fns["Version"] = GetVersion;
 					if (dte is DTE2 dte2)
 					{
-
 						fns["ActiveSolutionProjects"] = () =>
 						{
 							//System.Diagnostics.Debugger.Launch();
@@ -77,16 +77,40 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 							string commandArgs = parameters["args"];
 							dte.ExecuteCommand(commandName, commandArgs);
 						};
+						acts["AddProjects"] = () =>
+						{
+							foreach (var project in parameters["Projects"].Split(','))
+							{
+								try
+								{
+									dte.Solution.AddFromFile(project);
+
+								} catch (Exception ex)
+								{
+									ret += $"\r\n Failed to add project {project}";
+								}
+							}
+						};
 						acts["UnloadProjects"] = () =>
 						{
-							var projects = parameters["Projects"].Split(',');
-							foreach (Project project in dte.ActiveSolutionProjects as System.Array)
+							foreach (Project p in CustomizeVSWindowTitleShared.Utils.GetEnvDTEProjectsInSolution())
 							{
-								if (projects.Contains(project.Name))
+								var n = p.Name;
+								
+							}
+							var projects = parameters["Projects"].Split(',');
+							foreach (EnvDTE.UIHierarchyItem item in dte.ToolWindows.SolutionExplorer.UIHierarchyItems)
+							{
+								var n = item.Name;
+								var cc = item.Collection;
+								foreach (UIHierarchyItem proj in item.Collection)
 								{
-									var se = dte.ToolWindows.SolutionExplorer;
-									var proj = se.GetItem(project.FullName);
-									proj.Select(vsUISelectionType.vsUISelectionTypeExtend);
+									if (projects.Contains(proj.Name))
+									{
+										var se = dte.ToolWindows.SolutionExplorer;
+										//var proj = se.GetItem(project.FullName);
+										proj.Select(vsUISelectionType.vsUISelectionTypeExtend);
+									}
 								}
 							}
 						};
