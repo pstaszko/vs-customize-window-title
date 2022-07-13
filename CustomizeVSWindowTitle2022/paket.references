@@ -1,9 +1,2 @@
 dynamitey
 FSharp.Interop.Dynamic
-#Newtonsoft.Json
-#System.ValueTuple
-#System.Linq
-group Local
-#VSocket
-#VSCMD
-#FSSClass

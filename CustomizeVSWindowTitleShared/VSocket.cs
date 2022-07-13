@@ -91,6 +91,22 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 								}
 							}
 						};
+						acts["AddReferences"] = () =>
+						{
+							foreach (var project in parameters["References"].Split(','))
+							{
+								try
+								{
+									//foreach (VSLangProj. item in collection)
+									//{
+
+									//}
+								} catch (Exception ex)
+								{
+									ret += $"\r\n Failed to add project {project}";
+								}
+							}
+						};
 						acts["UnloadProjects"] = () =>
 						{
 							foreach (Project p in CustomizeVSWindowTitleShared.Utils.GetEnvDTEProjectsInSolution())
