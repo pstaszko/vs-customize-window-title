@@ -1,5 +1,9 @@
-﻿using EnvDTE;
+﻿//using EnvDTE;
+using EnvDTE;
 using EnvDTE80;
+//using EnvDTE90;
+//using EnvDTE90a;
+//using EnvDTE100;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +11,7 @@ using System.Text;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle
 {
-	
+
 	public static partial class VSocket
 	{
 		public static string GetVersion()
@@ -85,7 +89,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 								{
 									dte.Solution.AddFromFile(project);
 
-								} catch (Exception ex)
+								} catch
 								{
 									ret += $"\r\n Failed to add project {project}";
 								}
@@ -93,15 +97,17 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 						};
 						acts["AddReferences"] = () =>
 						{
+							
 							foreach (var project in parameters["References"].Split(','))
 							{
+
 								try
 								{
 									//foreach (VSLangProj. item in collection)
 									//{
 
 									//}
-								} catch (Exception ex)
+								} catch
 								{
 									ret += $"\r\n Failed to add project {project}";
 								}
@@ -112,7 +118,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 							foreach (Project p in CustomizeVSWindowTitleShared.Utils.GetEnvDTEProjectsInSolution())
 							{
 								var n = p.Name;
-								
+
 							}
 							var projects = parameters["Projects"].Split(',');
 							foreach (EnvDTE.UIHierarchyItem item in dte.ToolWindows.SolutionExplorer.UIHierarchyItems)
