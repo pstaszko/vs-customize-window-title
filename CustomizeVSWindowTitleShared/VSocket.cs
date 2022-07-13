@@ -1,9 +1,5 @@
-﻿//using EnvDTE;
-using EnvDTE;
+﻿using EnvDTE;
 using EnvDTE80;
-//using EnvDTE90;
-//using EnvDTE90a;
-//using EnvDTE100;
 using System;
 using System.Collections.Generic;
 using System.Linq;
