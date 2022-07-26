@@ -60,7 +60,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Lib\UtilsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Lib\Wildcard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Lib\WorkspaceInfoGetter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)OCR.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resolvers\AnythingUnsavedResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resolvers\ConfigurationResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resolvers\DebuggedProcessesArgsResolver.cs" />
