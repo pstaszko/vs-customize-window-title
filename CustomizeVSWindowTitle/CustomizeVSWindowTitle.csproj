@@ -344,7 +344,7 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Configuration) != 1">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Configuration) != 1">
       <ItemGroup>
         <Reference Include="System.Configuration">
           <Paket>True</Paket>
@@ -526,18 +526,6 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Security) != 1">
-      <ItemGroup>
-        <Reference Include="System.Security">
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.Security.Cryptography.ProtectedData">
-          <HintPath>..\..\packages\System.Security.Cryptography.ProtectedData\lib\net461\System.Security.Cryptography.ProtectedData.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
     <When Condition="(($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') Or ($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1'))) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Security.Cryptography.ProtectedData) != 1">
       <ItemGroup>
         <Reference Include="System.Security.Cryptography.ProtectedData">
@@ -552,6 +540,9 @@ exit /b 1
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.7.2') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Data.OracleClient) != 1">
       <ItemGroup>
         <Reference Include="System.Data.OracleClient">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Security">
           <Paket>True</Paket>
         </Reference>
         <Reference Include="System.ServiceProcess">
@@ -598,15 +589,6 @@ exit /b 1
     </When>
   </Choose>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETCoreApp' And $(TargetFrameworkVersion) == 'v5.0') And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Text.Encoding.CodePages) != 1">
-      <ItemGroup>
-        <Reference Include="System.Text.Encoding.CodePages">
-          <HintPath>..\..\packages\System.Text.Encoding.CodePages\lib\netcoreapp3.1\System.Text.Encoding.CodePages.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v2.1')) And $(registry:HKEY_CURRENT_USER\Software\WCRI\CustomizeVSWindowTitle@System.Text.Encoding.CodePages) != 1">
       <ItemGroup>
         <Reference Include="System.Text.Encoding.CodePages">
