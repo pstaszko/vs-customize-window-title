@@ -77,11 +77,14 @@ namespace CustomizeVSWindowTitleShared
 		static internal IEnumerable<EnvDTE.Project> GetEnvDTEProjectsInSolution()
 		{
 			List<EnvDTE.Project> ret = new List<EnvDTE.Project>();
-			EnvDTE80.DTE2 dte = (EnvDTE80.DTE2)ServiceProvider.GlobalProvider.GetService(typeof(EnvDTE.DTE));
-			EnvDTE.UIHierarchy hierarchy = dte.ToolWindows.SolutionExplorer;
-			foreach (EnvDTE.UIHierarchyItem innerItem in hierarchy.UIHierarchyItems)
+			var dte = (EnvDTE80.DTE2)ServiceProvider.GlobalProvider.GetService(typeof(EnvDTE.DTE));
+			if (dte != null)
 			{
-				FindProjectsIn(innerItem, ret);
+				EnvDTE.UIHierarchy hierarchy = dte.ToolWindows.SolutionExplorer;
+				foreach (EnvDTE.UIHierarchyItem innerItem in hierarchy.UIHierarchyItems)
+				{
+					FindProjectsIn(innerItem, ret);
+				}
 			}
 			return ret;
 		}

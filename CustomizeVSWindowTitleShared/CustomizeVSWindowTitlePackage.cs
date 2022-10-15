@@ -624,7 +624,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        public static void WriteOutput(string str, params object[] args) {
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("ApiDesign", "RS0030:Do not used banned APIs", Justification = "<Pending>")]
+		public static void WriteOutput(string str, params object[] args) {
             try {
                 Globals.InvokeOnUIThread(() => {
                     ThreadHelper.ThrowIfNotOnUIThread();
