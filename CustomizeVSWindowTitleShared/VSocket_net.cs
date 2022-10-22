@@ -81,7 +81,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 		public static bool TryBindListenerOnFreePort(Action<string> log, out HttpListener httpListener, out int port)
 		{
 			// IANA suggested range for dynamic or private ports
-			const int MinPort = 50000;
+			const int MinPort = 50160;
 			const int MaxPort = 65535;
 			for (port = MinPort; port < MaxPort; port++) {
 				log($"Checking {port}");
