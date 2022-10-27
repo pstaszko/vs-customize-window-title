@@ -1,4 +1,4 @@
-﻿using EnvDTE;
+using EnvDTE;
 using EnvDTE80;
 using System;
 using System.Collections.Generic;
@@ -39,23 +39,23 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 					fns["Version"] = GetVersion;
 					if (dte is DTE2 dte2)
 					{
-						fns["ActiveSolutionProjects"] = () =>
-						{
-							//System.Diagnostics.Debugger.Launch();
-							//System.Diagnostics.Debugger.Break();
+						//fns["ActiveSolutionProjects"] = () =>
+						//{
+						//	//System.Diagnostics.Debugger.Launch();
+						//	//System.Diagnostics.Debugger.Break();
 
-							//Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.Automation.OAProject x = null;
-							var n = new List<string>();
-							foreach (var item in dte.ActiveSolutionProjects as IEnumerable<object>)
-							{
-								var prop = item.GetType().GetProperty("FullName");
-								if (prop != null)
-								{
-									n.Add(prop.GetValue(item).ToString());
-								}
-							}
-							return string.Join("\r\n", n);
-						};
+						//	//Microsoft.VisualStudio.ProjectSystem.VS.Implementation.Package.Automation.OAProject x = null;
+						//	var n = new List<string>();
+						//	foreach (var item in dte.ActiveSolutionProjects as IEnumerable<object>)
+						//	{
+						//		var prop = item.GetType().GetProperty("FullName");
+						//		if (prop != null)
+						//		{
+						//			n.Add(prop.GetValue(item).ToString());
+						//		}
+						//	}
+						//	return string.Join("\r\n", n);
+						//};
 						var x = dte.ActiveSolutionProjects;
 						fns["GetActiveProjects"] = () =>
 						{
@@ -93,7 +93,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 						};
 						acts["AddReferences"] = () =>
 						{
-							
+
 							foreach (var project in parameters["References"].Split(','))
 							{
 

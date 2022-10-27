@@ -7,8 +7,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle.Resolvers {
         public static bool TryGetActiveProject(DTE2 dte, out Project activeProject) {
             activeProject = null;
             try {
-                var activeSolutionProjects = dte.ActiveSolutionProjects as Array;
-                if (activeSolutionProjects != null && activeSolutionProjects.Length > 0) {
+                if (dte.ActiveSolutionProjects is Array activeSolutionProjects && activeSolutionProjects.Length > 0) {
                     activeProject = activeSolutionProjects.GetValue(0) as Project;
                     return true;
                 }
