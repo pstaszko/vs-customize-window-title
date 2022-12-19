@@ -27,11 +27,12 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WisdominatorClient", "..\Ma
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExceptionalCode", "..\WesternCap\ExceptionalCode\ExceptionalCode.fsproj", "{2F7E3A26-F687-4BFD-A01B-408DBE459195}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SharedFSharpVanilla", "..\WesternCap\SharedFSharpVanilla\SharedFSharpVanilla.fsproj", "{3F97F31B-6490-42FC-A3B0-1E53E58E1AA9}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SharedFSharpVanilla", "..\WesternCap\SharedFSharpVanilla\SharedFSharpVanilla.fsproj", "{3F97F31B-6490-42FC-A3B0-1E53E58E1AA9}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CustomizeVSWindowTitleShared\CustomizeVSWindowTitleShared.projitems*{bbb5b91b-e909-4f08-b623-9f27377ee7dc}*SharedItemsImports = 13
+		CustomizeVSWindowTitleShared\CustomizeVSWindowTitleShared.projitems*{bf533fe9-559f-4ac7-8506-81f7883f1aa9}*SharedItemsImports = 4
 		CustomizeVSWindowTitleShared\CustomizeVSWindowTitleShared.projitems*{ea0e0d3b-0669-4422-9e9a-c53284ddea44}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
