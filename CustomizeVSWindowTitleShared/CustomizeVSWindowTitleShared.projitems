@@ -10,7 +10,7 @@
     <Import_RootNamespace>CustomizeVSWindowTitleShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\UIauto\FSS\FSSClass\FSSClass.fsproj">
+    <ProjectReference Include="..\..\UIauto\FSSClass\FSSClass.fsproj">
       <Project>{040e6526-25ed-4450-a3af-6a29c545e65f}</Project>
       <Name>FSSClass</Name>
     </ProjectReference>

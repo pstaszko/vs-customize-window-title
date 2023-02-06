@@ -135,7 +135,7 @@
       <Project>{a923831e-ed5c-4dba-85c6-def2db9d23c0}</Project>
       <Name>CustomizeVSWindowTitleSharedResources</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\DEV\UIauto\FSS\FSSClass\FSSClass.fsproj" xmlns="">
+    <ProjectReference Include="C:\Dev\UIauto\FSSClass\FSSClass.fsproj" xmlns="">
       <Name>FSSClass</Name>
       <Project>{035FA687-D0C7-4B11-8EDF-ACCCADC03210}</Project>
       <Private>True</Private>
