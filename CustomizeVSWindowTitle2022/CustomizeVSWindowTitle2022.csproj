@@ -136,6 +136,13 @@ exit /b 0
 exit /b 1
 </PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Dev\UIauto\FSSClass\FSSClass.fsproj">
+      <Name>FSSClass</Name>
+      <Project>{035FA687-D0C7-4B11-8EDF-ACCCADC03210}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.2')">
       <ItemGroup>
@@ -259,11 +266,6 @@ exit /b 1
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup xmlns="">
-    <ProjectReference Include="C:\Dev\UIauto\FSSClass\FSSClass.fsproj" xmlns="">
-      <Name>FSSClass</Name>
-      <Project>{035FA687-D0C7-4B11-8EDF-ACCCADC03210}</Project>
-      <Private>True</Private>
-    </ProjectReference>
+  <ItemGroup>
   </ItemGroup>
 </Project>
