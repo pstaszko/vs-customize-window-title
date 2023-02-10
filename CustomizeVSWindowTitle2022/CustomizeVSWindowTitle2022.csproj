@@ -266,6 +266,4 @@ exit /b 1
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup>
-  </ItemGroup>
 </Project>
