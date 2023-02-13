@@ -5,10 +5,12 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle {
+namespace ErwinMayerLabs.RenameVSWindowTitle
+{
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    [CLSCompliant(false), ComVisible(true)]
-    public class SettingsOverridesPageGrid : DialogPage {
+    [ComVisible(true)]
+    public class SettingsOverridesPageGrid : DialogPage
+    {
         [Category("Solution-specific overrides")]
         [DisplayName("Enable solution-specific overrides")]
         [Description("Default: False. If true, will try to use overrides from any 'MySolution.sln.rn.xml' file present in the same directory as the MySolution.sln file. " +
@@ -28,7 +30,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         SettingsOverridesControl SettingsOverridesControl;
 
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        protected override IWin32Window Window {
+        protected override IWin32Window Window
+        {
             get {
                 this.SettingsOverridesControl = new SettingsOverridesControl(optionsPage: this) {
                     Dock = DockStyle.Fill,
@@ -40,14 +43,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         public event EventHandler SettingsChanged;
 
-        protected override void OnApply(PageApplyEventArgs e) {
+        protected override void OnApply(PageApplyEventArgs e)
+        {
             base.OnApply(e);
             if (e.ApplyBehavior != ApplyKind.Apply)
                 return;
             this.SettingsChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        protected override void OnActivate(CancelEventArgs e) {
+        protected override void OnActivate(CancelEventArgs e)
+        {
             base.OnActivate(e);
             var solution = Globals.DTE.Solution;
             this.SettingsOverridesControl.SolutionFp = solution?.FullName;
@@ -59,8 +64,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     gfp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PSCustomizeVSWindowTitle-global.xml");
 
                 this.SettingsOverridesControl.GlobalSettingsFp = gfp; // if opened, the opening will set the global settings path
-            }
-            else {
+            } else {
                 this.SettingsOverridesControl.GlobalSettingsFp = null;
             }
         }

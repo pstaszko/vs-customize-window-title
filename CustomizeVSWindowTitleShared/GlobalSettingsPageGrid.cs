@@ -7,10 +7,12 @@ using Microsoft.VisualStudio.Shell;
 //http://stackoverflow.com/questions/24291249/dialogpage-string-array-not-persisted
 //http://www.codeproject.com/Articles/351172/CodeStash-a-journey-into-the-dark-side-of-Visual-S
 
-namespace ErwinMayerLabs.RenameVSWindowTitle {
+namespace ErwinMayerLabs.RenameVSWindowTitle
+{
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    [CLSCompliant(false), ComVisible(true)]
-    public class GlobalSettingsPageGrid : DialogPage {
+    [ComVisible(true)]
+    public class GlobalSettingsPageGrid : DialogPage
+    {
         [Category("General")]
         [DisplayName("Always rewrite titles")]
         [Description("Default: true. If true, will rewrite titles even if no conflict with other instances is detected. Conflicts may not be detected if patterns have been changed from the default.")]
@@ -124,7 +126,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         public event EventHandler SettingsChanged;
 
-        protected override void OnApply(PageApplyEventArgs e) {
+        protected override void OnApply(PageApplyEventArgs e)
+        {
             base.OnApply(e);
             if (e.ApplyBehavior != ApplyKind.Apply)
                 return;

@@ -20,7 +20,8 @@ using Task = System.Threading.Tasks.Task;
 using Window = EnvDTE.Window;
 
 //If refactoring, do not change namespace as it'd cause existing settings to be lost.
-namespace ErwinMayerLabs.RenameVSWindowTitle {
+namespace ErwinMayerLabs.RenameVSWindowTitle
+{
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
     /// </summary>
@@ -49,8 +50,10 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
     [ProvideOptionPage(typeof(SettingsOverridesPageGrid), "PSCustomize VS Window Title", "Solution-specific overrides", 51, 500, true)]
     [ProvideOptionPage(typeof(SupportedTagsGrid), "PSCustomize VS Window Title", "Supported tags", 101, 1000, true)]
     [Guid(GuidList.guidCustomizeVSWindowTitlePkgString)]
-    public sealed class PSCustomizeVSWindowTitle : AsyncPackage {
-        public PSCustomizeVSWindowTitle() {
+    public sealed class PSCustomizeVSWindowTitle : AsyncPackage
+    {
+        public PSCustomizeVSWindowTitle()
+        {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             this.TagResolvers = new List<ITagResolver> {
                 new DocumentNameResolver(),
@@ -91,7 +94,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             this.SimpleTagResolvers = this.TagResolvers.OfType<ISimpleTagResolver>().ToDictionary(t => t.TagName, t => t);
         }
 
-        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
+        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
             try {
                 if (args.Name.StartsWith("Microsoft.TeamFoundation.") || args.Name.StartsWith("Microsoft.VisualStudio.Services.")) {
                     var aname = new System.Reflection.AssemblyName(args.Name);
@@ -100,8 +104,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             return asm;
                     }
                 }
-            }
-            catch {
+            } catch {
                 //Do nothing
             }
             return null;
@@ -116,7 +119,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         /// <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
         /// <param name="progress">A provider for progress updates.</param>
         /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
-        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress) {
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        {
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
@@ -140,18 +144,19 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
             this.GlobalSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
             this.SolutionSettingsWatcher.SettingsCleared = this.OnSettingsCleared;
-            
+
             //Every 5 seconds, we check the window titles in case we missed an event.
             this.ResetTitleTimer = new System.Windows.Forms.Timer { Interval = this.UiSettings.ResetTitleTimerMsPeriod };
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
 
-			var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
-			var tt = new System.Threading.Thread(pts);
-			tt.Start();
-		}
+            var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
+            var tt = new System.Threading.Thread(pts);
+            tt.Start();
+        }
 
-        protected override void Dispose(bool disposing) {
+        protected override void Dispose(bool disposing)
+        {
             this.ResetTitleTimer.Dispose();
             base.Dispose(disposing: disposing);
         }
@@ -171,51 +176,61 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         public readonly string[] SupportedTags;
 
-        private void OnIdeEvent(Window gotfocus, Window lostfocus) {
+        private void OnIdeEvent(Window gotfocus, Window lostfocus)
+        {
             this.OnIdeEvent();
         }
 
-        private void OnIdeEvent(Document document) {
+        private void OnIdeEvent(Document document)
+        {
             this.OnIdeEvent();
         }
 
-        private void OnIdeEvent(Window window) {
+        private void OnIdeEvent(Window window)
+        {
             this.OnIdeEvent();
         }
 
-        private void OnIdeEvent(dbgEventReason reason) {
+        private void OnIdeEvent(dbgEventReason reason)
+        {
             this.OnIdeEvent();
         }
 
-        private void OnIdeEvent(dbgEventReason reason, ref dbgExecutionAction executionaction) {
+        private void OnIdeEvent(dbgEventReason reason, ref dbgExecutionAction executionaction)
+        {
             this.OnIdeEvent();
         }
 
-        private void OnIdeEvent(Process newProc, Program newProg, EnvDTE.Thread newThread, StackFrame newStkFrame) {
+        private void OnIdeEvent(Process newProc, Program newProg, EnvDTE.Thread newThread, StackFrame newStkFrame)
+        {
             this.OnIdeEvent();
         }
 
-        private void OnIdeEvent() {
+        private void OnIdeEvent()
+        {
             if (this.UiSettings.EnableDebugMode) {
                 WriteOutput("Debugger context changed. Updating title.");
             }
             this.UpdateWindowTitleAsync(this, EventArgs.Empty);
         }
 
-        private void OnIdeSolutionEvent(string oldname) {
+        private void OnIdeSolutionEvent(string oldname)
+        {
             this.ClearCachedSettings();
             this.OnIdeEvent();
         }
 
         // clear settings cache and update
-        private void OnIdeSolutionEvent() {
+        private void OnIdeSolutionEvent()
+        {
             this.ClearCachedSettings();
             this.OnIdeEvent();
         }
 
         private GlobalSettingsPageGrid _UiSettings;
 
-        internal GlobalSettingsPageGrid UiSettings {
+        internal GlobalSettingsPageGrid UiSettings
+        {
             get {
                 if (this._UiSettings == null) {
                     Globals.InvokeOnUIThread(() => {
@@ -234,7 +249,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         private SettingsOverridesPageGrid _UiSettingsOverridesOptions;
 
-        internal SettingsOverridesPageGrid UiSettingsOverridesOptions {
+        internal SettingsOverridesPageGrid UiSettingsOverridesOptions
+        {
             get {
                 if (this._UiSettingsOverridesOptions == null) {
                     Globals.InvokeOnUIThread(() => {
@@ -246,7 +262,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private string GetIDEName(string str) {
+        private string GetIDEName(string str)
+        {
             try {
                 var m = new Regex(@"^(.*) - (" + Globals.DTE.Name + ".*) " + Regex.Escape(this.UiSettings.AppendedString) + "$", RegexOptions.RightToLeft).Match(str);
                 if (!m.Success) {
@@ -265,15 +282,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     if (m.Groups.Count >= 2) {
                         return m.Groups[1].Captures[0].Value;
                     }
-                }
-                else {
+                } else {
                     if (this.UiSettings.EnableDebugMode) {
                         WriteOutput("IDE name (" + Globals.DTE.Name + ") not found: " + str + ".");
                     }
                     return null;
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 if (this.UiSettings.EnableDebugMode) {
                     WriteOutput("GetIDEName Exception: " + str + ". Details: " + ex);
                 }
@@ -282,7 +297,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return "";
         }
 
-        private string GetVSSolutionName(string str) {
+        private string GetVSSolutionName(string str)
+        {
             try {
                 var m = new Regex(@"^(.*)\\(.*) - (" + Globals.DTE.Name + ".*) " + Regex.Escape(this.UiSettings.AppendedString) + "$", RegexOptions.RightToLeft).Match(str);
                 if (m.Success && m.Groups.Count >= 4) {
@@ -306,8 +322,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     WriteOutput("VSName not found: " + str + ".");
                 }
                 return null;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 if (this.UiSettings.EnableDebugMode) {
                     WriteOutput("GetVSName Exception: " + str + (". Details: " + ex));
                 }
@@ -315,7 +330,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private string GetVSState(string str) {
+        private string GetVSState(string str)
+        {
             if (string.IsNullOrWhiteSpace(str)) return null;
             try {
                 var m = new Regex(@" \((.*)\) - (" + Globals.DTE.Name + ".*) " + Regex.Escape(this.UiSettings.AppendedString) + "$", RegexOptions.RightToLeft).Match(str);
@@ -329,8 +345,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                     WriteOutput("VSState not found: " + str + ".");
                 }
                 return null;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 if (this.UiSettings.EnableDebugMode) {
                     WriteOutput("GetVSState Exception: " + str + (". Details: " + ex));
                 }
@@ -338,7 +353,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private void UpdateWindowTitleAsync(object state, EventArgs e) {
+        private void UpdateWindowTitleAsync(object state, EventArgs e)
+        {
             //WriteOutput($"UpdateWindowTitleAsync... {DateTime.Now.ToString("HH:mm:ss.fff")}");
             try {
                 if (this.IDEName == null && Globals.DTE.MainWindow != null) {
@@ -350,14 +366,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                         }
                     }
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 try {
                     if (this.UiSettings.EnableDebugMode) {
                         WriteOutput($"UpdateWindowTitleAsync Exception: {this.IDEName}. Details: " + ex);
                     }
-                }
-                catch {
+                } catch {
                     //Do nothing
                 }
             }
@@ -369,7 +383,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         private readonly object UpdateWindowTitleLock = new object();
 
-        private void UpdateWindowTitle() {
+        private void UpdateWindowTitle()
+        {
             if (!Monitor.TryEnter(this.UpdateWindowTitleLock)) {
                 return;
             }
@@ -377,13 +392,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 var useDefaultPattern = true;
                 if (this.UiSettings.AlwaysRewriteTitles) {
                     useDefaultPattern = false;
-                }
-                else {
+                } else {
                     Globals.GetVSMultiInstanceInfo(out var info);
                     if (info.nb_instances_same_solution >= 2) {
                         useDefaultPattern = false;
-                    }
-                    else {
+                    } else {
                         var vsInstances = System.Diagnostics.Process.GetProcessesByName("devenv");
                         try {
                             if (vsInstances.Length >= 2) {
@@ -396,8 +409,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                                     useDefaultPattern = false;
                                 }
                             }
-                        }
-                        finally {
+                        } finally {
                             foreach (var p in vsInstances) {
                                 p.Dispose();
                             }
@@ -413,18 +425,15 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 var newTitle = this.GetNewTitle(solution, pattern, settings);
                 this.ChangeWindowTitle(newTitle);
                 if (this.UiSettings.RewriteCompactTitle) this.ChangeXamlTitle(!string.IsNullOrWhiteSpace(this.IDEName) ? newTitle.Replace(" - " + this.IDEName, "") : newTitle);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 try {
                     if (this.UiSettings.EnableDebugMode) {
                         WriteOutput("UpdateWindowTitle exception: " + ex);
                     }
-                }
-                catch {
+                } catch {
                     // ignored
                 }
-            }
-            finally {
+            } finally {
                 Monitor.Exit(this.UpdateWindowTitleLock);
             }
         }
@@ -432,7 +441,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         private readonly SettingsWatcher SolutionSettingsWatcher = new SettingsWatcher(false);
         private readonly SettingsWatcher GlobalSettingsWatcher = new SettingsWatcher(true);
 
-        private void ClearCachedSettings() {
+        private void ClearCachedSettings()
+        {
             if (this.UiSettings.EnableDebugMode) {
                 WriteOutput("Clearing cached settings...");
             }
@@ -445,12 +455,14 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             }
         }
 
-        private void OnSettingsCleared() {
+        private void OnSettingsCleared()
+        {
             this.CachedSettings = null; // force reload
         }
 
         private SettingsSet CachedSettings;
-        internal SettingsSet GetSettings(string solutionFp) {
+        internal SettingsSet GetSettings(string solutionFp)
+        {
             this.GlobalSettingsWatcher.Update(this.UiSettingsOverridesOptions.GlobalSolutionSettingsOverridesFp);
             this.SolutionSettingsWatcher.Update(string.IsNullOrEmpty(solutionFp) ? null : solutionFp + Globals.SolutionSettingsOverrideExtension);
 
@@ -476,11 +488,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
                 if (!this.UiSettingsOverridesOptions.AllowSolutionSettingsOverrides) {
                     // Do nothing
-                }
-                else if (this.GlobalSettingsWatcher.Update(settings)) {
+                } else if (this.GlobalSettingsWatcher.Update(settings)) {
                     // Do nothing
-                }
-                else if (this.SolutionSettingsWatcher.Update(settings)) {
+                } else if (this.SolutionSettingsWatcher.Update(settings)) {
                     // Do nothing
                 }
             }
@@ -498,7 +508,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public const int DefaultFarthestParentDepth = 1;
         public const int DefaultResetTitleTimerMsPeriod = 5000;
 
-        private string GetPattern(string solutionFp, bool useDefault, SettingsSet settingsOverride) {
+        private string GetPattern(string solutionFp, bool useDefault, SettingsSet settingsOverride)
+        {
             var settings = this.UiSettings;
             if (string.IsNullOrEmpty(solutionFp)) {
                 var document = Globals.DTE.ActiveDocument;
@@ -528,7 +539,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             throw new Exception("No matching state found");
         }
 
-        internal string GetNewTitle(Solution solution, string pattern, SettingsSet cfg) {
+        internal string GetNewTitle(Solution solution, string pattern, SettingsSet cfg)
+        {
             var info = AvailableInfo.GetCurrent(ideName: this.IDEName, solution: solution, cfg: cfg, globalSettings: this.UiSettings);
             if (info == null) return this.IDEName;
 
@@ -545,15 +557,13 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             }
                         }
                         return match.Value;
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         if (this.UiSettings.EnableDebugMode) {
                             WriteOutput("ReplaceTag (" + tag + ") failed: " + ex);
                         }
                         throw;
                     }
-                }
-                catch {
+                } catch {
                     return "";
                 }
             });
@@ -561,7 +571,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return pattern + " " + appendedString;
         }
 
-        private void ChangeWindowTitle(string title) {
+        private void ChangeWindowTitle(string title)
+        {
             try {
                 Globals.BeginInvokeOnUIThread(() => {
                     try {
@@ -580,13 +591,11 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                         //        }
                         //    }
                         //}
-                    }
-                    catch (Exception) {
+                    } catch (Exception) {
                         // ignored
                     }
                 });
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 if (this.UiSettings.EnableDebugMode) {
                     WriteOutput("ChangeWindowTitle failed: " + ex);
                 }
@@ -594,7 +603,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         }
 
         private TextBlock TitleTextBlock;
-        private void ChangeXamlTitle(string title) {
+        private void ChangeXamlTitle(string title)
+        {
             try {
                 Globals.BeginInvokeOnUIThread(() => {
                     try {
@@ -611,21 +621,20 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                             this.TitleTextBlock = FindChild<TextBlock>(statusBarTextBlock);
                         }
                         this.TitleTextBlock.Text = title;
-                    }
-                    catch (Exception) {
+                    } catch (Exception) {
                         // ignored
                     }
                 });
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 if (this.UiSettings.EnableDebugMode) {
                     WriteOutput("ChangeWindowTitle failed: " + ex);
                 }
             }
         }
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("ApiDesign", "RS0030:Do not used banned APIs", Justification = "<Pending>")]
-		public static void WriteOutput(string str, params object[] args) {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("ApiDesign", "RS0030:Do not used banned APIs", Justification = "<Pending>")]
+        public static void WriteOutput(string str, params object[] args)
+        {
             try {
                 Globals.InvokeOnUIThread(() => {
                     ThreadHelper.ThrowIfNotOnUIThread();
@@ -637,8 +646,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                         generalPane.Activate();
                     }
                 });
-            }
-            catch {
+            } catch {
                 // ignored
             }
         }
@@ -657,7 +665,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         /// If not matching item can be found, 
         /// a <see langword="null"/> is returned.</returns>
         private static T FindChild<T>(DependencyObject parent, string childName = null)
-           where T : DependencyObject {
+           where T : DependencyObject
+        {
             // Confirm parent and childName are valid. 
             if (parent == null) return null;
 
@@ -667,19 +676,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             for (int i = 0; i < childrenCount; i++) {
                 var child = VisualTreeHelper.GetChild(parent, i);
                 if (!string.IsNullOrEmpty(childName)) {
-					// If the child is not of the request child type child
-					// If the child's name is set for search
-					if (child is FrameworkElement frameworkElement)
-					{
-						if (frameworkElement.Name == childName)
-						{
-							// if the child's name is of the request name
-							foundChild = (T)child;
-							break;
-						}
-					}
-				}
-                else {
+                    // If the child is not of the request child type child
+                    // If the child's name is set for search
+                    if (child is FrameworkElement frameworkElement) {
+                        if (frameworkElement.Name == childName) {
+                            // if the child's name is of the request name
+                            foundChild = (T)child;
+                            break;
+                        }
+                    }
+                } else {
                     if (child is T typedChild) {
                         foundChild = typedChild;
                         break;

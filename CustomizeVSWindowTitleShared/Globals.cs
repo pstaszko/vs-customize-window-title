@@ -10,8 +10,10 @@ using EnvDTE80;
 using ErwinMayerLabs.Lib;
 using Microsoft.VisualStudio;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle {
-    public static class Globals {
+namespace ErwinMayerLabs.RenameVSWindowTitle
+{
+    public static class Globals
+    {
         public static DTE2 DTE;
 
         public const string SolutionSettingsOverrideExtension = ".rn.xml";
@@ -27,21 +29,25 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
         public static readonly Regex IndexRegex = new Regex(@"^:?(?<index>-?[0-9]+)$", RegexOptions.Compiled);
         public static readonly Regex RangeRegex = new Regex(@"^:(?<startIndex>-?[0-9]+):(?<endIndex>-?[0-9]+)$", RegexOptions.Compiled);
 
-        public static T[] GetPathRange<T>(IReadOnlyList<T> parts, int x, int y) {
+        public static T[] GetPathRange<T>(IReadOnlyList<T> parts, int x, int y)
+        {
             x = GetPathPartIndex(parts.Count, x);
             y = GetPathPartIndex(parts.Count, y);
             return parts.GetRange(startIndex: x, endIndex: y).ToArray();
         }
 
-        public static T GetPathPart<T>(IReadOnlyList<T> parts, int x) {
+        public static T GetPathPart<T>(IReadOnlyList<T> parts, int x)
+        {
             return parts[GetPathPartIndex(parts.Count, x)];
         }
 
-        public static int GetPathPartIndex(int length, int x) {
+        public static int GetPathPartIndex(int length, int x)
+        {
             return x < 0 ? length - Math.Min(length, -x) : Math.Min(length, x);
         }
 
-        public static string GetPathForTitle(string[] pathRange) {
+        public static string GetPathForTitle(string[] pathRange)
+        {
             if (pathRange.Any()) {
                 if (pathRange.Length >= 2 && pathRange[0].EndsWith(":", StringComparison.Ordinal)) {
                     pathRange = pathRange.ToArray();
@@ -52,16 +58,19 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
             return string.Empty;
         }
 
-        public static string GetExampleSolution(string solutionPath) {
+        public static string GetExampleSolution(string solutionPath)
+        {
             return string.IsNullOrEmpty(solutionPath) ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"SampleDir\SampleDir2\SampleDir3\SampleDir4\Sample.sln") : solutionPath;
         }
 
-        public static void InvokeOnUIThread(Action action) {
+        public static void InvokeOnUIThread(Action action)
+        {
             var dispatcher = System.Windows.Application.Current.Dispatcher;
             dispatcher?.Invoke(action);
         }
 
-        public static void BeginInvokeOnUIThread(Action action) {
+        public static void BeginInvokeOnUIThread(Action action)
+        {
             var dispatcher = System.Windows.Application.Current.Dispatcher;
             dispatcher?.BeginInvoke(action);
         }
@@ -73,17 +82,20 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
 
         static readonly Regex m_DTEComObjectNameRegex = new Regex(@"^!VisualStudio\.DTE\.(?<dte_version>\d+\.\d+).*$", RegexOptions.Compiled);
 
-        public struct VSMultiInstanceInfo {
+        public struct VSMultiInstanceInfo
+        {
             public bool multiple_instances;
             public bool multiple_instances_same_version;
             public int nb_instances_same_solution;
         }
 
-        public static void GetVSMultiInstanceInfo(out VSMultiInstanceInfo vs_instance_info) {
+        public static void GetVSMultiInstanceInfo(out VSMultiInstanceInfo vs_instance_info)
+        {
             GetVSMultiInstanceInfo(out vs_instance_info, DTE.Version, DTE.Solution);
         }
 
-        public static void GetVSMultiInstanceInfo(out VSMultiInstanceInfo vs_instance_info, string our_dte_version, Solution solution) {
+        public static void GetVSMultiInstanceInfo(out VSMultiInstanceInfo vs_instance_info, string our_dte_version, Solution solution)
+        {
             vs_instance_info.multiple_instances = false;
             vs_instance_info.multiple_instances_same_version = false;
             vs_instance_info.nb_instances_same_solution = 0;
@@ -129,8 +141,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 }
                 vs_instance_info.multiple_instances = dte_count > 1;
                 vs_instance_info.multiple_instances_same_version = dte_count_our_version > 1;
-            }
-            catch {
+            } catch {
                 vs_instance_info.multiple_instances = false;
                 vs_instance_info.multiple_instances_same_version = false;
             }
