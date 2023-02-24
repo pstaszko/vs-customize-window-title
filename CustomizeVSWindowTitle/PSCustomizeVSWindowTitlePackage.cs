@@ -56,11 +56,8 @@ namespace ErwinMayerLabs.RenameVSWindowTitle {
                 new DocumentProjectNameResolver(),
                 new DocumentProjectFileNameResolver(),
                 new DocumentUnsavedResolver(),
-<<<<<<< HEAD:CustomizeVSWindowTitle/PSCustomizeVSWindowTitlePackage.cs
                 new DocumentLineResolver(),
-=======
                 new AnythingUnsavedResolver(),
->>>>>>> Branch_5.0.1:CustomizeVSWindowTitleShared/CustomizeVSWindowTitlePackage.cs
                 new SolutionNameResolver(),
                 new DocumentPathResolver(),
                 new DocumentParentPathResolver(),
