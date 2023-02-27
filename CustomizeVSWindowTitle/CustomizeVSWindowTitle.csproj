@@ -555,7 +555,7 @@ exit /b 1
           <Paket>True</Paket>
         </Reference>
         <Reference Include="System.Security.Permissions">
-          <HintPath>..\..\packages\System.Security.Permissions\lib\net461\System.Security.Permissions.dll</HintPath>
+          <HintPath>..\..\packages\System.Security.Permissions\lib\net462\System.Security.Permissions.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
