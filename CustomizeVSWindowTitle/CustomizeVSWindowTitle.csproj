@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
@@ -151,22 +151,18 @@
     <PostBuildEvent>if "$(ConfigurationName)" neq "Release" (
     exit /b 0
 )
-
 if not exist  "$(SolutionDir)Releases\" (
     mkdir  "$(SolutionDir)Releases\"
     if errorlevel 1 goto Error
 )
-
 copy /Y "$(TargetDir)$(TargetName).vsix" "$(SolutionDir)Releases\$(TargetName)2019 (new).vsix"
 if errorlevel 1 goto Error
-
 exit /b 0
-
 :Error
 exit /b 1
 </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
