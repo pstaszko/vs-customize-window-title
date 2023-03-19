@@ -60,27 +60,27 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 
         [Category("Patterns")]
         [DisplayName("Solution in design mode")]
-        [Description("Default: [parentPath]\\[solutionName] - [ideName]. See 'Supported tags' section on the left for more guidance.")]
-        [DefaultValue("[parentPath]\\[solutionName] - [ideName]")]
+        [Description("Default: [solutionName] [documentPath] (Design) [gitBranchName] [documentUnsaved] | Visual Studio. See 'Supported tags' section on the left for more guidance.")]
+        [DefaultValue("[solutionName] [documentPath] (Design) [gitBranchName] [documentUnsaved] | Visual Studio")]
         [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
-        public string PatternIfDesignMode { get; set; } = "[parentPath]\\[solutionName] - [ideName]";
+        public string PatternIfDesignMode { get; set; } = "[solutionName] [documentPath] (Design) [gitBranchName] [documentUnsaved] | Visual Studio";
 
         [Category("Patterns")]
         [DisplayName("Solution in break mode")]
-        [Description("Default: [parentPath]\\[solutionName] (Debugging) - [ideName]. The appended string parameter will be added at the end automatically to identify that the title is being improved. See 'Supported tags' section on the left for more guidance.")]
-        [DefaultValue("[parentPath]\\[solutionName] (Debugging) - [ideName]")]
+        [Description("Default: [solutionName] [documentPath] (Break) [gitBranchName] [documentUnsaved] | Visual Studio. The appended string parameter will be added at the end automatically to identify that the title is being improved. See 'Supported tags' section on the left for more guidance.")]
+        [DefaultValue("[solutionName] [documentPath] (Break) [gitBranchName] [documentUnsaved] | Visual Studio")]
         [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
-        public string PatternIfBreakMode { get; set; } = "[parentPath]\\[solutionName] (Debugging) - [ideName]";
+        public string PatternIfBreakMode { get; set; } = "[solutionName] [documentPath] (Break) [gitBranchName] [documentUnsaved] | Visual Studio";
 
         [Category("Patterns")]
         [DisplayName("Solution in running mode")]
-        [Description("Default: [parentPath]\\[solutionName] (Running) - [ideName]. The appended string parameter will be added at the end automatically to identify that the title is being improved. See 'Supported tags' section on the left for more guidance.")]
-        [DefaultValue("[parentPath]\\[solutionName] (Running) - [ideName]")]
+        [Description("Default: [solutionName] [documentPath] (Debugging) [gitBranchName] [documentUnsaved] | Visual Studio. The appended string parameter will be added at the end automatically to identify that the title is being improved. See 'Supported tags' section on the left for more guidance.")]
+        [DefaultValue("[solutionName] [documentPath] (Debugging) [gitBranchName] [documentUnsaved] | Visual Studio")]
         [Editor(typeof(EditablePatternEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [PreviewRequires(PreviewRequiresAttribute.Requirement.Solution)]
-        public string PatternIfRunningMode { get; set; } = "[parentPath]\\[solutionName] (Running) - [ideName]";
+        public string PatternIfRunningMode { get; set; } = "[solutionName] [documentPath] (Debugging) [gitBranchName] [documentUnsaved] | Visual Studio";
 
         [Category("Patterns")]
         [DisplayName("Appended string")]
