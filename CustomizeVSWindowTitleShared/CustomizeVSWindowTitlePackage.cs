@@ -1,4 +1,4 @@
-﻿using EnvDTE;
+using EnvDTE;
 using EnvDTE80;
 using ErwinMayerLabs.RenameVSWindowTitle.Resolvers;
 using Microsoft.VisualStudio;
@@ -150,9 +150,9 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
             this.ResetTitleTimer.Tick += this.UpdateWindowTitleAsync;
             this.ResetTitleTimer.Start();
 
-            var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
-            var tt = new System.Threading.Thread(pts);
-            tt.Start();
+            //var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
+            //var tt = new System.Threading.Thread(pts);
+            //tt.Start();
         }
 
         protected override void Dispose(bool disposing)
@@ -652,7 +652,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         }
 
         /// <summary>
-        /// Finds a Child of a given item in the visual tree. 
+        /// Finds a Child of a given item in the visual tree.
         /// </summary>
         /// <param name="parent">A direct parent of the queried item.</param>
         /// <typeparam name="T">The type of the queried item.</typeparam>
@@ -662,12 +662,12 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
         /// the first element to have that name is returned.
         /// If <paramref name="childName"/> is <see langword="null"/> the
         /// first element to match <typeparamref name="T"/> is returned.
-        /// If not matching item can be found, 
+        /// If not matching item can be found,
         /// a <see langword="null"/> is returned.</returns>
         private static T FindChild<T>(DependencyObject parent, string childName = null)
            where T : DependencyObject
         {
-            // Confirm parent and childName are valid. 
+            // Confirm parent and childName are valid.
             if (parent == null) return null;
 
             T foundChild = null;
@@ -695,7 +695,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
                 // recursively drill down the tree
                 foundChild = FindChild<T>(child, childName);
 
-                // If the child is found, break so we do not overwrite the found child. 
+                // If the child is found, break so we do not overwrite the found child.
                 if (foundChild != null) break;
             }
 

@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle
+namespace VSocketExtension
 {
-
 	public static partial class VSocketQQ
 	{
 		public static string GetVersion()

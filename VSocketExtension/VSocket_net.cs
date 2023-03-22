@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace ErwinMayerLabs.RenameVSWindowTitle
 {
-	public static partial class VSocket
+	public static partial class VSocketQQ
 	{
 		public class ListenerAndPort
 		{
@@ -18,7 +18,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 		}
 		public static void StartListen()
 		{
-			var pts = new ParameterizedThreadStart((object obj) => VSocket.Listen(Globals.DTE));
+			var pts = new ParameterizedThreadStart((object obj) => VSocketQQ.Listen(Globals.DTE));
 			var tt = new System.Threading.Thread(pts);
 			tt.Start();
 		}
@@ -36,7 +36,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 				}
 				var listener = TryBindListenerOnFreePortX();
 				log(listener.port.ToString() + " assigned");
-				var v = VSocket.GetVersion();
+				var v = VSocketQQ.GetVersion();
 				var t = new List<string> { $"{pid}:{listener.port}:{v}" };
 				if (System.IO.Directory.Exists(@"c:\DEV")) { System.IO.Directory.CreateDirectory(@"c:\DEV"); }
 				if (System.IO.Directory.Exists(@"c:\DEV\temp")) { System.IO.Directory.CreateDirectory(@"c:\DEV\temp"); }
@@ -81,7 +81,7 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 		public static bool TryBindListenerOnFreePort(Action<string> log, out HttpListener httpListener, out int port)
 		{
 			// IANA suggested range for dynamic or private ports
-			const int MinPort = 50000;
+			const int MinPort = 50160;
 			const int MaxPort = 65535;
 			for (port = MinPort; port < MaxPort; port++) {
 				log($"Checking {port}");

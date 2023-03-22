@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{473860A7-963C-40AA-A703-28BD68109AB0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VSocketExtension</RootNamespace>
+    <AssemblyName>VSocketExtension</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <UseCodebase>true</UseCodebase>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+    <StartAction>Program</StartAction>
+    <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\CustomizeVSWindowTitleShared\Lib\UtilsExtensions.cs">
+      <Link>UtilsExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Globals.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VSocket.cs" />
+    <Compile Include="VSocketExtensionPackage.cs" />
+    <Compile Include="VSocket_net.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".refs" />
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.5.4065">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ProjectReference Include="c:\dev\UIAuto\FSSClass\FSSClass.fsproj">
+      <Name>FSSClass</Name>
+      <Project>{E7769A43-0629-4B7C-B6AC-6F9D66296F1A}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\DEV\MatrixOS\WisdominatorClient\WisdominatorClient.fsproj">
+      <Name>WisdominatorClient</Name>
+      <Project>{B5612194-36DB-4BE8-9B1A-8BF09A3C3691}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\PublicRepos\FMQTT\FMQTT.fsproj">
+      <Name>FMQTT</Name>
+      <Project>{60D006D5-4F4C-418C-8C08-F3152F91E37E}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\UIAuto\ClipMaster_Plugin\ClipMaster_Plugin.vbproj">
+      <Name>ClipMaster_Plugin</Name>
+      <Project>{406AD9DA-DBE6-46D3-9F4B-58AD76BAA305}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\UIauto\CSFramework\CSFramework.csproj">
+      <Name>CSFramework</Name>
+      <Project>{FD1A189C-8705-4FC6-84DF-973817D32969}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\UIauto\ClipMasterClass\ClipMasterClass.vbproj">
+      <Name>ClipMasterClass</Name>
+      <Project>{18D06F93-3EAA-45A6-AA7E-3AD317A488EB}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\UIauto\SourceFramework\SourceFramework.vbproj">
+      <Name>SourceFramework</Name>
+      <Project>{9B55F68D-7D12-46D1-8919-752C7D9E293C}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\UIauto\VSocket\VSocket.fsproj">
+      <Name>VSocket</Name>
+      <Project>{D981EE42-8DF2-486E-80E9-78BF1E755DED}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\Cricket.Utilities\Cricket.Utilities.csproj">
+      <Name>Cricket.Utilities</Name>
+      <Project>{3EC026EE-FDFD-4719-9C45-067AA4F9F178}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\ExceptionalCode\ExceptionalCode.fsproj">
+      <Name>ExceptionalCode</Name>
+      <Project>{42F7C482-A83F-4970-8EDB-7192E51B38B3}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\FSparkle\FSparkle.fsproj">
+      <Name>FSparkle</Name>
+      <Project>{FDB8196D-5550-443F-AF49-BB388C432D67}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\Flatinum\Flatinum.fsproj">
+      <Name>Flatinum</Name>
+      <Project>{0A9B3E0F-5163-4E4A-9A85-13C9B4D89E19}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\PerFSharp\PerFSharp.fsproj">
+      <Name>PerFSharp</Name>
+      <Project>{2A6CE901-7AC8-4C21-BDE0-97C7DBAEF454}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFSharpForms\SharedFSharpForms.fsproj">
+      <Name>SharedFSharpForms</Name>
+      <Project>{FED26A57-857E-4711-8BCE-19B1D60F713C}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFSharpSQL\SharedFSharpSQL.fsproj">
+      <Name>SharedFSharpSQL</Name>
+      <Project>{F5FCCB86-57D8-49EE-AA57-412CF6DFD91F}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFSharpVanilla\SharedFSharpVanilla.fsproj">
+      <Name>SharedFSharpVanilla</Name>
+      <Project>{B77257C5-764D-4F8F-8B8B-A159884A350D}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkEntity\SharedFrameworkEntity.fsproj">
+      <Name>SharedFrameworkEntity</Name>
+      <Project>{BCBB2943-3539-40AA-884E-360C6E65FEB1}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkForms\SharedFrameworkForms.csproj">
+      <Name>SharedFrameworkForms</Name>
+      <Project>{F539DCE9-25C6-49F1-A0E2-184D7DFDFC57}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="c:\dev\WesternCap\SharedFrameworkInterfaces\SharedFrameworkInterfaces.csproj">
+      <Name>SharedFrameworkInterfaces</Name>
+      <Project>{624081CE-4B52-4807-BDA5-5DB4082FB3C9}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkLogging\SharedFrameworkLogging.csproj">
+      <Name>SharedFrameworkLogging</Name>
+      <Project>{3738C547-5788-4BCD-AA24-01D39B60852D}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkROP\SharedFrameworkROP.fsproj">
+      <Name>SharedFrameworkROP</Name>
+      <Project>{9D094212-4C54-403B-B9D7-ACFC180DCD98}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkSuper\SharedFrameworkSuper.csproj">
+      <Name>SharedFrameworkSuper</Name>
+      <Project>{2A1F16A9-8BA2-435D-994C-977BB9EFE0A4}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkTestingFS\SharedFrameworkTestingFS.fsproj">
+      <Name>SharedFrameworkTestingFS</Name>
+      <Project>{65C0A70D-1201-4F06-885D-FB17942F2E67}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkTesting\SharedFrameworkTesting.csproj">
+      <Name>SharedFrameworkTesting</Name>
+      <Project>{BCA80BDD-9F06-420D-B712-F5FD6E33800E}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\SharedFramework\SharedFramework.csproj">
+      <Name>SharedFramework</Name>
+      <Project>{FEFE2789-EABB-42BD-9C9D-34FC851D5E20}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="C:\Dev\WesternCap\UniversalExtensions\UniversalExtensions.csproj">
+      <Name>UniversalExtensions</Name>
+      <Project>{5D795D87-5DEB-4311-B912-FE67F15B7EEA}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="c:\dev\UIAuto\VSCMD\VSCMD.vbproj">
+      <Name>VSCMD</Name>
+      <Project>{D53B14A1-78C6-4CF0-85E1-2AC96C3A984D}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
