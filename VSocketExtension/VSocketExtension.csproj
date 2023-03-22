@@ -27,6 +27,17 @@
     <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootsuffix Exp</StartArguments>
   </PropertyGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <FSharpCoreResourcesFiles Include="$(OutputPath)**\Microsoft.VisualStudio.Services.WebApi.resources.dll" />
+      <FSharpCoreResourcesFiles Include="$(OutputPath)**\Microsoft.VisualStudio.Services.Common.resources.dll" />
+      <FSharpCoreResourcesFiles Include="$(OutputPath)**\Microsoft.TeamFoundation.Common.resources.dll" />
+      <FSharpCoreResourcesFiles Include="$(OutputPath)**\Terminal.Gui.resources.dll" />
+      <FSharpCoreResourcesFiles Include="$(OutputPath)**\FSharp.Core.resources.dll" />
+      <FSharpCoreResourcesDirs Include="@(FSharpCoreResourcesFiles->'\%(Directory)') " />
+    </ItemGroup>
+    <RemoveDir Directories="@(FSharpCoreResourcesDirs)" />
+  </Target>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -35,6 +46,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
+    <CopyVsixExtensionLocation>C:\Dev\vs-customize-window-title\VSocketExtension\VSIX</CopyVsixExtensionLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

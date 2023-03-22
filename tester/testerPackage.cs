@@ -1,11 +1,13 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
-using VSocketExtension;
+//using VSocketExtension;
 using Task = System.Threading.Tasks.Task;
 
-namespace VSocketExtension
+namespace tester
 {
 	/// <summary>
 	/// This is the class that implements the package exposed by this assembly.
@@ -25,19 +27,26 @@ namespace VSocketExtension
 	/// </para>
 	/// </remarks>
 	[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-	[Guid(VSocketExtensionPackage.PackageGuidString)]
-	public sealed class VSocketExtensionPackage : AsyncPackage
+	[Guid(testerPackage.PackageGuidString)]
+	public sealed class testerPackage : AsyncPackage
 	{
 		/// <summary>
-		/// VSocketExtensionPackage GUID string.
+		/// testerPackage GUID string.
 		/// </summary>
-		public const string PackageGuidString = "0d39ce63-0962-4e6c-bf1b-a2385a994683";
+		public const string PackageGuidString = "f6e6e75d-6f15-4634-8370-39dca30c1d3e";
 
 		#region Package Members
-		protected override System.Threading.Tasks.Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
+		protected override Task OnAfterPackageLoadedAsync(CancellationToken cancellationToken)
 		{
+			IVsOutputWindow outWindow = Package.GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
 
-			return base.InitializeToolWindowAsync(toolWindowType, id, cancellationToken);
+			Guid generalPaneGuid = VSConstants.GUID_OutWindowGeneralPane; // P.S. There's also the GUID_OutWindowDebugPane available.
+			IVsOutputWindowPane generalPane;
+			outWindow.GetPane(ref generalPaneGuid, out generalPane);
+
+			generalPane.OutputString("Hello World!");
+			generalPane.Activate(); // Brings this pane into view
+			return base.OnAfterPackageLoadedAsync(cancellationToken);
 		}
 		/// <summary>
 		/// Initialization of the package; this method is called right after the package is sited, so this is the place
@@ -48,13 +57,14 @@ namespace VSocketExtension
 		/// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
 		protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
 		{
-			var pts = new ParameterizedThreadStart(obj => VSocketQQ.Listen(Globals.DTE));
-			var tt = new System.Threading.Thread(pts);
-			tt.Start();
+			//throw new Exception("hi");
+
+			//var pts = new ParameterizedThreadStart(obj => VSocketQQ.Listen(Globals.DTE));
+			//var tt = new System.Threading.Thread(pts);
+			//tt.Start();
 			// When initialized asynchronously, the current thread may be a background thread at this point.
 			// Do any initialization that requires the UI thread after switching to the UI thread.
 			await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-
 		}
 
 		#endregion

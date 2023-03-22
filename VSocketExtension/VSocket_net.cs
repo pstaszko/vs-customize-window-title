@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle
+namespace VSocketExtension
 {
 	public static partial class VSocketQQ
 	{
@@ -18,14 +18,16 @@ namespace ErwinMayerLabs.RenameVSWindowTitle
 		}
 		public static void StartListen()
 		{
-			var pts = new ParameterizedThreadStart((object obj) => VSocketQQ.Listen(Globals.DTE));
+			var pts = new ParameterizedThreadStart((object obj) => VSocketQQ.Listen(VSocketExtension.Globals.DTE));
 			var tt = new System.Threading.Thread(pts);
 			tt.Start();
 		}
 		public static void Listen(DTE2 dte)
 		{
 			int pid = 0;
-			void log(string msg) => System.IO.File.AppendAllText($@"c:\dev\temp\vspidlog_{pid}.txt", (DateTime.Now.ToLongTimeString()) + " | " + msg + "\r\n");
+			System.Diagnostics.Debugger.Launch();
+			System.Diagnostics.Debugger.Break();
+			void log(string msg) => System.IO.File.AppendAllText($@"c:\dev\temp\VSPIDLOG_{pid}.txt", (DateTime.Now.ToLongTimeString()) + " | " + msg + "\r\n");
 			try {
 				pid = System.Diagnostics.Process.GetCurrentProcess().Id;
 				log("Listen called, getting port");

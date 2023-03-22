@@ -10,7 +10,7 @@ using ErwinMayerLabs.Lib;
 using Microsoft.VisualStudio;
 using System.Collections.Generic;
 
-namespace ErwinMayerLabs.RenameVSWindowTitle
+namespace VSocketExtension
 {
     public static class Globals
     {
