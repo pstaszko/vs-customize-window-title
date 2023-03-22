@@ -10,14 +10,6 @@
     <Import_RootNamespace>CustomizeVSWindowTitleShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\UIauto\FSSClass\FSSClass.fsproj">
-      <Project>{040e6526-25ed-4450-a3af-6a29c545e65f}</Project>
-      <Name>FSSClass</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\UIauto\VSCMD\VSCMD.vbproj">
-      <Project>{1c13fccf-0756-41ca-abca-c0d338ef4d8a}</Project>
-      <Name>VSCMD</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CustomizeVSWindowTitleSharedResources\CustomizeVSWindowTitleSharedResources.csproj">
       <Project>{a923831e-ed5c-4dba-85c6-def2db9d23c0}</Project>
       <Name>CustomizeVSWindowTitleSharedResources</Name>
@@ -97,8 +89,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)VSocket.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)VSocket_net.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)EditablePatternControl.resx">
