@@ -118,8 +118,8 @@ namespace VSocketExtension
 
 			try {
 				serverExplorerToolwindow = GetToolwindow(EnvDTE.Constants.vsWindowKindServerExplorer);
-				var x = new FSSClass.myProgsGen.progsSingleton();
-				x.AutoHotkey.SendInput("{right}");
+				//var x = new FSSClass.myProgsGen.progsSingleton();
+				FSSClass.AHKUtils.SendInput("{right}");
 				if (serverExplorerToolwindow != null) {
 					hierarchy = (EnvDTE.UIHierarchy)serverExplorerToolwindow.Object;
 
