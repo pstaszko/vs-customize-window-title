@@ -36,6 +36,8 @@ namespace VSocketExtension
 		#region Package Members
 		protected override System.Threading.Tasks.Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
 		{
+			System.IO.File.WriteAllText(@"C:\Dev\temp\x.txt", "a");
+			
 
 			return base.InitializeToolWindowAsync(toolWindowType, id, cancellationToken);
 		}

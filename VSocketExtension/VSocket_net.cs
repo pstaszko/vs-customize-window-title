@@ -115,7 +115,7 @@ namespace VSocketExtension
 		{
 			EnvDTE.Window serverExplorerToolwindow;
 			EnvDTE.UIHierarchy hierarchy;
-
+			
 			try {
 				serverExplorerToolwindow = GetToolwindow(EnvDTE.Constants.vsWindowKindServerExplorer);
 				//var x = new FSSClass.myProgsGen.progsSingleton();

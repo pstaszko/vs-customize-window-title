@@ -11,12 +11,17 @@ namespace VSocketExtension
 	{
 		public static string GetVersion()
 		{
+			System.IO.File.WriteAllText(@"C:\Dev\temp\x.txt", "ab");
+
 			var x = System.Reflection.Assembly.GetExecutingAssembly();
 			return $"{DateTime.Now.Subtract((new System.IO.FileInfo(x.Location)).LastWriteTime).TotalSeconds} Seconds old | {x.Location} | {x.FullName}";
 		}
 
 		private static string processParameters(Connect c, DTE2 dte, Dictionary<string, string> parameters)
 		{
+			System.IO.File.WriteAllText(@"C:\Dev\temp\x.txt", "ac");
+
+
 			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 			var ret = "No action taken";
 			try
