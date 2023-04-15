@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Runtime.InteropServices;
@@ -60,7 +61,81 @@ namespace VSocketExtension
 	[ProvideAutoLoad(UIContextGuids.SolutionHasSingleProject)]
 	[ProvideAutoLoad(UIContextGuids.SolutionHasMultipleProjects)]
 	[ProvideAutoLoad(UIContextGuids.CodeWindow)]
- 	public sealed class VSocketExtensionPackage : AsyncPackage
+	[ProvideAutoLoad(VSConstants.UICONTEXT.RESXEditor_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.FSharpProject_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VCProject_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.CSharpProject_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBProject_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.ToolboxChooseItemsDataSourceInitialized_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.ToolboxInitialized_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.ProjectCreating_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionOrProjectUpgrading_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.BulkFileOperation_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.FullSolutionLoading_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.OutputWindowCreated_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasAppContainerProject_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasSingleProject_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasMultipleProjects_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExistsAndNotBuildingAndNotDebugging_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExistsAndFullyLoaded_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionBuilding_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.RepositoryOpen_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeAttribute_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeClass_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeDelegate_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeEnum_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.CloudEnvironmentConnected_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.ToolWindowActive_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.DocumentWindowActive_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.FolderOpened_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.ShellInitialized_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SharedMSBuildFilesManagerHierarchyLoaded_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SynchronousSolutionOperation_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasWindowsPhone80NativeProject_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.WizardOpen_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.ProjectRetargeting_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasSilverlightWindowsPhoneProject_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.StandardPreviewerConfigurationChanging_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.BackgroundProjectLoad_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeVariable_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeStruct_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeProperty_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeParameter_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeNamespace_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeInterface_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBCodeFunction_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.IdeUserSignedIn_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.ToolboxVisible_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionOpening_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.DesignMode_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.DataSourceWindowAutoVisible_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.DataSourceWizardSuppressed_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.MainToolBarVisible_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.FullScreenMode_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.CodeWindow_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.MainToolBarInvisible_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.VBProjOpened_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.HistoricalDebugging_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.FirstLaunchSetup_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.DataSourceWindowSupported_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.ApplicationDesigner_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.CloudDebugging_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.MinimalMode_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.PropertyPageDesigner_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.NotBuildingAndNotDebugging_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.OsWindows8OrHigher_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionClosing_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.Dragging_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.EmptySolution_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.Debugging_string)]
+	[ProvideAutoLoad(VSConstants.UICONTEXT.SettingsDesigner_string)]
+	//[ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad)]
+	//[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string, PackageAutoLoadFlags.BackgroundLoad)]
+	//[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasMultipleProjects_string, PackageAutoLoadFlags.BackgroundLoad)]
+	//[ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasSingleProject_string, PackageAutoLoadFlags.BackgroundLoad)]
+	public sealed class VSocketExtensionPackage : AsyncPackage
 	{
 		public VSocketExtensionPackage()
 		{
@@ -87,27 +162,26 @@ namespace VSocketExtension
 		/// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
 		protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
 		{
+			//this.QueryService
+			//VSocketQQ.Start();
 			var pts = new ParameterizedThreadStart(obj => VSocketQQ.Listen(Globals.DTE));
 			var tt = new System.Threading.Thread(pts);
 			tt.Start();
 			// When initialized asynchronously, the current thread may be a background thread at this point.
 			// Do any initialization that requires the UI thread after switching to the UI thread.
 			await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-			await Command1.InitializeAsync(this);
-
-		}
-
-		protected override void Initialize()
-		{
-			var pts = new ParameterizedThreadStart(obj => VSocketQQ.Listen(Globals.DTE));
-			var tt = new System.Threading.Thread(pts);
-			tt.Start();
-			// When initialized asynchronously, the current thread may be a background thread at this point.
-			// Do any initialization that requires the UI thread after switching to the UI thread.
-			//await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 			//await Command1.InitializeAsync(this);
-			base.Initialize();
 		}
+
+		//protected override void Initialize()
+		//{
+		//VSocketQQ.Start();
+		//	// When initialized asynchronously, the current thread may be a background thread at this point.
+		//	// Do any initialization that requires the UI thread after switching to the UI thread.
+		//	//await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+		//	//await Command1.InitializeAsync(this);
+		//	base.Initialize();
+		//}
 		#endregion
 	}
 }

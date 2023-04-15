@@ -29,7 +29,7 @@ namespace VSocketExtension
         public static readonly Regex IndexRegex = new Regex(@"^:?(?<index>-?[0-9]+)$", RegexOptions.Compiled);
         public static readonly Regex RangeRegex = new Regex(@"^:(?<startIndex>-?[0-9]+):(?<endIndex>-?[0-9]+)$", RegexOptions.Compiled);
 
-        public static T[] GetPathRange<T>(IReadOnlyList<T> parts, int x, int y)
+        public static T[] GetPathRange2<T>(IReadOnlyList<T> parts, int x, int y)
         {
             x = GetPathPartIndex(parts.Count, x);
             y = GetPathPartIndex(parts.Count, y);

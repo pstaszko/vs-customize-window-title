@@ -4,24 +4,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace VSocketExtension
 {
 	public static partial class VSocketQQ
 	{
+		public static void Start()
+		{
+			var pts = new ParameterizedThreadStart(obj => VSocketQQ.Listen(Globals.DTE));
+			var tt = new System.Threading.Thread(pts);
+			tt.Start();
+		}
 		public static string GetVersion()
 		{
-			System.IO.File.WriteAllText(@"C:\Dev\temp\x.txt", "ab");
-
 			var x = System.Reflection.Assembly.GetExecutingAssembly();
 			return $"{DateTime.Now.Subtract((new System.IO.FileInfo(x.Location)).LastWriteTime).TotalSeconds} Seconds old | {x.Location} | {x.FullName}";
 		}
 
 		private static string processParameters(Connect c, DTE2 dte, Dictionary<string, string> parameters)
 		{
-			System.IO.File.WriteAllText(@"C:\Dev\temp\x.txt", "ac");
-
-
 			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 			var ret = "No action taken";
 			try

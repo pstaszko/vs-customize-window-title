@@ -25,8 +25,8 @@ namespace VSocketExtension
 		public static void Listen(DTE2 dte)
 		{
 			int pid = 0;
-			System.Diagnostics.Debugger.Launch();
-			System.Diagnostics.Debugger.Break();
+			//System.Diagnostics.Debugger.Launch();
+			//System.Diagnostics.Debugger.Break();
 			void log(string msg) => System.IO.File.AppendAllText($@"c:\dev\temp\VSPIDLOG_{pid}.txt", (DateTime.Now.ToLongTimeString()) + " | " + msg + "\r\n");
 			try {
 				pid = System.Diagnostics.Process.GetCurrentProcess().Id;
