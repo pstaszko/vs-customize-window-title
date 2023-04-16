@@ -10,12 +10,12 @@ namespace VSocketExtension
 {
 	public static partial class VSocketQQ
 	{
-		public static void Start()
-		{
-			var pts = new ParameterizedThreadStart(obj => VSocketQQ.Listen(Globals.DTE));
-			var tt = new System.Threading.Thread(pts);
-			tt.Start();
-		}
+		//public static void Start()
+		//{
+		//	var pts = new ParameterizedThreadStart(obj => VSocketQQ.Listen(Globals.DTE));
+		//	var tt = new System.Threading.Thread(pts);
+		//	tt.Start();
+		//}
 		public static string GetVersion()
 		{
 			var x = System.Reflection.Assembly.GetExecutingAssembly();
@@ -24,7 +24,7 @@ namespace VSocketExtension
 
 		private static string processParameters(Connect c, DTE2 dte, Dictionary<string, string> parameters)
 		{
-			Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+			//Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 			var ret = "No action taken";
 			try
 			{
