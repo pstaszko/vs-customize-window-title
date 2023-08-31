@@ -88,7 +88,7 @@ namespace VSocketExtension
 			for (port = MinPort; port < MaxPort; port++) {
 				log($"Checking {port}");
 				httpListener = new HttpListener();
-				httpListener.Prefixes.Add($"http://localhost:{port}/");
+				httpListener.Prefixes.Add($"http://127.0.0.1:{port}/");
 				try {
 					httpListener.Start();
 					return true;
