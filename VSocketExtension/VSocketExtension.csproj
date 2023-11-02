@@ -107,7 +107,7 @@
       <Project>{B5612194-36DB-4BE8-9B1A-8BF09A3C3691}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="C:\Dev\PublicRepos\FMQTT\FMQTT.fsproj">
+    <ProjectReference Include="C:\DEV\PublicRepos\FMQTT\FMQTT\FMQTT.fsproj">
       <Name>FMQTT</Name>
       <Project>{60D006D5-4F4C-418C-8C08-F3152F91E37E}</Project>
       <Private>True</Private>
