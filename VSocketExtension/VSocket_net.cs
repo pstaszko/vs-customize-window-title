@@ -1,4 +1,4 @@
-﻿using EnvDTE;
+using EnvDTE;
 using EnvDTE80;
 using System;
 using System.Collections.Generic;
@@ -38,8 +38,8 @@ namespace VSocketExtension
 				}
 				var listener = TryBindListenerOnFreePortX();
 				log(listener.port.ToString() + " assigned");
-				var v = VSocketQQ.GetVersion();
-				var t = new List<string> { $"{pid}:{listener.port}:{v}" };
+				var version = VSocketQQ.GetVersion();
+				var t = new List<string> { $"{pid}:{listener.port}:{version}" };
 				if (System.IO.Directory.Exists(@"c:\DEV")) { System.IO.Directory.CreateDirectory(@"c:\DEV"); }
 				if (System.IO.Directory.Exists(@"c:\DEV\temp")) { System.IO.Directory.CreateDirectory(@"c:\DEV\temp"); }
 				System.IO.File.AppendAllLines(@"C:\DEV\temp\port.txt", t);
@@ -115,7 +115,7 @@ namespace VSocketExtension
 		{
 			EnvDTE.Window serverExplorerToolwindow;
 			EnvDTE.UIHierarchy hierarchy;
-			
+
 			try {
 				serverExplorerToolwindow = GetToolwindow(EnvDTE.Constants.vsWindowKindServerExplorer);
 				//var x = new FSSClass.myProgsGen.progsSingleton();
