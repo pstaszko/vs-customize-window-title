@@ -151,6 +151,7 @@ namespace VSocketExtension
 						acts["SE"] = () =>
 						{
 							c.SE();
+							ret = "";
 						};
 						acts["WriteToOutputWindow"] = () => dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
 					}
