@@ -163,7 +163,7 @@ namespace VSocketExtension
 		protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
 		{
 			//this.QueryService
-			//VSocketQQ.Start();
+			//VSocketStatic.Start();
 			//Application.Current.Dispatcher.Invoke(() =>
 			//{
 			//	// Your UI update code here
@@ -179,7 +179,7 @@ namespace VSocketExtension
 			// Do any initialization that requires the UI thread after switching to the UI thread.
 			Globals.DTE = (DTE2)(await this.GetServiceAsync(typeof(DTE))); //.ConfigureAwait(false) not recommended as we need to remain on the UI thread.
 			await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-			var pts = new ParameterizedThreadStart(obj => VSocketQQ.Listen(Globals.DTE));
+			var pts = new ParameterizedThreadStart(obj => VSocketStatic.Listen(Globals.DTE));
 			var tt = new System.Threading.Thread(pts);
 			tt.Start();
 			//await Command1.InitializeAsync(this);
@@ -187,7 +187,7 @@ namespace VSocketExtension
 
 		//protected override void Initialize()
 		//{
-		//VSocketQQ.Start();
+		//VSocketStatic.Start();
 		//	// When initialized asynchronously, the current thread may be a background thread at this point.
 		//	// Do any initialization that requires the UI thread after switching to the UI thread.
 		//	//await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);

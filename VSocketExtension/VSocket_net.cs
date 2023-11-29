@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace VSocketExtension
 {
-    public static partial class VSocketQQ
+    public static partial class VSocketStatic
     {
         public class ListenerAndPort
         {
@@ -19,18 +19,18 @@ namespace VSocketExtension
         }
         public static void StartListen()
         {
-            var pts = new ParameterizedThreadStart((object obj) => VSocketQQ.Listen(VSocketExtension.Globals.DTE));
+            var pts = new ParameterizedThreadStart((object obj) => VSocketStatic.Listen(VSocketExtension.Globals.DTE));
             var tt = new System.Threading.Thread(pts);
             tt.Start();
         }
+        public static int pid { get; set; } = 0;
         public static void Listen(DTE2 dte)
         {
-            int pid = 0;
             //System.Diagnostics.Debugger.Launch();
             //System.Diagnostics.Debugger.Break();
             void log(string msg) => System.IO.File.AppendAllText($@"c:\dev\temp\VSPIDLOG_{pid}.txt", (DateTime.Now.ToLongTimeString()) + " | " + msg + "\r\n");
             try {
-                pid = System.Diagnostics.Process.GetCurrentProcess().Id;
+                VSocketStatic.pid = System.Diagnostics.Process.GetCurrentProcess().Id;
                 log("Listen called, getting port");
                 ListenerAndPort TryBindListenerOnFreePortX()
                 {
@@ -39,7 +39,7 @@ namespace VSocketExtension
                 }
                 var listener = TryBindListenerOnFreePortX();
                 log(listener.port.ToString() + " assigned");
-                var version = VSocketQQ.GetVersion();
+                var version = VSocketStatic.GetVersion();
                 var t = new List<string> { $"{pid}:{listener.port}:{version}" };
                 if (System.IO.Directory.Exists(@"c:\DEV")) { System.IO.Directory.CreateDirectory(@"c:\DEV"); }
                 if (System.IO.Directory.Exists(@"c:\DEV\temp")) { System.IO.Directory.CreateDirectory(@"c:\DEV\temp"); }
@@ -50,7 +50,6 @@ namespace VSocketExtension
                 _ListenWS(c, dte, listener.listener, log);
                 _Listen(c, dte, listener.listener);
                 log("Finishing listen method to file");
-
             } catch (System.Exception ex) {
                 log("Exception in Listen: " + ex.Message);
                 System.Windows.Forms.MessageBox.Show(ex.Message);
