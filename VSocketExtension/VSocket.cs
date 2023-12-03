@@ -43,6 +43,7 @@ namespace VSocketExtension
                     };
                     acts["Break"] = () => System.Diagnostics.Debugger.Break();
                     acts["SaveAndClose"] = () => {
+                        dte.ExecuteCommand("Debug.StopDebugging");
                         dte.ExecuteCommand("File.SaveAll");
                         dte.ExecuteCommand("File.Exit");
                     };
