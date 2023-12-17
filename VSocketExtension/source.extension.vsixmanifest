@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="VSocketExtension.a1d76874-35d6-4c11-b54c-221e4cf73fdc" Version="1.11" Language="en-US" Publisher="Paul Staszko" />
+        <Identity Id="VSocketExtension.a1d76874-35d6-4c11-b54c-221e4cf73fdc" Version="1.12" Language="en-US" Publisher="Paul Staszko" />
         <DisplayName>VSocketExtension</DisplayName>
         <Description xml:space="preserve">VSocket Extension for Visual Studio 2022</Description>
     </Metadata>
