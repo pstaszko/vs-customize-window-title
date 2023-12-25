@@ -12,6 +12,7 @@ namespace VSocketExtension
 {
     public static partial class VSocketStatic
     {
+        private static Flatinum.WebSockets.WebsocketHandle ws;
         public class ListenerAndPort
         {
             public HttpListener listener { get; set; }
@@ -70,11 +71,11 @@ namespace VSocketExtension
                 var parameters = UniversalExtensions.Extensions.NewtonDeserialize<Dictionary<string, string>>(x);
                 var msg = processParameters(c, dte, parameters);
                 if (msg.isNotEmpty()) {
-                    Flatinum.WebSockets.SendToClientNow(msg);
+                    ws.SendToClientNow(msg);
                 }
                 log(x);
             }));
-            Flatinum.WebSockets.ConnectCS("ws://localhost:1880/ws/vs", null, onMessage);
+            ws = Flatinum.WebSockets.ConnectCS("ws://localhost:1880/ws/vs", null, onMessage);
         }
         public static void _Listen(Connect c, DTE2 dte, HttpListener listener)
         {
