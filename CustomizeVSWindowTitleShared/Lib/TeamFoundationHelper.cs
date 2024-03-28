@@ -1,4 +1,4 @@
-﻿xxx
+xxx
 using Microsoft.TeamFoundation.VersionControl.Client;
 using System;
 using System.Collections.Generic;

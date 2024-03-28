@@ -1,4 +1,4 @@
-﻿///* Requires references to these TFS and Visual Studio assemblies:
+///* Requires references to these TFS and Visual Studio assemblies:
 // *  Microsoft.TeamFoundation.Client
 // *  Microsoft.TeamFoundation.Common
 // *  Microsoft.TeamFoundation.VersionControl.Client
