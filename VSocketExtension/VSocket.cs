@@ -35,10 +35,10 @@ namespace VSocketExtension
                     var fns = new Dictionary<string, Func<string>>();
                     acts["LaunchDebugger"] = () => System.Diagnostics.Debugger.Launch();
                     fns["NewCollapse_JumpBack"] = () => {
-                        var dtex = VSCMD.VSCMD.DTEWrapper.Init(dte);
-                        VSCMD.VSCMD.Commands.DTE = dtex;
+                        var dtex = VSCMD.DTEWrapper.Init(dte);
+                        VSCMD.Commands.DTE = dtex;
                         var sb = new StringBuilder();
-                        VSCMD.VSCMD.Commands.NewCollapse_JumpBack(sb);
+                        VSCMD.Commands.NewCollapse_JumpBack(sb);
                         return sb.ToString();
                     };
                     acts["Break"] = () => System.Diagnostics.Debugger.Break();
