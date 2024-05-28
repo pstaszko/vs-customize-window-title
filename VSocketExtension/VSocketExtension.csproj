@@ -154,11 +154,6 @@
       <Project>{0A9B3E0F-5163-4E4A-9A85-13C9B4D89E19}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\PerFSharp\PerFSharp.fsproj">
-      <Name>PerFSharp</Name>
-      <Project>{2A6CE901-7AC8-4C21-BDE0-97C7DBAEF454}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="C:\Dev\WesternCap\SharedFSharpForms\SharedFSharpForms.fsproj">
       <Name>SharedFSharpForms</Name>
       <Project>{FED26A57-857E-4711-8BCE-19B1D60F713C}</Project>
