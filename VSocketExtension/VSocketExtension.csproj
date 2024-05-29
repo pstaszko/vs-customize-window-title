@@ -159,11 +159,6 @@
       <Project>{FED26A57-857E-4711-8BCE-19B1D60F713C}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\SharedFSharpSQL\SharedFSharpSQL.fsproj">
-      <Name>SharedFSharpSQL</Name>
-      <Project>{F5FCCB86-57D8-49EE-AA57-412CF6DFD91F}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="C:\Dev\WesternCap\SharedFSharpVanilla\SharedFSharpVanilla.fsproj">
       <Name>SharedFSharpVanilla</Name>
       <Project>{B77257C5-764D-4F8F-8B8B-A159884A350D}</Project>
