@@ -99,29 +99,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <ProjectReference Include="c:\dev\UIAuto\FSSClass\FSSClass.fsproj">
-      <Name>FSSClass</Name>
-      <Project>{E7769A43-0629-4B7C-B6AC-6F9D66296F1A}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\DEV\MatrixOS\WisdominatorClient\WisdominatorClient.fsproj">
-      <Name>WisdominatorClient</Name>
-      <Project>{B5612194-36DB-4BE8-9B1A-8BF09A3C3691}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\UIAuto\ClipMaster_Plugin\ClipMaster_Plugin.vbproj">
-      <Name>ClipMaster_Plugin</Name>
-      <Project>{406AD9DA-DBE6-46D3-9F4B-58AD76BAA305}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="C:\Dev\UIauto\CSFramework\CSFramework.csproj">
       <Name>CSFramework</Name>
       <Project>{FD1A189C-8705-4FC6-84DF-973817D32969}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\UIauto\ClipMasterClass\ClipMasterClass.vbproj">
-      <Name>ClipMasterClass</Name>
-      <Project>{18D06F93-3EAA-45A6-AA7E-3AD317A488EB}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="C:\Dev\UIauto\SourceFramework\SourceFramework.vbproj">
