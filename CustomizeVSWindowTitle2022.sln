@@ -54,8 +54,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFrameworkSuper", "C:\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFrameworkTesting", "C:\Dev\WesternCap\SharedFrameworkTesting\SharedFrameworkTesting.csproj", "{F0C00376-1C2B-4877-9123-48BFD98F00F7}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SharedFrameworkTestingFS", "C:\Dev\WesternCap\SharedFrameworkTestingFS\SharedFrameworkTestingFS.fsproj", "{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}"
-EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SourceFramework", "C:\Dev\UIauto\SourceFramework\SourceFramework.vbproj", "{EA6B336F-9409-4A91-825B-2909CE56F6B5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalExtensions", "C:\Dev\WesternCap\UniversalExtensions\UniversalExtensions.csproj", "{706E2D3D-CF9A-4362-A7AD-4A36167C084A}"
@@ -636,30 +634,6 @@ Global
 		{F0C00376-1C2B-4877-9123-48BFD98F00F7}.StrictCompile|x64.Build.0 = Debug|Any CPU
 		{F0C00376-1C2B-4877-9123-48BFD98F00F7}.StrictCompile|x86.ActiveCfg = Debug|Any CPU
 		{F0C00376-1C2B-4877-9123-48BFD98F00F7}.StrictCompile|x86.Build.0 = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Debug|arm64.Build.0 = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Debug|x64.Build.0 = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Debug|x86.Build.0 = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Release|arm64.ActiveCfg = Release|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Release|arm64.Build.0 = Release|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Release|x64.ActiveCfg = Release|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Release|x64.Build.0 = Release|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Release|x86.ActiveCfg = Release|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.Release|x86.Build.0 = Release|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.StrictCompile|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.StrictCompile|Any CPU.Build.0 = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.StrictCompile|arm64.ActiveCfg = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.StrictCompile|arm64.Build.0 = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.StrictCompile|x64.ActiveCfg = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.StrictCompile|x64.Build.0 = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.StrictCompile|x86.ActiveCfg = Debug|Any CPU
-		{D4FC9717-460F-486B-8DAD-65FBB06FE2FC}.StrictCompile|x86.Build.0 = Debug|Any CPU
 		{EA6B336F-9409-4A91-825B-2909CE56F6B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA6B336F-9409-4A91-825B-2909CE56F6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA6B336F-9409-4A91-825B-2909CE56F6B5}.Debug|arm64.ActiveCfg = Debug|Any CPU

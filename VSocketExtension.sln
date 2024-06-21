@@ -38,7 +38,6 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "PerFSharp", "C:\Dev\Western
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SharedFSharpForms", "C:\Dev\WesternCap\SharedFSharpForms\SharedFSharpForms.fsproj", "{A4DB8863-FD6E-414A-A437-E4A558C098AF}"
 EndProject
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFramework", "C:\Dev\WesternCap\SharedFramework\SharedFramework.csproj", "{21B2142C-F3C2-4F49-B3BA-0BE45E820919}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SharedFrameworkEntity", "C:\Dev\WesternCap\SharedFrameworkEntity\SharedFrameworkEntity.fsproj", "{344091B7-4D0A-4F62-BB06-05140A63A46A}"
@@ -46,8 +45,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFrameworkForms", "C:\Dev\WesternCap\SharedFrameworkForms\SharedFrameworkForms.csproj", "{0F795E3E-665A-4891-B496-3F8B79C06968}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFrameworkTesting", "C:\Dev\WesternCap\SharedFrameworkTesting\SharedFrameworkTesting.csproj", "{6F725CBE-9728-463F-AB2E-1800708B9041}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SharedFrameworkTestingFS", "C:\DEV\WesternCap\SharedFrameworkTestingFS\SharedFrameworkTestingFS.fsproj", "{89152B7B-A223-4326-923B-8EDE164D383A}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ClipMaster_Plugin", "C:\Dev\UIAuto\ClipMaster_Plugin\ClipMaster_Plugin.vbproj", "{EDCACBA4-CEBE-4AD3-BD9F-5E386F1A0000}"
 EndProject
@@ -603,30 +600,6 @@ Global
 		{6F725CBE-9728-463F-AB2E-1800708B9041}.StrictCompile|x64.Build.0 = Debug|Any CPU
 		{6F725CBE-9728-463F-AB2E-1800708B9041}.StrictCompile|x86.ActiveCfg = Debug|Any CPU
 		{6F725CBE-9728-463F-AB2E-1800708B9041}.StrictCompile|x86.Build.0 = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Debug|arm64.Build.0 = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Debug|x64.Build.0 = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Debug|x86.Build.0 = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Release|arm64.ActiveCfg = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Release|arm64.Build.0 = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Release|x64.ActiveCfg = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Release|x64.Build.0 = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Release|x86.ActiveCfg = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.Release|x86.Build.0 = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.StrictCompile|Any CPU.ActiveCfg = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.StrictCompile|Any CPU.Build.0 = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.StrictCompile|arm64.ActiveCfg = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.StrictCompile|arm64.Build.0 = Release|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.StrictCompile|x64.ActiveCfg = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.StrictCompile|x64.Build.0 = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.StrictCompile|x86.ActiveCfg = Debug|Any CPU
-		{89152B7B-A223-4326-923B-8EDE164D383A}.StrictCompile|x86.Build.0 = Debug|Any CPU
 		{EDCACBA4-CEBE-4AD3-BD9F-5E386F1A0000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDCACBA4-CEBE-4AD3-BD9F-5E386F1A0000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDCACBA4-CEBE-4AD3-BD9F-5E386F1A0000}.Debug|arm64.ActiveCfg = Debug|Any CPU
