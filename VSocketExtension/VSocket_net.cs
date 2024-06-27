@@ -1,4 +1,4 @@
-using CSFramework;
+//using CSFramework;
 using EnvDTE;
 using EnvDTE80;
 using System;
