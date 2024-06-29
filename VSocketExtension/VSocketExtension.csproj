@@ -99,11 +99,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <ProjectReference Include="C:\Dev\UIauto\SourceFramework\SourceFramework.vbproj">
-      <Name>SourceFramework</Name>
-      <Project>{9B55F68D-7D12-46D1-8919-752C7D9E293C}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="C:\Dev\UIauto\VSocket\VSocket.fsproj">
       <Name>VSocket</Name>
       <Project>{D981EE42-8DF2-486E-80E9-78BF1E755DED}</Project>
@@ -112,11 +107,6 @@
     <ProjectReference Include="C:\Dev\WesternCap\Cricket.Utilities\Cricket.Utilities.csproj">
       <Name>Cricket.Utilities</Name>
       <Project>{3EC026EE-FDFD-4719-9C45-067AA4F9F178}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\ExceptionalCode\ExceptionalCode.fsproj">
-      <Name>ExceptionalCode</Name>
-      <Project>{42F7C482-A83F-4970-8EDB-7192E51B38B3}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="C:\Dev\WesternCap\FSparkle\FSparkle.fsproj">
@@ -129,44 +119,14 @@
       <Project>{0A9B3E0F-5163-4E4A-9A85-13C9B4D89E19}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\SharedFSharpVanilla\SharedFSharpVanilla.fsproj">
-      <Name>SharedFSharpVanilla</Name>
-      <Project>{B77257C5-764D-4F8F-8B8B-A159884A350D}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkEntity\SharedFrameworkEntity.fsproj">
-      <Name>SharedFrameworkEntity</Name>
-      <Project>{BCBB2943-3539-40AA-884E-360C6E65FEB1}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="c:\dev\WesternCap\SharedFrameworkInterfaces\SharedFrameworkInterfaces.csproj">
       <Name>SharedFrameworkInterfaces</Name>
       <Project>{624081CE-4B52-4807-BDA5-5DB4082FB3C9}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkLogging\SharedFrameworkLogging.csproj">
-      <Name>SharedFrameworkLogging</Name>
-      <Project>{3738C547-5788-4BCD-AA24-01D39B60852D}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkROP\SharedFrameworkROP.fsproj">
-      <Name>SharedFrameworkROP</Name>
-      <Project>{9D094212-4C54-403B-B9D7-ACFC180DCD98}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkSuper\SharedFrameworkSuper.csproj">
       <Name>SharedFrameworkSuper</Name>
       <Project>{2A1F16A9-8BA2-435D-994C-977BB9EFE0A4}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\SharedFramework\SharedFramework.csproj">
-      <Name>SharedFramework</Name>
-      <Project>{FEFE2789-EABB-42BD-9C9D-34FC851D5E20}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\UniversalExtensions\UniversalExtensions.csproj">
-      <Name>UniversalExtensions</Name>
-      <Project>{5D795D87-5DEB-4311-B912-FE67F15B7EEA}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="c:\dev\UIAuto\VSCMD\VSCMD.vbproj">
