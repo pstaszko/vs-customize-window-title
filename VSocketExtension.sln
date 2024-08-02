@@ -40,8 +40,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFramework", "C:\Dev\W
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SharedFrameworkEntity", "C:\Dev\WesternCap\SharedFrameworkEntity\SharedFrameworkEntity.fsproj", "{344091B7-4D0A-4F62-BB06-05140A63A46A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFrameworkForms", "C:\Dev\WesternCap\SharedFrameworkForms\SharedFrameworkForms.csproj", "{0F795E3E-665A-4891-B496-3F8B79C06968}"
-EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ClipMaster_Plugin", "C:\Dev\UIAuto\ClipMaster_Plugin\ClipMaster_Plugin.vbproj", "{EDCACBA4-CEBE-4AD3-BD9F-5E386F1A0000}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cricket.Utilities", "C:\Dev\WesternCap\Cricket.Utilities\Cricket.Utilities.csproj", "{BA288DCA-F1FE-4EB9-A972-2CA5473E6DA2}"
@@ -534,30 +532,6 @@ Global
 		{344091B7-4D0A-4F62-BB06-05140A63A46A}.StrictCompile|x64.Build.0 = Debug|Any CPU
 		{344091B7-4D0A-4F62-BB06-05140A63A46A}.StrictCompile|x86.ActiveCfg = Debug|Any CPU
 		{344091B7-4D0A-4F62-BB06-05140A63A46A}.StrictCompile|x86.Build.0 = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Debug|arm64.Build.0 = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Debug|x64.Build.0 = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Debug|x86.ActiveCfg = Debug|x86
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Debug|x86.Build.0 = Debug|x86
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Release|arm64.ActiveCfg = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Release|arm64.Build.0 = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Release|x64.ActiveCfg = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Release|x64.Build.0 = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Release|x86.ActiveCfg = Release|x86
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.Release|x86.Build.0 = Release|x86
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.StrictCompile|Any CPU.ActiveCfg = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.StrictCompile|Any CPU.Build.0 = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.StrictCompile|arm64.ActiveCfg = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.StrictCompile|arm64.Build.0 = Release|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.StrictCompile|x64.ActiveCfg = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.StrictCompile|x64.Build.0 = Debug|Any CPU
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.StrictCompile|x86.ActiveCfg = Debug|x86
-		{0F795E3E-665A-4891-B496-3F8B79C06968}.StrictCompile|x86.Build.0 = Debug|x86
 		{EDCACBA4-CEBE-4AD3-BD9F-5E386F1A0000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDCACBA4-CEBE-4AD3-BD9F-5E386F1A0000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDCACBA4-CEBE-4AD3-BD9F-5E386F1A0000}.Debug|arm64.ActiveCfg = Debug|Any CPU
