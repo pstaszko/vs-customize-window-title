@@ -46,8 +46,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFrameworkLogging", "C
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SharedFrameworkROP", "C:\Dev\WesternCap\SharedFrameworkROP\SharedFrameworkROP.fsproj", "{275D0D22-5942-4E53-AA31-DEAF6FD0571F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFrameworkSuper", "C:\Dev\WesternCap\SharedFrameworkSuper\SharedFrameworkSuper.csproj", "{BFE1F51E-F444-44F0-96E1-736357A12052}"
-EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SourceFramework", "C:\Dev\UIauto\SourceFramework\SourceFramework.vbproj", "{EA6B336F-9409-4A91-825B-2909CE56F6B5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalExtensions", "C:\Dev\WesternCap\UniversalExtensions\UniversalExtensions.csproj", "{706E2D3D-CF9A-4362-A7AD-4A36167C084A}"
@@ -532,30 +530,6 @@ Global
 		{275D0D22-5942-4E53-AA31-DEAF6FD0571F}.StrictCompile|x64.Build.0 = Debug|Any CPU
 		{275D0D22-5942-4E53-AA31-DEAF6FD0571F}.StrictCompile|x86.ActiveCfg = Debug|Any CPU
 		{275D0D22-5942-4E53-AA31-DEAF6FD0571F}.StrictCompile|x86.Build.0 = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Debug|arm64.Build.0 = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Debug|x64.Build.0 = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Debug|x86.Build.0 = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Release|arm64.ActiveCfg = Release|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Release|arm64.Build.0 = Release|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Release|x64.ActiveCfg = Release|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Release|x64.Build.0 = Release|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Release|x86.ActiveCfg = Release|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.Release|x86.Build.0 = Release|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.StrictCompile|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.StrictCompile|Any CPU.Build.0 = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.StrictCompile|arm64.ActiveCfg = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.StrictCompile|arm64.Build.0 = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.StrictCompile|x64.ActiveCfg = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.StrictCompile|x64.Build.0 = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.StrictCompile|x86.ActiveCfg = Debug|Any CPU
-		{BFE1F51E-F444-44F0-96E1-736357A12052}.StrictCompile|x86.Build.0 = Debug|Any CPU
 		{EA6B336F-9409-4A91-825B-2909CE56F6B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA6B336F-9409-4A91-825B-2909CE56F6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA6B336F-9409-4A91-825B-2909CE56F6B5}.Debug|arm64.ActiveCfg = Debug|Any CPU
