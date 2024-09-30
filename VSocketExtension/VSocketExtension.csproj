@@ -71,8 +71,7 @@
     <Compile Include="VSocket_net.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".refs" />
-    <None Include="source.extension.vsixmanifest">
+        <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
