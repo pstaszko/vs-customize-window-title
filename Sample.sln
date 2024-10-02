@@ -59,18 +59,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{578D
 		..\WesternCap\Cricket.Intranet\Views\Payment\TransactionAdmin.ts = ..\WesternCap\Cricket.Intranet\Views\Payment\TransactionAdmin.ts
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{BDC29A2A-F3BF-4A60-8D63-A7399DBE8ACF}"
-	ProjectSection(SolutionItems) = preProject
-		..\WesternCap\Template\CreateNewController.psm1 = ..\WesternCap\Template\CreateNewController.psm1
-		..\WesternCap\Template\CreateTemplate.ps1 = ..\WesternCap\Template\CreateTemplate.ps1
-		..\WesternCap\Template\Search.cshtml = ..\WesternCap\Template\Search.cshtml
-		..\WesternCap\Template\Search.ts = ..\WesternCap\Template\Search.ts
-		..\WesternCap\Template\Template_Search.fs = ..\WesternCap\Template\Template_Search.fs
-		..\WesternCap\Template\Template_Search_Data.sql = ..\WesternCap\Template\Template_Search_Data.sql
-		..\WesternCap\Template\TemplateController.cs = ..\WesternCap\Template\TemplateController.cs
-		..\WesternCap\Template\TemplateController_Search.cs = ..\WesternCap\Template\TemplateController_Search.cs
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExpenseReports", "ExpenseReports", "{009C7352-3638-4C16-B66E-DE54D1FE1255}"
 	ProjectSection(SolutionItems) = preProject
 		..\WesternCap\Cricket.Intranet\Views\ExpenseReports\ExpenseReports.ts = ..\WesternCap\Cricket.Intranet\Views\ExpenseReports\ExpenseReports.ts
