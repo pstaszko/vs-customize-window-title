@@ -4,6 +4,18 @@
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <IntermediateOutputPath>C:\Users\Paul\AppData\Local\Temp\vs6E26.tmp\x86\Debug\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|arm64'">
+    <IntermediateOutputPath>C:\Users\Paul\AppData\Local\Temp\vs6E26.tmp\arm64\Debug\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <IntermediateOutputPath>C:\Users\Paul\AppData\Local\Temp\vs6E26.tmp\x86\Release\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|arm64'">
+    <IntermediateOutputPath>C:\Users\Paul\AppData\Local\Temp\vs6E26.tmp\arm64\Release\</IntermediateOutputPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,7 +47,7 @@
       <FSharpCoreResourcesFiles Include="$(OutputPath)**\Microsoft.TeamFoundation.Common.resources.dll" />
       <FSharpCoreResourcesFiles Include="$(OutputPath)**\Terminal.Gui.resources.dll" />
       <FSharpCoreResourcesFiles Include="$(OutputPath)**\FSharp.Core.resources.dll" />
-      <FSharpCoreResourcesDirs Include="@(FSharpCoreResourcesFiles-&gt;'\%(Directory)') " />
+      <FSharpCoreResourcesDirs Include="@(FSharpCoreResourcesFiles->'\%(Directory)') " />
     </ItemGroup>
     <RemoveDir Directories="@(FSharpCoreResourcesDirs)" />
   </Target>
@@ -50,6 +62,7 @@
     <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
     <CopyVsixExtensionLocation>C:\Dev\vs-customize-window-title\VSocketExtension\VSIX</CopyVsixExtensionLocation>
     <NoWarn>VSTHRD010</NoWarn>
+    <IntermediateOutputPath>C:\Users\Paul\AppData\Local\Temp\vs6E26.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,6 +71,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\Paul\AppData\Local\Temp\vs6E26.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\CustomizeVSWindowTitleShared\Lib\UtilsExtensions.cs">
@@ -101,39 +115,17 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
+    <ProjectReference Include="..\..\UIauto\SourceFramework\SourceFramework.vbproj">
+      <Project>{040957ff-f7a2-4cb4-b02f-1c110634f787}</Project>
+      <Name>SourceFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\UIauto\VSCMD\VSCMD.vbproj">
+      <Project>{1c13fccf-0756-41ca-abca-c0d338ef4d8a}</Project>
+      <Name>VSCMD</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Dev\UIauto\VSocket\VSocket.fsproj">
       <Name>VSocket</Name>
       <Project>{D981EE42-8DF2-486E-80E9-78BF1E755DED}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\Cricket.Utilities\Cricket.Utilities.csproj">
-      <Name>Cricket.Utilities</Name>
-      <Project>{3EC026EE-FDFD-4719-9C45-067AA4F9F178}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\FSparkle\FSparkle.fsproj">
-      <Name>FSparkle</Name>
-      <Project>{FDB8196D-5550-443F-AF49-BB388C432D67}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\Flatinum\Flatinum.fsproj">
-      <Name>Flatinum</Name>
-      <Project>{0A9B3E0F-5163-4E4A-9A85-13C9B4D89E19}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="c:\dev\WesternCap\SharedFrameworkInterfaces\SharedFrameworkInterfaces.csproj">
-      <Name>SharedFrameworkInterfaces</Name>
-      <Project>{624081CE-4B52-4807-BDA5-5DB4082FB3C9}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Dev\WesternCap\SharedFrameworkSuper\SharedFrameworkSuper.csproj">
-      <Name>SharedFrameworkSuper</Name>
-      <Project>{2A1F16A9-8BA2-435D-994C-977BB9EFE0A4}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="c:\dev\UIAuto\VSCMD\VSCMD.vbproj">
-      <Name>VSCMD</Name>
-      <Project>{D53B14A1-78C6-4CF0-85E1-2AC96C3A984D}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

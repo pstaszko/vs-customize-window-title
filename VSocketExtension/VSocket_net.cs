@@ -12,7 +12,7 @@ namespace VSocketExtension
 {
     public static partial class VSocketStatic
     {
-        private static Flatinum.WebSockets.WebsocketHandle ws;
+        //private static Flatinum.WebSockets.WebsocketHandle ws;
         public class ListenerAndPort
         {
             public HttpListener listener { get; set; }
@@ -48,7 +48,7 @@ namespace VSocketExtension
                 log("Wrote to file");
                 var c = new Connect(dte);
                 //c.SE();
-                _ListenWS(c, dte, listener.listener, log);
+                //_ListenWS(c, dte, listener.listener, log);
                 _Listen(c, dte, listener.listener);
                 log("Finishing listen method to file");
             } catch (System.Exception ex) {
@@ -63,20 +63,20 @@ namespace VSocketExtension
             p.AbsoluteCharOffset,
             p.LineCharOffset
         };
-        public static void _ListenWS(Connect c, DTE2 dte, HttpListener listener, Action<string> log)
-        {
-            var onMessage = SharedFramework.Extensions.MakeAction(((string x) => {
-                //Flatinum.WebSockets.SendToClientNow("Got: " + x);
-                //Flatinum.WebSockets.SendToClientNow(UniversalExtensions.Extensions.NewtonSerialize(d));
-                var parameters = UniversalExtensions.Extensions.NewtonDeserialize<Dictionary<string, string>>(x);
-                var msg = processParameters(c, dte, parameters);
-                if (msg.isNotEmpty()) {
-                    ws.SendToClientNow(msg);
-                }
-                log(x);
-            }));
-            ws = Flatinum.WebSockets.ConnectCS("ws://localhost:1880/ws/vs", null, onMessage);
-        }
+        //public static void _ListenWS(Connect c, DTE2 dte, HttpListener listener, Action<string> log)
+        //{
+        //    var onMessage = SharedFramework.Extensions.MakeAction(((string x) => {
+        //        //Flatinum.WebSockets.SendToClientNow("Got: " + x);
+        //        //Flatinum.WebSockets.SendToClientNow(UniversalExtensions.Extensions.NewtonSerialize(d));
+        //        var parameters = UniversalExtensions.Extensions.NewtonDeserialize<Dictionary<string, string>>(x);
+        //        var msg = processParameters(c, dte, parameters);
+        //        if (msg.isNotEmpty()) {
+        //            ws.SendToClientNow(msg);
+        //        }
+        //        log(x);
+        //    }));
+        //    ws = Flatinum.WebSockets.ConnectCS("ws://localhost:1880/ws/vs", null, onMessage);
+        //}
         public static void _Listen(Connect c, DTE2 dte, HttpListener listener)
         {
             var ctx = listener.GetContext();
@@ -128,41 +128,41 @@ namespace VSocketExtension
             //_addInInstance = (AddIn)addInInst;
         }
 
-        private void ExpandServers()
-        {
-            EnvDTE.Window serverExplorerToolwindow;
-            EnvDTE.UIHierarchy hierarchy;
+        //private void ExpandServers()
+        //{
+        //    EnvDTE.Window serverExplorerToolwindow;
+        //    EnvDTE.UIHierarchy hierarchy;
 
-            try {
-                serverExplorerToolwindow = GetToolwindow(EnvDTE.Constants.vsWindowKindServerExplorer);
-                //var x = new FSSClass.myProgsGen.progsSingleton();
-                FSSClass.AHKUtils.SendInput("{right}");
-                if (serverExplorerToolwindow != null) {
-                    hierarchy = (EnvDTE.UIHierarchy)serverExplorerToolwindow.Object;
+        //    try {
+        //        serverExplorerToolwindow = GetToolwindow(EnvDTE.Constants.vsWindowKindServerExplorer);
+        //        //var x = new FSSClass.myProgsGen.progsSingleton();
+        //        FSSClass.AHKUtils.SendInput("{right}");
+        //        if (serverExplorerToolwindow != null) {
+        //            hierarchy = (EnvDTE.UIHierarchy)serverExplorerToolwindow.Object;
 
-                    //ShowNodes(hierarchy.UIHierarchyItems);
-                    var getNode = getNodeByName("Servers", hierarchy.UIHierarchyItems);
-                    if (getNode != null) {
-                        getNode.Select(vsUISelectionType.vsUISelectionTypeSelect);
-                        //getNode.Collection.Expanded = true;
-                        //var c = getNode.Collection.Count;
-                        foreach (UIHierarchyItem item in getNode.Collection) {
-                            if (item.Name == "Data Connections") {
-                                //item.Select(vsUISelectionType.vsUISelectionTypeSelect);
-                                //item.Collection.Expanded = true;
-                                if (item.Collection.Expanded) {
-                                    //getNodeByName
-                                }
-                            }
+        //            //ShowNodes(hierarchy.UIHierarchyItems);
+        //            var getNode = getNodeByName("Servers", hierarchy.UIHierarchyItems);
+        //            if (getNode != null) {
+        //                getNode.Select(vsUISelectionType.vsUISelectionTypeSelect);
+        //                //getNode.Collection.Expanded = true;
+        //                //var c = getNode.Collection.Count;
+        //                foreach (UIHierarchyItem item in getNode.Collection) {
+        //                    if (item.Name == "Data Connections") {
+        //                        //item.Select(vsUISelectionType.vsUISelectionTypeSelect);
+        //                        //item.Collection.Expanded = true;
+        //                        if (item.Collection.Expanded) {
+        //                            //getNodeByName
+        //                        }
+        //                    }
 
-                        }
-                        //getNode.Collection.Item(0).Select(vsUISelectionType.vsUISelectionTypeExtend);
-                    }
-                }
-            } catch (Exception ex) {
-                System.Windows.Forms.MessageBox.Show(ex.ToString());
-            }
-        }
+        //                }
+        //                //getNode.Collection.Item(0).Select(vsUISelectionType.vsUISelectionTypeExtend);
+        //            }
+        //        }
+        //    } catch (Exception ex) {
+        //        System.Windows.Forms.MessageBox.Show(ex.ToString());
+        //    }
+        //}
 
         private EnvDTE.Window GetToolwindow(string windowKind)
         {
@@ -201,10 +201,10 @@ namespace VSocketExtension
             }
         }
 
-        internal void SE()
-        {
-            ExpandServers();
+        //internal void SE()
+        //{
+        //    ExpandServers();
 
-        }
+        //}
     }
 }

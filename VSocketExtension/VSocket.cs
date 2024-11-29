@@ -47,25 +47,25 @@ namespace VSocketExtension
                         dte.ExecuteCommand("File.SaveAll");
                         dte.ExecuteCommand("File.Exit");
                     };
-                    acts["Activate"] = () => {
-                        var xxx = FSSClass.Windows.Window.WinRestorePID(VSocketStatic.pid);
-                        var xx = FSSClass.Windows.Window.WinActivatePID(VSocketStatic.pid);
-                    };
-                    acts["ActivateSolution"] = () => {
-                        //System.Diagnostics.Debugger.Break();
-                        var sln = parameters["sln"];
-                        var z = sln.ToLower();
-                        var q = dte.Solution.FileName.ToString().ToLower();
-                        if (z == q) {
-                            var xxx = FSSClass.Windows.Window.WinRestorePID(VSocketStatic.pid);
-                            var xx = FSSClass.Windows.Window.WinActivatePID(VSocketStatic.pid);
-                            if (xx) {
-                                ret = "t";
-                            } else {
-                                ret = "f";
-                            }
-                        }
-                    };
+                    //acts["Activate"] = () => {
+                    //    var xxx = FSSClass.Windows.Window.WinRestorePID(VSocketStatic.pid);
+                    //    var xx = FSSClass.Windows.Window.WinActivatePID(VSocketStatic.pid);
+                    //};
+                    //acts["ActivateSolution"] = () => {
+                    //    //System.Diagnostics.Debugger.Break();
+                    //    var sln = parameters["sln"];
+                    //    var z = sln.ToLower();
+                    //    var q = dte.Solution.FileName.ToString().ToLower();
+                    //    if (z == q) {
+                    //        var xxx = FSSClass.Windows.Window.WinRestorePID(VSocketStatic.pid);
+                    //        var xx = FSSClass.Windows.Window.WinActivatePID(VSocketStatic.pid);
+                    //        if (xx) {
+                    //            ret = "t";
+                    //        } else {
+                    //            ret = "f";
+                    //        }
+                    //    }
+                    //};
 
                     fns["Version"] = GetVersion;
                     fns["PID"] = () => VSocketStatic.pid.ToString();
@@ -157,10 +157,10 @@ namespace VSocketExtension
                             dte.ExecuteCommand(commandName, commandArgs);
                             ret = "";
                         };
-                        acts["SE"] = () => {
-                            c.SE();
-                            ret = "";
-                        };
+                        //acts["SE"] = () => {
+                        //    c.SE();
+                        //    ret = "";
+                        //};
                         acts["WriteToOutputWindow"] = () => dte.ToolWindows.OutputWindow.ActivePane.OutputString(parameters["message"]);
                     }
 
