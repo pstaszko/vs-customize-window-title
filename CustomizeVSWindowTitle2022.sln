@@ -66,7 +66,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SystemConsole", "..\SharedF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalNetstandardHoldups", "..\SharedFrameworkArchive\UniversalNetstandardHoldups\UniversalNetstandardHoldups.csproj", "{EABE5A16-DF20-4B4A-A195-6FABE98B649E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedFrameworkInterfaces", "..\SharedFrameworkArchive\SharedFrameworkInterfaces\SharedFrameworkInterfaces.csproj", "{1BEF6041-03BD-47A9-A487-10CECC5E5FF2}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SharedFrameworkInterfaces", "..\SharedFrameworkArchive\SharedFrameworkInterfaces\SharedFrameworkInterfaces.fsproj", "{1BEF6041-03BD-47A9-A487-10CECC5E5FF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

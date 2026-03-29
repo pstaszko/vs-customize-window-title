@@ -58,7 +58,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CasePipes", "..\SharedFrame
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SystemConsole", "..\SharedFrameworkArchive\SystemConsole\SystemConsole.fsproj", "{F7BCB80F-968B-481F-B2DF-FDC608651290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedFrameworkInterfaces", "..\SharedFrameworkArchive\SharedFrameworkInterfaces\SharedFrameworkInterfaces.csproj", "{A7731B65-8CAF-4BB4-B241-42730CC9ED85}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SharedFrameworkInterfaces", "..\SharedFrameworkArchive\SharedFrameworkInterfaces\SharedFrameworkInterfaces.fsproj", "{A7731B65-8CAF-4BB4-B241-42730CC9ED85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
