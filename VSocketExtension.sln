@@ -46,7 +46,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SharedFrameworkROP", "..\Sh
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AHKFunctionProxy", "..\UIauto\AHKFunctionProxy\AHKFunctionProxy.fsproj", "{658F3C07-7D20-42BE-BAB2-161B96EFD4F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopwatcher.Abstractions", "..\SharedFrameworkArchive\Stopwatcher.Abstractions\Stopwatcher.Abstractions.csproj", "{A339F606-11DC-4982-A9A2-DC0BE158EBCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopwatcher.Abstractions", "..\SharedFrameworkArchive\Stopwatcher.Abstractions\Stopwatcher.Abstractions.fsproj", "{A339F606-11DC-4982-A9A2-DC0BE158EBCA}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CasePipes", "..\SharedFrameworkArchive\CasePipes\CasePipes.fsproj", "{2ECEA0D4-AC03-4247-AA84-295A922E9C30}"
 EndProject
