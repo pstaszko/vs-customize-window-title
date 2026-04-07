@@ -47,7 +47,7 @@
       <FSharpCoreResourcesFiles Include="$(OutputPath)**\Microsoft.TeamFoundation.Common.resources.dll" />
       <FSharpCoreResourcesFiles Include="$(OutputPath)**\Terminal.Gui.resources.dll" />
       <FSharpCoreResourcesFiles Include="$(OutputPath)**\FSharp.Core.resources.dll" />
-      <FSharpCoreResourcesDirs Include="@(FSharpCoreResourcesFiles-&gt;'\%(Directory)') " />
+      <FSharpCoreResourcesDirs Include="@(FSharpCoreResourcesFiles->'\%(Directory)') " />
     </ItemGroup>
     <RemoveDir Directories="@(FSharpCoreResourcesDirs)" />
   </Target>
@@ -59,10 +59,12 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
+    <CopyVsixExtensionFiles>False</CopyVsixExtensionFiles>
     <CopyVsixExtensionLocation>C:\Dev\vs-customize-window-title\VSocketExtension\VSIX</CopyVsixExtensionLocation>
     <NoWarn>VSTHRD010</NoWarn>
     <IntermediateOutputPath>C:\Users\Paul\AppData\Local\Temp\vs6E26.tmp\Debug\</IntermediateOutputPath>
+    <CreateVsixContainer>False</CreateVsixContainer>
+    <DeployExtension>True</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -72,6 +74,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <IntermediateOutputPath>C:\Users\Paul\AppData\Local\Temp\vs6E26.tmp\Release\</IntermediateOutputPath>
+    <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
+    <CopyVsixExtensionLocation>C:\Dev\vs-customize-window-title\VSocketExtension\VSIX</CopyVsixExtensionLocation>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\CustomizeVSWindowTitleShared\Lib\UtilsExtensions.cs">
@@ -119,7 +123,7 @@
       <Project>{1c13fccf-0756-41ca-abca-c0d338ef4d8a}</Project>
       <Name>VSCMD</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Dev\UIauto\VSocket\VSocket.fsproj">
+    <ProjectReference Include="..\..\UIauto\VSocket\VSocket.fsproj">
       <Name>VSocket</Name>
       <Project>{D981EE42-8DF2-486E-80E9-78BF1E755DED}</Project>
       <Private>True</Private>

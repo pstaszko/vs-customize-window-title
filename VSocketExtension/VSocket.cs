@@ -1,7 +1,6 @@
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Commanding;
-using SourceFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;

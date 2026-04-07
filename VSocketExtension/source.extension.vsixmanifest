@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="VSocketExtension.a1d76874-35d6-4c11-b54c-221e4cf73fdc" Version="1.14" Language="en-US" Publisher="Paul Staszko" />
         <DisplayName>VSocketExtension</DisplayName>
-        <Description xml:space="preserve">VSocket Extension for Visual Studio 2022</Description>
+        <Description xml:space="preserve">VSocket Extension for Visual Studio 2022 and above</Description>
     </Metadata>
     <Installation AllUsers="true" InstalledByMsi="false">
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0,)">
