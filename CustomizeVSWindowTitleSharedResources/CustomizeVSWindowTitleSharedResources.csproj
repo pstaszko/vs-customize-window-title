@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <Nullable>disable</Nullable><TargetFramework>net46</TargetFramework>
     <RootNamespace>ErwinMayerLabs.CustomizeVSWindowTitleSharedResources</RootNamespace>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\DEV\vs-customize-window-title\CustomizeVSWindowTitleSharedResources\Key.snk</AssemblyOriginatorKeyFile>
